@@ -30,7 +30,6 @@ The [source code for this demo](https://github.com/flutter/ai/blob/main/example/
 
 ## Getting started
 
-<!-- Commenting this out for now, as it doesn't appear to work
 <a href="https://idx.google.com/new?template=https%3A%2F%2Fgithub.com%2Fflutter%2Fai">
   <picture>
     <source
@@ -45,7 +44,6 @@ The [source code for this demo](https://github.com/flutter/ai/blob/main/example/
       src="https://cdn.idx.dev/btn/try_purple_32.svg">
   </picture>
 </a>
--->
 
 **1. Installation**
 Add the following dependencies to your `pubspec.yaml` file:
