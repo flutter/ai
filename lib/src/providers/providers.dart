@@ -2,6 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+export 'implementations/anthropic_provider.dart';
 export 'implementations/echo_provider.dart';
 export 'implementations/gemini_provider.dart';
 export 'implementations/vertex_provider.dart';
