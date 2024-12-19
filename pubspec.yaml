@@ -1,11 +1,18 @@
 name: flutter_ai_toolkit
-description: "A set of AI chat-related widgets for your Flutter app targeting mobile, desktop and web."
-version: 0.6.7
-homepage: https://github.com/flutter/ai
+description: >-
+  A set of AI chat-related widgets for Flutter apps targeting
+  mobile, desktop and web.
+version: 0.6.8-wip
+repository: https://github.com/flutter/ai
+
+topics:
+  - ai
+  - chat
+  - gemini
 
 environment:
-  sdk: '>=3.4.0 <4.0.0'
-  flutter: '>=3.27.0-0'
+  sdk: ^3.5.0
+  flutter: '>=3.27.0'
 
 dependencies:
   cross_file: ^0.3.4+2
