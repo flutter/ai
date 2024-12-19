@@ -10,7 +10,7 @@ class SearchBox extends StatefulWidget {
   const SearchBox({super.key, required this.onSearchChanged});
 
   @override
-  _SearchBoxState createState() => _SearchBoxState();
+  State<SearchBox> createState() => _SearchBoxState();
 }
 
 class _SearchBoxState extends State<SearchBox>

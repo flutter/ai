@@ -15,7 +15,7 @@ class RecipeListView extends StatefulWidget {
   const RecipeListView({super.key, required this.searchText});
 
   @override
-  _RecipeListViewState createState() => _RecipeListViewState();
+  State<RecipeListView> createState() => _RecipeListViewState();
 }
 
 class _RecipeListViewState extends State<RecipeListView> {

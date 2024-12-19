@@ -25,7 +25,7 @@ class EditRecipePage extends StatefulWidget {
   final Recipe recipe;
 
   @override
-  _EditRecipePageState createState() => _EditRecipePageState();
+  State<EditRecipePage> createState() => _EditRecipePageState();
 }
 
 class _EditRecipePageState extends State<EditRecipePage> {
