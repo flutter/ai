@@ -1,7 +1,6 @@
 ## 0.6.8-wip
 
 * Require Dart 3.5 or later.
-* 
 
 ## 0.6.7
 
