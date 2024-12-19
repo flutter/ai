@@ -17,6 +17,12 @@ class AnthropicProvider extends LlmProvider with ChangeNotifier {
   /// Creates an Anthropic provider instance.
   ///
   /// The [apiKey] parameter is required for authentication with Anthropic's API.
+  ///
+  /// The [model] parameter specifies the LLM to use. You can find a list of available
+  /// models [here](https://docs.anthropic.com/en/docs/about-claude/models).
+  ///
+  /// For consuming Anthropic-compatible APIs, you can specify a custom [baseUrl], [headers],
+  /// and [queryParams].
   AnthropicProvider({
     required String apiKey,
     String? baseUrl,
