@@ -115,7 +115,8 @@ class OpenAIProvider extends LlmProvider with ChangeNotifier {
         case MessageOrigin.user:
           if (message.attachments.isEmpty) {
             return ChatCompletionMessage.user(
-              content: ChatCompletionUserMessageContent.string(message.text ?? ''),
+              content:
+                  ChatCompletionUserMessageContent.string(message.text ?? ''),
             );
           }
 
@@ -125,11 +126,13 @@ class OpenAIProvider extends LlmProvider with ChangeNotifier {
               if (attachment is ImageFileAttachment)
                 ChatCompletionMessageContentPart.image(
                   imageUrl: ChatCompletionMessageImageUrl(
-                    url: 'data:${attachment.mimeType};base64,${base64Encode(attachment.bytes)}',
+                    url:
+                        'data:${attachment.mimeType};base64,${base64Encode(attachment.bytes)}',
                   ),
                 )
               else
-                throw LlmFailureException('Unsupported attachment type: $attachment'),
+                throw LlmFailureException(
+                    'Unsupported attachment type: $attachment'),
           ];
           return ChatCompletionMessage.user(
             content: ChatCompletionUserMessageContent.parts(parts),
