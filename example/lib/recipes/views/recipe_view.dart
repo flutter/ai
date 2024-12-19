@@ -3,7 +3,6 @@
 // found in the LICENSE file.
 
 import 'package:flutter/material.dart';
-import 'package:gap/gap.dart';
 
 import '../data/recipe_data.dart';
 import 'recipe_content_view.dart';
@@ -52,7 +51,7 @@ class RecipeView extends StatelessWidget {
                     ],
                   ),
                 ),
-                const Gap(16),
+                const SizedBox(height: 16),
               ],
             ),
           ],

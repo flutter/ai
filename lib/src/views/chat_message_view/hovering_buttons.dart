@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/widgets.dart';
-import 'package:gap/gap.dart';
 
 import '../../styles/llm_chat_view_style.dart';
 import '../../utility.dart';
@@ -66,6 +65,7 @@ class HoveringButtons extends StatelessWidget {
                           right: isUserMessage ? 0 : null,
                           left: isUserMessage ? null : 32,
                           child: Row(
+                            spacing: 6,
                             children: [
                               if (onEdit != null)
                                 GestureDetector(
@@ -78,7 +78,6 @@ class HoveringButtons extends StatelessWidget {
                                     ),
                                   ),
                                 ),
-                              const Gap(6),
                               GestureDetector(
                                 onTap: () => unawaited(
                                   copyToClipboard(context, clipboardText!),

@@ -3,7 +3,6 @@
 // found in the LICENSE file.
 
 import 'package:flutter/widgets.dart';
-import 'package:gap/gap.dart';
 
 import '../../chat_view_model/chat_view_model_client.dart';
 import '../../providers/interface/attachments.dart';
@@ -37,6 +36,7 @@ class FileAttachmentView extends StatelessWidget {
             decoration: attachmentStyle.decoration,
             child: Row(
               mainAxisSize: MainAxisSize.min,
+              spacing: 8,
               children: [
                 Container(
                   height: 64,
@@ -48,7 +48,6 @@ class FileAttachmentView extends StatelessWidget {
                     size: 24,
                   ),
                 ),
-                const Gap(8),
                 Flexible(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,

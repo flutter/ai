@@ -5,7 +5,6 @@
 import 'package:file_selector/file_selector.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
-import 'package:gap/gap.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:waveform_recorder/waveform_recorder.dart';
 
@@ -149,7 +148,7 @@ class _ChatInputState extends State<ChatInput> {
                   attachments: _attachments,
                   onRemove: onRemoveAttachment,
                 ),
-                if (_attachments.isNotEmpty) const Gap(6),
+                if (_attachments.isNotEmpty) const SizedBox(height: 6),
                 ValueListenableBuilder(
                   valueListenable: _textController,
                   builder: (context, value, child) => ListenableBuilder(
