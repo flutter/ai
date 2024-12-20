@@ -14,6 +14,7 @@
 /// - Chat UI: Ready-to-use widgets for displaying chat interfaces.
 library;
 
+export 'src/llm_exception.dart';
 export 'src/providers/interface/chat_message.dart';
 export 'src/providers/providers.dart';
 export 'src/styles/styles.dart';
