@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
-import 'package:gap/gap.dart';
 
 import '../data/recipe_data.dart';
 import '../data/recipe_repository.dart';
@@ -35,7 +34,6 @@ class RecipeResponseView extends StatelessWidget {
         // extract the recipe
         final json = recipeWithText['recipe'] as Map<String, dynamic>;
         final recipe = Recipe.fromJson(json);
-        children.add(const Gap(16));
         children.add(Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -46,12 +44,10 @@ class RecipeResponseView extends StatelessWidget {
         ));
 
         // add a button to add the recipe to the list
-        children.add(const Gap(16));
         children.add(OutlinedButton(
           onPressed: () => RecipeRepository.addNewRecipe(recipe),
           child: const Text('Add Recipe'),
         ));
-        children.add(const Gap(16));
       }
     } catch (e) {
       debugPrint('Error parsing response: $e');
@@ -74,6 +70,7 @@ class RecipeResponseView extends StatelessWidget {
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
+      spacing: 16,
       children: children,
     );
   }

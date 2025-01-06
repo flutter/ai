@@ -1,5 +1,4 @@
 import 'package:flutter/widgets.dart';
-import 'package:gap/gap.dart';
 
 import '../../styles/action_button_style.dart';
 import '../../styles/toolkit_text_styles.dart';
@@ -36,6 +35,7 @@ class EditingIndicator extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.end,
           crossAxisAlignment: CrossAxisAlignment.end,
+          spacing: 6,
           children: [
             Text(
               'Editing',
@@ -43,7 +43,6 @@ class EditingIndicator extends StatelessWidget {
                 color: invertColor(cancelButtonStyle.iconColor),
               ),
             ),
-            const Gap(6),
             ActionButton(
               onPressed: onCancelEdit,
               style: cancelButtonStyle,

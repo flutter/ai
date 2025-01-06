@@ -3,7 +3,6 @@
 // found in the LICENSE file.
 
 import 'package:flutter/material.dart';
-import 'package:gap/gap.dart';
 
 import '../data/recipe_data.dart';
 
@@ -25,18 +24,18 @@ class RecipeContentView extends StatelessWidget {
                   ? SingleChildScrollView(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
+                        spacing: 16,
                         children: [
                           _RecipeIngredientsView(recipe),
-                          const Gap(16),
                           _RecipeInstructionsView(recipe),
                         ],
                       ),
                     )
                   : Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
+                      spacing: 16,
                       children: [
                         Expanded(child: _RecipeIngredientsView(recipe)),
-                        const Gap(16),
                         Expanded(child: _RecipeInstructionsView(recipe)),
                       ],
                     ),

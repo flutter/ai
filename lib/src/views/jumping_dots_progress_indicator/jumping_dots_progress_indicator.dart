@@ -43,7 +43,7 @@ class JumpingDotsProgressIndicator extends StatefulWidget {
   final int milliseconds;
 
   @override
-  _JumpingDotsProgressIndicatorState createState() =>
+  State<JumpingDotsProgressIndicator> createState() =>
       _JumpingDotsProgressIndicatorState();
 }
 

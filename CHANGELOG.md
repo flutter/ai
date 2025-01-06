@@ -1,6 +1,7 @@
 ## 0.6.8-wip
 
 * Require Dart 3.5 or later.
+* Remove dependency on `package:gap`.
 
 ## 0.6.7
 

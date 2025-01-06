@@ -6,7 +6,6 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_ai_toolkit/flutter_ai_toolkit.dart';
-import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
 import 'package:uuid/uuid.dart';
@@ -25,7 +24,7 @@ class EditRecipePage extends StatefulWidget {
   final Recipe recipe;
 
   @override
-  _EditRecipePageState createState() => _EditRecipePageState();
+  State<EditRecipePage> createState() => _EditRecipePageState();
 }
 
 class _EditRecipePageState extends State<EditRecipePage> {
@@ -150,7 +149,7 @@ When you generate a recipe, you should generate a JSON object.
                   ),
                   maxLines: null,
                 ),
-                const Gap(16),
+                const SizedBox(height: 16),
                 OverflowBar(
                   spacing: 16,
                   children: [
@@ -210,9 +209,9 @@ When you generate a recipe, you should generate a JSON object.
           title: Text(recipe.title),
           content: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
+            spacing: 16,
             children: [
               const Text('Modifications:'),
-              const Gap(16),
               Text(_wrapText(modifications)),
             ],
           ),

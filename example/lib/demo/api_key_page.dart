@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:gap/gap.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class GeminiApiKeyPage extends StatefulWidget {
@@ -57,7 +56,7 @@ class _GeminiApiKeyPageState extends State<GeminiApiKeyPage> {
                     child: Text('(or copy the URL above by tapping HERE)'),
                   ),
                 ),
-                const Gap(16),
+                const SizedBox(height: 16),
                 const Text('Paste your API key here:'),
                 SizedBox(
                   width: 300,
@@ -74,7 +73,7 @@ class _GeminiApiKeyPageState extends State<GeminiApiKeyPage> {
                         : null,
                   ),
                 ),
-                const Gap(16),
+                const SizedBox(height: 16),
                 ElevatedButton(
                   onPressed: _isValidApiKey()
                       ? () => widget.onApiKey(_controller.text)
