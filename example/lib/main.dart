@@ -2,9 +2,20 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+// ignore_for_file: unused_import
+
 import 'package:flutter/material.dart';
 import 'package:flutter_ai_toolkit/flutter_ai_toolkit.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
+import 'package:permission_handler/permission_handler.dart'; //request permission from iOS
+import 'dart:async';
+import 'dart:io';
+
+import 'package:flutter/foundation.dart';
+import 'package:image_picker_platform_interface/image_picker_platform_interface.dart';
+import 'package:file_selector_macos/file_selector_macos.dart';
+import 'package:mime/mime.dart';
+
 
 import '../gemini_api_key.dart';
 

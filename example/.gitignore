@@ -5,9 +5,11 @@
 *.swp
 .DS_Store
 .atom/
+.build/
 .buildlog/
 .history
 .svn/
+.swiftpm/
 migrate_working_dir/
 
 # IntelliJ related
@@ -44,5 +46,5 @@ app.*.map.json
 /android/app/release
 
 # custom
-gemini_api_key.dart
+*gemini_api_key.dart
 firebase_options.dart

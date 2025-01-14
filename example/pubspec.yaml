@@ -26,6 +26,10 @@ dependencies:
   google_fonts: ^6.2.1
   future_builder_ex: ^4.0.0
   split_view: ^3.2.1
+  permission_handler: ^11.3.1
+  image_picker_platform_interface: ^2.10.1
+  file_selector_macos: ^0.9.4+2
+  mime: ^2.0.0
 
 dev_dependencies:
   flutter_test:
