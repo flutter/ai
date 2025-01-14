@@ -1,0 +1,296 @@
+[
+  {
+    "id": "f8c3de3d-1fea-4d7c-a8b0-29f63c4c3454",
+    "title": "Spaghetti and Meatballs",
+    "description": "A classic Italian comfort food dish.",
+    "ingredients": [
+      "1 pound spaghetti",
+      "1 pound ground beef",
+      "1 onion, chopped",
+      "2 cloves garlic, minced",
+      "1 (28 ounce) can crushed tomatoes",
+      "1 (15 ounce) can tomato sauce",
+      "1/4 cup chopped fresh parsley",
+      "1 teaspoon dried oregano",
+      "1/2 teaspoon salt",
+      "1/4 teaspoon black pepper"
+    ],
+    "instructions": [
+      "Cook spaghetti according to package directions.",
+      "Mix ground beef, onion, garlic, and spices; form into meatballs.",
+      "Brown meatballs in a large skillet over medium heat.",
+      "Add crushed tomatoes and tomato sauce; simmer for 20 minutes.",
+      "Serve meatballs and sauce over cooked spaghetti."
+    ],
+    "tags": [
+      "Italian",
+      "pasta",
+      "dinner",
+      "comfort food"
+    ],
+    "notes": ""
+  },
+  {
+    "id": "a2c8d3e3-b1f7-4d5a-9c3b-1f8e7d4c6e5d",
+    "title": "Chicken Stir-Fry",
+    "description": "A quick and easy weeknight meal.",
+    "ingredients": [
+      "1 pound boneless, skinless chicken breasts, cut into bite-sized pieces",
+      "1 tablespoon vegetable oil",
+      "1 onion, sliced",
+      "1 red bell pepper, sliced",
+      "1 green bell pepper, sliced",
+      "1 (14.5 ounce) can chicken broth",
+      "1/4 cup soy sauce",
+      "2 tablespoons cornstarch",
+      "1/4 cup water",
+      "1 teaspoon sesame oil"
+    ],
+    "instructions": [
+      "Heat oil in a large skillet or wok over medium-high heat.",
+      "Add chicken and cook until browned, about 5 minutes.",
+      "Add onion and bell peppers; stir-fry for 3-4 minutes.",
+      "Mix chicken broth, soy sauce, cornstarch, and water in a bowl.",
+      "Pour sauce into the skillet and cook until thickened.",
+      "Drizzle with sesame oil and serve over rice."
+    ],
+    "tags": [
+      "Asian",
+      "chicken",
+      "quick meal",
+      "stir-fry"
+    ],
+    "notes": ""
+  },
+  {
+    "id": "b3d9e4f5-c2g8-6h7i-j9k0-l1m2n3o4p5q6",
+    "title": "Pancakes",
+    "description": "A delicious breakfast staple.",
+    "ingredients": [
+      "1 1/2 cups all-purpose flour",
+      "2 tablespoons sugar",
+      "2 teaspoons baking powder",
+      "1/2 teaspoon salt",
+      "1 1/4 cups milk",
+      "1 egg",
+      "3 tablespoons melted unsalted butter"
+    ],
+    "instructions": [
+      "Whisk together flour, sugar, baking powder, and salt in a bowl.",
+      "In another bowl, whisk milk, egg, and melted butter.",
+      "Pour wet ingredients into dry ingredients and mix until just combined.",
+      "Heat a griddle or non-stick pan over medium heat.",
+      "Pour 1/4 cup batter for each pancake and cook until bubbles form.",
+      "Flip and cook other side until golden brown.",
+      "Serve with maple syrup and butter."
+    ],
+    "tags": [
+      "breakfast",
+      "sweet",
+      "quick",
+      "vegetarian"
+    ],
+    "notes": ""
+  },
+  {
+    "id": "c4e0f5g6-h7i8-j9k0-l1m2-n3o4p5q6r7s8",
+    "title": "Grilled Salmon",
+    "description": "A healthy and flavorful seafood dish.",
+    "ingredients": [
+      "4 salmon fillets",
+      "2 tablespoons olive oil",
+      "1 lemon, juiced",
+      "2 cloves garlic, minced",
+      "1 teaspoon dried dill",
+      "Salt and pepper to taste"
+    ],
+    "instructions": [
+      "Preheat grill to medium-high heat.",
+      "In a small bowl, mix olive oil, lemon juice, garlic, and dill.",
+      "Season salmon fillets with salt and pepper.",
+      "Brush the marinade over the salmon fillets.",
+      "Grill salmon for 4-5 minutes per side, or until it flakes easily.",
+      "Serve with lemon wedges and your choice of sides."
+    ],
+    "tags": [
+      "seafood",
+      "healthy",
+      "grilling",
+      "quick"
+    ],
+    "notes": ""
+  },
+  {
+    "id": "d5f1g2h3-i4j5-k6l7-m8n9-o0p1q2r3s4t5",
+    "title": "Vegetable Lasagna",
+    "description": "A hearty vegetarian pasta dish.",
+    "ingredients": [
+      "1 package lasagna noodles",
+      "2 zucchini, sliced",
+      "2 cups spinach",
+      "1 cup ricotta cheese",
+      "1 cup mozzarella cheese",
+      "1 jar marinara sauce",
+      "1/4 cup grated Parmesan cheese"
+    ],
+    "instructions": [
+      "Preheat oven to 375°F (190°C).",
+      "Cook lasagna noodles according to package directions.",
+      "In a baking dish, layer noodles, zucchini, spinach, ricotta, and marinara sauce.",
+      "Repeat layers, ending with sauce and mozzarella on top.",
+      "Sprinkle with Parmesan cheese.",
+      "Bake for 25-30 minutes until cheese is melted and bubbly.",
+      "Let cool for 10 minutes before serving."
+    ],
+    "tags": [
+      "vegetarian",
+      "Italian",
+      "pasta",
+      "casserole"
+    ],
+    "notes": ""
+  },
+  {
+    "id": "e6g2h3i4-j5k6-l7m8-n9o0-p1q2r3s4t5u6",
+    "title": "Beef Tacos",
+    "description": "A Mexican-inspired favorite.",
+    "ingredients": [
+      "1 pound ground beef",
+      "1 packet taco seasoning",
+      "8 taco shells",
+      "1 cup shredded lettuce",
+      "1 cup diced tomatoes",
+      "1 cup shredded cheddar cheese",
+      "1/2 cup sour cream"
+    ],
+    "instructions": [
+      "Brown ground beef in a skillet over medium heat.",
+      "Drain excess fat and add taco seasoning with water as directed on packet.",
+      "Simmer for 5 minutes, stirring occasionally.",
+      "Warm taco shells according to package directions.",
+      "Fill shells with beef mixture, lettuce, tomatoes, cheese, and sour cream.",
+      "Serve immediately."
+    ],
+    "tags": [
+      "Mexican",
+      "beef",
+      "quick",
+      "family-friendly"
+    ],
+    "notes": ""
+  },
+  {
+    "id": "f7h3i4j5-k6l7-m8n9-o0p1-q2r3s4t5u6v7",
+    "title": "Caesar Salad",
+    "description": "A classic salad with a creamy dressing.",
+    "ingredients": [
+      "1 head romaine lettuce",
+      "1/2 cup Caesar dressing",
+      "1/4 cup grated Parmesan cheese",
+      "1 cup croutons",
+      "1 lemon, juiced"
+    ],
+    "instructions": [
+      "Wash and chop romaine lettuce into bite-sized pieces.",
+      "In a large bowl, toss lettuce with Caesar dressing.",
+      "Add Parmesan cheese and croutons, toss gently.",
+      "Squeeze fresh lemon juice over the salad.",
+      "Serve immediately."
+    ],
+    "tags": [
+      "salad",
+      "vegetarian",
+      "quick",
+      "side dish"
+    ],
+    "notes": ""
+  },
+  {
+    "id": "g8i4j5k6-l7m8-n9o0-p1q2-r3s4t5u6v7w8",
+    "title": "Chocolate Chip Cookies",
+    "description": "A beloved sweet treat.",
+    "ingredients": [
+      "2 1/4 cups all-purpose flour",
+      "1 teaspoon baking soda",
+      "1 cup unsalted butter, softened",
+      "3/4 cup granulated sugar",
+      "3/4 cup brown sugar",
+      "2 large eggs",
+      "2 cups semisweet chocolate chips"
+    ],
+    "instructions": [
+      "Preheat oven to 375°F (190°C).",
+      "In a bowl, mix flour and baking soda.",
+      "In another bowl, cream butter and sugars until light and fluffy.",
+      "Beat in eggs one at a time.",
+      "Gradually stir in flour mixture, then fold in chocolate chips.",
+      "Drop spoonfuls of dough onto ungreased baking sheets.",
+      "Bake for 9-11 minutes or until golden brown.",
+      "Cool on wire racks."
+    ],
+    "tags": [
+      "dessert",
+      "baking",
+      "cookies",
+      "chocolate"
+    ],
+    "notes": ""
+  },
+  {
+    "id": "h9j5k6l7-m8n9-o0p1-q2r3-s4t5u6v7w8x9",
+    "title": "Beef Stroganoff",
+    "description": "A creamy Russian-inspired dish.",
+    "ingredients": [
+      "1 pound beef sirloin, sliced",
+      "1 onion, sliced",
+      "8 ounces mushrooms, sliced",
+      "1 cup beef broth",
+      "1 cup sour cream",
+      "2 tablespoons flour",
+      "1 package egg noodles"
+    ],
+    "instructions": [
+      "Cook egg noodles according to package directions.",
+      "In a large skillet, brown beef over medium-high heat.",
+      "Add onions and mushrooms, cook until softened.",
+      "Sprinkle flour over the mixture and stir.",
+      "Pour in beef broth, simmer until thickened.",
+      "Stir in sour cream until heated through.",
+      "Serve over cooked egg noodles."
+    ],
+    "tags": [
+      "Russian",
+      "beef",
+      "pasta",
+      "comfort food"
+    ],
+    "notes": ""
+  },
+  {
+    "id": "i0k6l7m8-n9o0-p1q2-r3s4-t5u6v7w8x9y0",
+    "title": "Caprese Salad",
+    "description": "A simple Italian salad.",
+    "ingredients": [
+      "3 large tomatoes, sliced",
+      "1 pound fresh mozzarella, sliced",
+      "1/4 cup fresh basil leaves",
+      "2 tablespoons olive oil",
+      "2 tablespoons balsamic vinegar",
+      "Salt and pepper to taste"
+    ],
+    "instructions": [
+      "Arrange alternating slices of tomato and mozzarella on a serving platter.",
+      "Tuck basil leaves between the slices.",
+      "Drizzle with olive oil and balsamic vinegar.",
+      "Season with salt and pepper to taste.",
+      "Serve immediately at room temperature."
+    ],
+    "tags": [
+      "Italian",
+      "salad",
+      "vegetarian",
+      "no-cook"
+    ],
+    "notes": ""
+  }
+]

@@ -30,6 +30,10 @@ dependencies:
   image_picker_platform_interface: ^2.10.1
   file_selector_macos: ^0.9.4+2
   mime: ^2.0.0
+  cross_file: ^0.3.4+2
+  flutter_picture_taker: ^0.2.0
+  universal_platform: ^1.1.0
+  flutter_context_menu: ^0.2.0
 
 dev_dependencies:
   flutter_test:
