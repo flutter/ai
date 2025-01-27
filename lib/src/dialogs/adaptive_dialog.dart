@@ -3,8 +3,8 @@
 // found in the LICENSE file.
 
 import 'package:flutter/cupertino.dart'
-    show CupertinoAlertDialog, showCupertinoDialog;
-import 'package:flutter/material.dart' show AlertDialog, showDialog;
+    show CupertinoAlertDialog, CupertinoDialogAction, showCupertinoDialog;
+import 'package:flutter/material.dart' show AlertDialog, TextButton, showDialog;
 import 'package:flutter/widgets.dart';
 
 import '../utility.dart';
@@ -13,38 +13,54 @@ import '../utility.dart';
 /// style.
 @immutable
 class AdaptiveAlertDialog {
-  /// Shows an adaptive dialog with the given [content] widget as content.
+  /// Displays an adaptive dialog with the specified [content] widget.
   ///
-  /// This method automatically chooses between a Cupertino-style dialog for iOS
-  /// and a Material-style dialog for other platforms.
+  /// This method selects a Cupertino-style dialog for iOS platforms and a
+  /// Material-style dialog for other platforms, ensuring a consistent user
+  /// experience across different devices.
   ///
   /// Parameters:
-  ///   * [context]: The build context in which to show the dialog.
-  ///   * [child]: The widget to display as the dialog's content.
+  ///   * [context]: The build context in which to display the dialog.
+  ///   * [content]: The widget to be displayed as the dialog's content.
+  ///   * [showOK]: A boolean flag indicating whether to display an "OK" button
+  ///     in the dialog. Defaults to false. If false, the dialog will be
+  ///     barrier dismissible.
   ///
-  /// Returns a [Future] that completes with the result value when the dialog is
+  /// Returns a [Future] that resolves with the result value when the dialog is
   /// dismissed.
+  // NOTE: showOK is a fix for https://github.com/flutter/ai/issues/40.
+  // Otherwise, the context used by Navigator.pop() is the wrong one.
   static Future<T?> show<T>({
     required BuildContext context,
     required Widget content,
-    bool barrierDismissible = false,
-    List<Widget> actions = const [],
+    bool showOK = false,
   }) =>
       isCupertinoApp(context)
           ? showCupertinoDialog<T>(
               context: context,
-              barrierDismissible: barrierDismissible,
+              barrierDismissible: !showOK,
               builder: (context) => CupertinoAlertDialog(
                 content: content,
-                actions: actions,
+                actions: [
+                  if (showOK)
+                    CupertinoDialogAction(
+                      onPressed: () => Navigator.pop(context),
+                      child: const Text('OK'),
+                    ),
+                ],
               ),
             )
           : showDialog<T>(
               context: context,
-              barrierDismissible: barrierDismissible,
-              builder: (context) => AlertDialog(
-                content: content,
-                actions: actions,
-              ),
+              barrierDismissible: !showOK,
+              builder: (context) => Builder(builder: (context) {
+                return AlertDialog(content: content, actions: [
+                  if (showOK)
+                    TextButton(
+                      onPressed: () => Navigator.pop(context),
+                      child: const Text('OK'),
+                    )
+                ]);
+              }),
             );
 }
