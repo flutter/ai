@@ -68,7 +68,6 @@ class RemovableAttachment extends StatelessWidget {
   Future<void> _showPreviewDialog(BuildContext context) async =>
       AdaptiveAlertDialog.show<void>(
         context: context,
-        barrierDismissible: true,
         content: ImagePreviewDialog(attachment as ImageFileAttachment),
       );
 }
