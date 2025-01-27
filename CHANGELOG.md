@@ -2,6 +2,7 @@
 
 * Require Dart 3.5 or later.
 * Remove dependency on `package:gap`.
+* fixed #40: Unrecoverable Black screen
 
 ## 0.6.7
 
