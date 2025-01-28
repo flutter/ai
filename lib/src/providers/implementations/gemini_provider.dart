@@ -13,7 +13,6 @@ import '../interface/llm_provider.dart';
 ///
 /// This class extends [LlmProvider] and implements the necessary methods to
 /// generate text using the Gemini AI model.
-@immutable
 class GeminiProvider extends LlmProvider with ChangeNotifier {
   /// Creates a new instance of [GeminiProvider].
   ///
