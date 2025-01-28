@@ -13,6 +13,7 @@ import '../interface/llm_provider.dart';
 ///
 /// This class extends [LlmProvider] and implements the necessary methods to
 /// generate text using Firebase Vertex AI's generative model.
+@immutable
 class VertexProvider extends LlmProvider with ChangeNotifier {
   /// Creates a new instance of [VertexProvider].
   ///
@@ -27,7 +28,6 @@ class VertexProvider extends LlmProvider with ChangeNotifier {
   ///
   /// [chatGenerationConfig] is an optional configuration for controlling the
   /// model's generation behavior.
-  @immutable
   VertexProvider({
     required GenerativeModel model,
     Iterable<ChatMessage>? history,
