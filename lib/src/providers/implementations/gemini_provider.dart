@@ -27,7 +27,6 @@ class GeminiProvider extends LlmProvider with ChangeNotifier {
   ///
   /// [chatGenerationConfig] is an optional configuration for controlling the
   /// model's generation behavior.
-  @immutable
   GeminiProvider({
     required GenerativeModel model,
     Iterable<ChatMessage>? history,
