@@ -32,16 +32,17 @@ class AttachmentsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Container(
-        height: attachments.isNotEmpty ? 104 : 0,
-        padding: const EdgeInsets.only(top: 12, bottom: 12, left: 12),
-        child: attachments.isNotEmpty
+    height: attachments.isNotEmpty ? 104 : 0,
+    padding: const EdgeInsets.only(top: 12, bottom: 12, left: 12),
+    child:
+        attachments.isNotEmpty
             ? ListView(
-                scrollDirection: Axis.horizontal,
-                children: [
-                  for (final a in attachments)
-                    RemovableAttachment(attachment: a, onRemove: onRemove),
-                ],
-              )
+              scrollDirection: Axis.horizontal,
+              children: [
+                for (final a in attachments)
+                  RemovableAttachment(attachment: a, onRemove: onRemove),
+              ],
+            )
             : const SizedBox(),
-      );
+  );
 }

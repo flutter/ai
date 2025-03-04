@@ -9,7 +9,6 @@ import '../styles/llm_chat_view_style.dart';
 import '../views/response_builder.dart';
 
 @immutable
-
 /// A view model class for managing chat interactions and configurations.
 ///
 /// This class encapsulates the core data and functionality needed for the chat
@@ -77,10 +76,10 @@ class ChatViewModel {
   // the following is best practices when overriding operator ==
   @override
   int get hashCode => Object.hash(
-        provider,
-        style,
-        welcomeMessage,
-        responseBuilder,
-        messageSender,
-      );
+    provider,
+    style,
+    welcomeMessage,
+    responseBuilder,
+    messageSender,
+  );
 }

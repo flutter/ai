@@ -11,10 +11,7 @@ import 'toolkit_text_styles.dart';
 @immutable
 class UserMessageStyle {
   /// Creates a UserMessageStyle.
-  const UserMessageStyle({
-    this.textStyle,
-    this.decoration,
-  });
+  const UserMessageStyle({this.textStyle, this.decoration});
 
   /// Resolves the UserMessageStyle by combining the provided style with default
   /// values.
@@ -44,17 +41,17 @@ class UserMessageStyle {
 
   /// Provides a default light style.
   factory UserMessageStyle._lightStyle() => UserMessageStyle(
-        textStyle: ToolkitTextStyles.body1,
-        decoration: const BoxDecoration(
-          color: ToolkitColors.userMessageBackground,
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(20),
-            topRight: Radius.zero,
-            bottomLeft: Radius.circular(20),
-            bottomRight: Radius.circular(20),
-          ),
-        ),
-      );
+    textStyle: ToolkitTextStyles.body1,
+    decoration: const BoxDecoration(
+      color: ToolkitColors.userMessageBackground,
+      borderRadius: BorderRadius.only(
+        topLeft: Radius.circular(20),
+        topRight: Radius.zero,
+        bottomLeft: Radius.circular(20),
+        bottomRight: Radius.circular(20),
+      ),
+    ),
+  );
 
   /// The text style for user messages.
   final TextStyle? textStyle;

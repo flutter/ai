@@ -22,8 +22,9 @@ LlmChatViewStyle darkChatViewStyle() {
     recordButtonStyle: _darkActionButtonStyle(ActionButtonType.record),
     submitButtonStyle: _darkActionButtonStyle(ActionButtonType.submit),
     closeMenuButtonStyle: _darkActionButtonStyle(ActionButtonType.closeMenu),
-    actionButtonBarDecoration:
-        _invertDecoration(style.actionButtonBarDecoration),
+    actionButtonBarDecoration: _invertDecoration(
+      style.actionButtonBarDecoration,
+    ),
     fileAttachmentStyle: _darkFileAttachmentStyle(),
     suggestionStyle: _darkSuggestionStyle(),
     closeButtonStyle: _darkActionButtonStyle(ActionButtonType.close),
@@ -87,11 +88,10 @@ ActionButtonStyle _darkActionButtonStyle(ActionButtonType type) {
     iconDecoration: switch (type) {
       ActionButtonType.add ||
       ActionButtonType.record ||
-      ActionButtonType.stop =>
-        BoxDecoration(
-          color: _greyBackground,
-          shape: BoxShape.circle,
-        ),
+      ActionButtonType.stop => BoxDecoration(
+        color: _greyBackground,
+        shape: BoxShape.circle,
+      ),
       _ => _invertDecoration(style.iconDecoration),
     },
     tooltip: style.tooltip,
@@ -107,9 +107,7 @@ FileAttachmentStyle _darkFileAttachmentStyle() {
     // decoration: invertDecoration(style.decoration),
     decoration: ShapeDecoration(
       color: _greyBackground,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
     ),
     icon: style.icon,
     iconColor: _invertColor(style.iconColor),
@@ -134,22 +132,27 @@ SuggestionStyle _darkSuggestionStyle() {
 
 const Color _greyBackground = Color(0xFF535353);
 
-Color? _invertColor(Color? color) => color != null
-    ? Color.from(
-        alpha: color.a, red: 1 - color.r, green: 1 - color.g, blue: 1 - color.b)
-    : null;
+Color? _invertColor(Color? color) =>
+    color != null
+        ? Color.from(
+          alpha: color.a,
+          red: 1 - color.r,
+          green: 1 - color.g,
+          blue: 1 - color.b,
+        )
+        : null;
 
 Decoration _invertDecoration(Decoration? decoration) => switch (decoration!) {
-      final BoxDecoration d => d.copyWith(color: _invertColor(d.color)),
-      final ShapeDecoration d => ShapeDecoration(
-          color: _invertColor(d.color),
-          shape: d.shape,
-          shadows: d.shadows,
-          image: d.image,
-          gradient: d.gradient,
-        ),
-      _ => decoration,
-    };
+  final BoxDecoration d => d.copyWith(color: _invertColor(d.color)),
+  final ShapeDecoration d => ShapeDecoration(
+    color: _invertColor(d.color),
+    shape: d.shape,
+    shadows: d.shadows,
+    image: d.image,
+    gradient: d.gradient,
+  ),
+  _ => decoration,
+};
 
 TextStyle _invertTextStyle(TextStyle? style) =>
     style!.copyWith(color: _invertColor(style.color));

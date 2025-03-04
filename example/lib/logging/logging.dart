@@ -16,29 +16,21 @@ class App extends StatelessWidget {
   const App({super.key});
 
   @override
-  Widget build(BuildContext context) => MaterialApp(
-        title: title,
-        home: ChatPage(),
-      );
+  Widget build(BuildContext context) =>
+      MaterialApp(title: title, home: ChatPage());
 }
 
 class ChatPage extends StatelessWidget {
   ChatPage({super.key});
   final _provider = GeminiProvider(
-    model: GenerativeModel(
-      model: 'gemini-1.5-flash',
-      apiKey: geminiApiKey,
-    ),
+    model: GenerativeModel(model: 'gemini-1.5-flash', apiKey: geminiApiKey),
   );
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text(App.title)),
-      body: LlmChatView(
-        provider: _provider,
-        messageSender: _logMessage,
-      ),
+      body: LlmChatView(provider: _provider, messageSender: _logMessage),
     );
   }
 

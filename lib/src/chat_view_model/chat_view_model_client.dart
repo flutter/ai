@@ -17,11 +17,7 @@ class ChatViewModelClient extends StatelessWidget {
   /// Creates a [ChatViewModelClient].
   ///
   /// The [builder] argument must not be null.
-  const ChatViewModelClient({
-    required this.builder,
-    this.child,
-    super.key,
-  });
+  const ChatViewModelClient({required this.builder, this.child, super.key});
 
   /// A function that builds a widget tree based on the current [ChatViewModel].
   ///
@@ -29,7 +25,11 @@ class ChatViewModelClient extends StatelessWidget {
   /// [ChatViewModel] obtained from the nearest [ChatViewModelProvider]
   /// ancestor, and the optional [child].
   final Widget Function(
-      BuildContext context, ChatViewModel viewModel, Widget? child) builder;
+    BuildContext context,
+    ChatViewModel viewModel,
+    Widget? child,
+  )
+  builder;
 
   /// An optional child widget that can be passed to the [builder] function.
   ///

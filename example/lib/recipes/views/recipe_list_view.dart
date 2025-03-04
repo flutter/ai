@@ -21,18 +21,26 @@ class RecipeListView extends StatefulWidget {
 class _RecipeListViewState extends State<RecipeListView> {
   final _expanded = <String, bool>{};
 
-  Iterable<Recipe> _filteredRecipes(Iterable<Recipe> recipes) => recipes
-      .where((recipe) =>
-          recipe.title
-              .toLowerCase()
-              .contains(widget.searchText.toLowerCase()) ||
-          recipe.description
-              .toLowerCase()
-              .contains(widget.searchText.toLowerCase()) ||
-          recipe.tags.any((tag) =>
-              tag.toLowerCase().contains(widget.searchText.toLowerCase())))
-      .toList()
-    ..sort((a, b) => a.title.toLowerCase().compareTo(b.title.toLowerCase()));
+  Iterable<Recipe> _filteredRecipes(Iterable<Recipe> recipes) =>
+      recipes
+          .where(
+            (recipe) =>
+                recipe.title.toLowerCase().contains(
+                  widget.searchText.toLowerCase(),
+                ) ||
+                recipe.description.toLowerCase().contains(
+                  widget.searchText.toLowerCase(),
+                ) ||
+                recipe.tags.any(
+                  (tag) => tag.toLowerCase().contains(
+                    widget.searchText.toLowerCase(),
+                  ),
+                ),
+          )
+          .toList()
+        ..sort(
+          (a, b) => a.title.toLowerCase().compareTo(b.title.toLowerCase()),
+        );
 
   @override
   Widget build(BuildContext context) =>
@@ -53,8 +61,8 @@ class _RecipeListViewState extends State<RecipeListView> {
                 key: ValueKey(recipeId),
                 recipe: recipe,
                 expanded: _expanded[recipeId] == true,
-                onExpansionChanged: (expanded) =>
-                    _onExpand(recipe.id, expanded),
+                onExpansionChanged:
+                    (expanded) => _onExpand(recipe.id, expanded),
                 onEdit: () => _onEdit(recipe),
                 onDelete: () => _onDelete(recipe),
               );
@@ -66,30 +74,29 @@ class _RecipeListViewState extends State<RecipeListView> {
   void _onExpand(String recipeId, bool expanded) =>
       _expanded[recipeId] = expanded;
 
-  void _onEdit(Recipe recipe) => context.goNamed(
-        'edit',
-        pathParameters: {'recipe': recipe.id},
-      );
+  void _onEdit(Recipe recipe) =>
+      context.goNamed('edit', pathParameters: {'recipe': recipe.id});
 
   void _onDelete(Recipe recipe) async {
     final shouldDelete = await showDialog<bool>(
       context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Delete Recipe'),
-        content: Text(
-          'Are you sure you want to delete the recipe "${recipe.title}"?',
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context, false),
-            child: const Text('Cancel'),
+      builder:
+          (context) => AlertDialog(
+            title: const Text('Delete Recipe'),
+            content: Text(
+              'Are you sure you want to delete the recipe "${recipe.title}"?',
+            ),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context, false),
+                child: const Text('Cancel'),
+              ),
+              TextButton(
+                onPressed: () => Navigator.pop(context, true),
+                child: const Text('Delete'),
+              ),
+            ],
           ),
-          TextButton(
-            onPressed: () => Navigator.pop(context, true),
-            child: const Text('Delete'),
-          ),
-        ],
-      ),
     );
 
     if (shouldDelete == true) await RecipeRepository.deleteRecipe(recipe);

@@ -42,24 +42,23 @@ class _AppState extends State<App> {
 
   @override
   Widget build(BuildContext context) => ValueListenableBuilder<ThemeMode>(
-        valueListenable: App.themeMode,
-        builder: (context, mode, child) => MaterialApp(
+    valueListenable: App.themeMode,
+    builder:
+        (context, mode, child) => MaterialApp(
           title: App.title,
           theme: ThemeData.light(),
           darkTheme: ThemeData.dark(),
           themeMode: mode,
-          home: _geminiApiKey == null
-              ? GeminiApiKeyPage(
-                  title: App.title,
-                  onApiKey: _setApiKey,
-                )
-              : ChatPage(
-                  geminiApiKey: _geminiApiKey!,
-                  onResetApiKey: _resetApiKey,
-                ),
+          home:
+              _geminiApiKey == null
+                  ? GeminiApiKeyPage(title: App.title, onApiKey: _setApiKey)
+                  : ChatPage(
+                    geminiApiKey: _geminiApiKey!,
+                    onResetApiKey: _resetApiKey,
+                  ),
           debugShowCheckedModeBanner: false,
         ),
-      );
+  );
 
   void _setApiKey(String apiKey) {
     setState(() => _geminiApiKey = apiKey);
@@ -123,8 +122,9 @@ class _ChatPageState extends State<ChatPage>
 
   @override
   Widget build(BuildContext context) => ValueListenableBuilder<bool>(
-        valueListenable: _halloweenMode,
-        builder: (context, halloween, child) => Scaffold(
+    valueListenable: _halloweenMode,
+    builder:
+        (context, halloween, child) => Scaffold(
           appBar: AppBar(
             title: const Text(App.title),
             actions: [
@@ -139,13 +139,16 @@ class _ChatPageState extends State<ChatPage>
                 icon: const Icon(Icons.history),
               ),
               IconButton(
-                onPressed: () => App.themeMode.value =
+                onPressed:
+                    () =>
+                        App.themeMode.value =
+                            App.themeMode.value == ThemeMode.light
+                                ? ThemeMode.dark
+                                : ThemeMode.light,
+                tooltip:
                     App.themeMode.value == ThemeMode.light
-                        ? ThemeMode.dark
-                        : ThemeMode.light,
-                tooltip: App.themeMode.value == ThemeMode.light
-                    ? 'Dark Mode'
-                    : 'Light Mode',
+                        ? 'Dark Mode'
+                        : 'Light Mode',
                 icon: const Icon(Icons.brightness_4_outlined),
               ),
               IconButton(
@@ -161,34 +164,35 @@ class _ChatPageState extends State<ChatPage>
           ),
           body: AnimatedBuilder(
             animation: _animationController,
-            builder: (context, child) => Stack(
-              children: [
-                SizedBox(
-                  height: double.infinity,
-                  width: double.infinity,
-                  child: Image.asset(
-                    'assets/halloween-bg.png',
-                    fit: BoxFit.cover,
-                    opacity: _animationController,
-                  ),
-                ),
-                LlmChatView(
-                  provider: _provider,
-                  style: style,
-                  welcomeMessage:
-                      'Hello and welcome to the Flutter AI Toolkit!',
-                  suggestions: [
-                    'I\'m a Star Wars fan. What should I wear for Halloween?',
-                    'I\'m allergic to peanuts. What candy should I avoid at '
-                        'Halloween?',
-                    'What\'s the difference between a pumpkin and a squash?',
+            builder:
+                (context, child) => Stack(
+                  children: [
+                    SizedBox(
+                      height: double.infinity,
+                      width: double.infinity,
+                      child: Image.asset(
+                        'assets/halloween-bg.png',
+                        fit: BoxFit.cover,
+                        opacity: _animationController,
+                      ),
+                    ),
+                    LlmChatView(
+                      provider: _provider,
+                      style: style,
+                      welcomeMessage:
+                          'Hello and welcome to the Flutter AI Toolkit!',
+                      suggestions: [
+                        'I\'m a Star Wars fan. What should I wear for Halloween?',
+                        'I\'m allergic to peanuts. What candy should I avoid at '
+                            'Halloween?',
+                        'What\'s the difference between a pumpkin and a squash?',
+                      ],
+                    ),
                   ],
                 ),
-              ],
-            ),
           ),
         ),
-      );
+  );
 
   void _clearHistory() {
     _provider.history = [];
@@ -238,17 +242,19 @@ class _ChatPageState extends State<ChatPage>
         ),
       ),
       chatInputStyle: ChatInputStyle(
-        backgroundColor: _animationController.isAnimating
-            ? Colors.transparent
-            : Colors.black,
+        backgroundColor:
+            _animationController.isAnimating
+                ? Colors.transparent
+                : Colors.black,
         decoration: BoxDecoration(
           color: Colors.yellow,
           border: Border.all(color: Colors.orange),
         ),
         textStyle: halloweenTextStyle.copyWith(color: Colors.black),
         hintText: 'good evening...',
-        hintStyle:
-            halloweenTextStyle.copyWith(color: Colors.orange.withAlpha(128)),
+        hintStyle: halloweenTextStyle.copyWith(
+          color: Colors.orange.withAlpha(128),
+        ),
       ),
       userMessageStyle: UserMessageStyle(
         textStyle: halloweenTextStyle.copyWith(color: Colors.black),
@@ -256,11 +262,7 @@ class _ChatPageState extends State<ChatPage>
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            colors: [
-              Colors.white,
-              Colors.grey.shade300,
-              Colors.grey.shade400,
-            ],
+            colors: [Colors.white, Colors.grey.shade300, Colors.grey.shade400],
           ),
           borderRadius: BorderRadius.circular(20),
           boxShadow: [
@@ -331,9 +333,7 @@ class _ChatPageState extends State<ChatPage>
         borderRadius: BorderRadius.circular(8),
       ),
       fileAttachmentStyle: FileAttachmentStyle(
-        decoration: BoxDecoration(
-          color: Colors.black,
-        ),
+        decoration: BoxDecoration(color: Colors.black),
         iconDecoration: BoxDecoration(
           color: Colors.orange,
           borderRadius: BorderRadius.circular(8),

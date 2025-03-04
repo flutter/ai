@@ -37,30 +37,37 @@ class AdaptiveAlertDialog {
   }) =>
       isCupertinoApp(context)
           ? showCupertinoDialog<T>(
-              context: context,
-              barrierDismissible: !showOK,
-              builder: (context) => CupertinoAlertDialog(
-                content: content,
-                actions: [
-                  if (showOK)
-                    CupertinoDialogAction(
-                      onPressed: () => Navigator.pop(context),
-                      child: const Text('OK'),
-                    ),
-                ],
-              ),
-            )
+            context: context,
+            barrierDismissible: !showOK,
+            builder:
+                (context) => CupertinoAlertDialog(
+                  content: content,
+                  actions: [
+                    if (showOK)
+                      CupertinoDialogAction(
+                        onPressed: () => Navigator.pop(context),
+                        child: const Text('OK'),
+                      ),
+                  ],
+                ),
+          )
           : showDialog<T>(
-              context: context,
-              barrierDismissible: !showOK,
-              builder: (context) => Builder(builder: (context) {
-                return AlertDialog(content: content, actions: [
-                  if (showOK)
-                    TextButton(
-                      onPressed: () => Navigator.pop(context),
-                      child: const Text('OK'),
-                    )
-                ]);
-              }),
-            );
+            context: context,
+            barrierDismissible: !showOK,
+            builder:
+                (context) => Builder(
+                  builder: (context) {
+                    return AlertDialog(
+                      content: content,
+                      actions: [
+                        if (showOK)
+                          TextButton(
+                            onPressed: () => Navigator.pop(context),
+                            child: const Text('OK'),
+                          ),
+                      ],
+                    );
+                  },
+                ),
+          );
 }

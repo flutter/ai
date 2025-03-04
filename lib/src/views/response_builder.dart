@@ -14,7 +14,5 @@ import 'package:flutter/widgets.dart';
 ///
 /// The function should return a [Widget] that represents the formatted response
 /// in the chat interface.
-typedef ResponseBuilder = Widget Function(
-  BuildContext context,
-  String response,
-);
+typedef ResponseBuilder =
+    Widget Function(BuildContext context, String response);

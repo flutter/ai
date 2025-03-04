@@ -47,40 +47,32 @@ class _CupertinoSnackBarState extends State<CupertinoSnackBar> {
   void initState() {
     super.initState();
     Future.microtask(() => setState(() => show = true));
-    Future.delayed(
-      Duration(
-        milliseconds: widget.waitDurationMillis,
-      ),
-      () {
-        if (mounted) {
-          setState(() => show = false);
-        }
-      },
-    );
+    Future.delayed(Duration(milliseconds: widget.waitDurationMillis), () {
+      if (mounted) {
+        setState(() => show = false);
+      }
+    });
   }
 
   @override
   Widget build(BuildContext context) => AnimatedPositioned(
-        bottom: show ? 8.0 : -50.0,
-        left: 8,
-        right: 8,
-        curve: show ? Curves.linearToEaseOut : Curves.easeInToLinear,
-        duration: Duration(milliseconds: widget.animationDurationMillis),
-        child: CupertinoPopupSurface(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 8,
-              vertical: 8,
-            ),
-            child: Text(
-              widget.message,
-              style: const TextStyle(
-                fontSize: 14,
-                color: CupertinoColors.secondaryLabel,
-              ),
-              textAlign: TextAlign.center,
-            ),
+    bottom: show ? 8.0 : -50.0,
+    left: 8,
+    right: 8,
+    curve: show ? Curves.linearToEaseOut : Curves.easeInToLinear,
+    duration: Duration(milliseconds: widget.animationDurationMillis),
+    child: CupertinoPopupSurface(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+        child: Text(
+          widget.message,
+          style: const TextStyle(
+            fontSize: 14,
+            color: CupertinoColors.secondaryLabel,
           ),
+          textAlign: TextAlign.center,
         ),
-      );
+      ),
+    ),
+  );
 }

@@ -25,46 +25,79 @@ class ToolkitIcons {
   static const String _kFontPkg = 'flutter_ai_toolkit';
 
   /// Icon for submitting or sending.
-  static const IconData submit_icon =
-      IconData(0xe800, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData submit_icon = IconData(
+    0xe800,
+    fontFamily: _kFontFam,
+    fontPackage: _kFontPkg,
+  );
 
   /// Icon representing a spark or idea.
-  static const IconData spark_icon =
-      IconData(0xe801, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData spark_icon = IconData(
+    0xe801,
+    fontFamily: _kFontFam,
+    fontPackage: _kFontPkg,
+  );
 
   /// Icon for adding or creating new items.
-  static const IconData add =
-      IconData(0xe802, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData add = IconData(
+    0xe802,
+    fontFamily: _kFontFam,
+    fontPackage: _kFontPkg,
+  );
 
   /// Icon for attaching files.
-  static const IconData attach_file =
-      IconData(0xe803, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData attach_file = IconData(
+    0xe803,
+    fontFamily: _kFontFam,
+    fontPackage: _kFontPkg,
+  );
 
   /// Icon for stopping or halting an action.
-  static const IconData stop =
-      IconData(0xe804, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData stop = IconData(
+    0xe804,
+    fontFamily: _kFontFam,
+    fontPackage: _kFontPkg,
+  );
 
   /// Icon representing a microphone.
-  static const IconData mic =
-      IconData(0xe805, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData mic = IconData(
+    0xe805,
+    fontFamily: _kFontFam,
+    fontPackage: _kFontPkg,
+  );
 
   /// Icon for closing or dismissing.
-  static const IconData close =
-      IconData(0xe806, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData close = IconData(
+    0xe806,
+    fontFamily: _kFontFam,
+    fontPackage: _kFontPkg,
+  );
 
   /// Icon representing a camera.
-  static const IconData camera_alt =
-      IconData(0xe807, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData camera_alt = IconData(
+    0xe807,
+    fontFamily: _kFontFam,
+    fontPackage: _kFontPkg,
+  );
 
   /// Icon representing an image or picture.
-  static const IconData image =
-      IconData(0xe808, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData image = IconData(
+    0xe808,
+    fontFamily: _kFontFam,
+    fontPackage: _kFontPkg,
+  );
 
   /// Icon for editing.
-  static const IconData edit =
-      IconData(0xe809, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData edit = IconData(
+    0xe809,
+    fontFamily: _kFontFam,
+    fontPackage: _kFontPkg,
+  );
 
   /// Icon for copying content.
-  static const IconData content_copy =
-      IconData(0xe80a, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData content_copy = IconData(
+    0xe80a,
+    fontFamily: _kFontFam,
+    fontPackage: _kFontPkg,
+  );
 }

@@ -31,24 +31,24 @@ class EditingIndicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Padding(
-        padding: const EdgeInsets.only(right: 16),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          crossAxisAlignment: CrossAxisAlignment.end,
-          spacing: 6,
-          children: [
-            Text(
-              'Editing',
-              style: ToolkitTextStyles.label.copyWith(
-                color: invertColor(cancelButtonStyle.iconColor),
-              ),
-            ),
-            ActionButton(
-              onPressed: onCancelEdit,
-              style: cancelButtonStyle,
-              size: 16,
-            ),
-          ],
+    padding: const EdgeInsets.only(right: 16),
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      crossAxisAlignment: CrossAxisAlignment.end,
+      spacing: 6,
+      children: [
+        Text(
+          'Editing',
+          style: ToolkitTextStyles.label.copyWith(
+            color: invertColor(cancelButtonStyle.iconColor),
+          ),
         ),
-      );
+        ActionButton(
+          onPressed: onCancelEdit,
+          style: cancelButtonStyle,
+          size: 16,
+        ),
+      ],
+    ),
+  );
 }

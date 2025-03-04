@@ -29,31 +29,31 @@ class ChatSuggestionsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => ChatViewModelClient(
-        builder: (context, viewModel, child) {
-          final suggestionStyle = SuggestionStyle.resolve(
-            viewModel.style?.suggestionStyle,
-          );
-          return Wrap(
-            children: [
-              for (final suggestion in suggestions)
-                GestureDetector(
-                  onTap: () => onSelectSuggestion(suggestion),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8),
-                    child: Container(
-                      padding: const EdgeInsets.all(8),
-                      decoration: suggestionStyle.decoration,
-                      child: Text(
-                        suggestion,
-                        softWrap: true,
-                        maxLines: 3,
-                        style: suggestionStyle.textStyle,
-                      ),
-                    ),
+    builder: (context, viewModel, child) {
+      final suggestionStyle = SuggestionStyle.resolve(
+        viewModel.style?.suggestionStyle,
+      );
+      return Wrap(
+        children: [
+          for (final suggestion in suggestions)
+            GestureDetector(
+              onTap: () => onSelectSuggestion(suggestion),
+              child: Padding(
+                padding: const EdgeInsets.all(8),
+                child: Container(
+                  padding: const EdgeInsets.all(8),
+                  decoration: suggestionStyle.decoration,
+                  child: Text(
+                    suggestion,
+                    softWrap: true,
+                    maxLines: 3,
+                    style: suggestionStyle.textStyle,
                   ),
                 ),
-            ],
-          );
-        },
+              ),
+            ),
+        ],
       );
+    },
+  );
 }

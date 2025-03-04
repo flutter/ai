@@ -54,23 +54,19 @@ class FileAttachmentStyle {
 
   /// Provides a default light style.
   factory FileAttachmentStyle._lightStyle() => FileAttachmentStyle(
-        decoration: ShapeDecoration(
-          color: ToolkitColors.fileContainerBackground,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
-          ),
-        ),
-        icon: ToolkitIcons.attach_file,
-        iconColor: ToolkitColors.darkIcon,
-        iconDecoration: ShapeDecoration(
-          color: ToolkitColors.fileAttachmentIconBackground,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8),
-          ),
-        ),
-        filenameStyle: ToolkitTextStyles.filename,
-        filetypeStyle: ToolkitTextStyles.filetype,
-      );
+    decoration: ShapeDecoration(
+      color: ToolkitColors.fileContainerBackground,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+    ),
+    icon: ToolkitIcons.attach_file,
+    iconColor: ToolkitColors.darkIcon,
+    iconDecoration: ShapeDecoration(
+      color: ToolkitColors.fileAttachmentIconBackground,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+    ),
+    filenameStyle: ToolkitTextStyles.filename,
+    filetypeStyle: ToolkitTextStyles.filetype,
+  );
 
   /// The decoration for the file attachment container.
   final Decoration? decoration;

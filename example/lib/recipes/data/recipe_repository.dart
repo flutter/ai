@@ -71,9 +71,10 @@ class RecipeRepository {
     late final String contents;
     if (!kIsWeb) {
       final recipeFile = await _recipeFile;
-      contents = await recipeFile.exists()
-          ? await recipeFile.readAsString()
-          : await rootBundle.loadString(_assetFileName);
+      contents =
+          await recipeFile.exists()
+              ? await recipeFile.readAsString()
+              : await rootBundle.loadString(_assetFileName);
     } else {
       contents = await rootBundle.loadString(_assetFileName);
     }

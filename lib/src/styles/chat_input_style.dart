@@ -39,17 +39,16 @@ class ChatInputStyle {
 
   /// Provides a default light style.
   factory ChatInputStyle._lightStyle() => ChatInputStyle(
-        textStyle: ToolkitTextStyles.body2,
-        hintStyle:
-            ToolkitTextStyles.body2.copyWith(color: ToolkitColors.hintText),
-        hintText: 'Ask me anything...',
-        backgroundColor: ToolkitColors.containerBackground,
-        decoration: BoxDecoration(
-          color: ToolkitColors.containerBackground,
-          border: Border.all(width: 1, color: ToolkitColors.outline),
-          borderRadius: BorderRadius.circular(24),
-        ),
-      );
+    textStyle: ToolkitTextStyles.body2,
+    hintStyle: ToolkitTextStyles.body2.copyWith(color: ToolkitColors.hintText),
+    hintText: 'Ask me anything...',
+    backgroundColor: ToolkitColors.containerBackground,
+    decoration: BoxDecoration(
+      color: ToolkitColors.containerBackground,
+      border: Border.all(width: 1, color: ToolkitColors.outline),
+      borderRadius: BorderRadius.circular(24),
+    ),
+  );
 
   /// The text style for the input text box.
   final TextStyle? textStyle;

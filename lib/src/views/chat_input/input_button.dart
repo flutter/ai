@@ -52,24 +52,24 @@ class InputButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => switch (inputState) {
-        InputState.canSubmitPrompt => ActionButton(
-            style: chatStyle.submitButtonStyle!,
-            onPressed: onSubmitPrompt,
-          ),
-        InputState.canCancelPrompt => ActionButton(
-            style: chatStyle.stopButtonStyle!,
-            onPressed: onCancelPrompt,
-          ),
-        InputState.canStt => ActionButton(
-            style: chatStyle.recordButtonStyle!,
-            onPressed: onStartRecording,
-          ),
-        InputState.isRecording => ActionButton(
-            style: chatStyle.stopButtonStyle!,
-            onPressed: onStopRecording,
-          ),
-        InputState.canCancelStt => AdaptiveCircularProgressIndicator(
-            color: chatStyle.progressIndicatorColor!,
-          ),
-      };
+    InputState.canSubmitPrompt => ActionButton(
+      style: chatStyle.submitButtonStyle!,
+      onPressed: onSubmitPrompt,
+    ),
+    InputState.canCancelPrompt => ActionButton(
+      style: chatStyle.stopButtonStyle!,
+      onPressed: onCancelPrompt,
+    ),
+    InputState.canStt => ActionButton(
+      style: chatStyle.recordButtonStyle!,
+      onPressed: onStartRecording,
+    ),
+    InputState.isRecording => ActionButton(
+      style: chatStyle.stopButtonStyle!,
+      onPressed: onStopRecording,
+    ),
+    InputState.canCancelStt => AdaptiveCircularProgressIndicator(
+      color: chatStyle.progressIndicatorColor!,
+    ),
+  };
 }

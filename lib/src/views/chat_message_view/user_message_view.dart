@@ -33,60 +33,60 @@ class UserMessageView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Column(
-        children: [
-          ...[
-            for (final attachment in message.attachments)
-              Padding(
-                padding: const EdgeInsets.only(bottom: 6),
-                child: Align(
-                  alignment: Alignment.topRight,
-                  child: SizedBox(
-                    height: 80,
-                    width: 200,
-                    child: AttachmentView(attachment),
-                  ),
-                ),
+    children: [
+      ...[
+        for (final attachment in message.attachments)
+          Padding(
+            padding: const EdgeInsets.only(bottom: 6),
+            child: Align(
+              alignment: Alignment.topRight,
+              child: SizedBox(
+                height: 80,
+                width: 200,
+                child: AttachmentView(attachment),
               ),
-          ],
-          ChatViewModelClient(
-            builder: (context, viewModel, child) {
-              final text = message.text!;
-              final chatStyle = LlmChatViewStyle.resolve(viewModel.style);
-              final userStyle = UserMessageStyle.resolve(
-                chatStyle.userMessageStyle,
-              );
+            ),
+          ),
+      ],
+      ChatViewModelClient(
+        builder: (context, viewModel, child) {
+          final text = message.text!;
+          final chatStyle = LlmChatViewStyle.resolve(viewModel.style);
+          final userStyle = UserMessageStyle.resolve(
+            chatStyle.userMessageStyle,
+          );
 
-              return Align(
-                alignment: Alignment.topRight,
-                child: Padding(
-                  padding: const EdgeInsets.only(right: 16),
-                  child: HoveringButtons(
-                    isUserMessage: true,
-                    chatStyle: chatStyle,
-                    clipboardText: text,
-                    onEdit: onEdit,
-                    child: DecoratedBox(
-                      decoration: userStyle.decoration!,
-                      child: Padding(
-                        padding: const EdgeInsets.only(
-                          left: 16,
-                          right: 16,
-                          top: 12,
-                          bottom: 12,
-                        ),
-                        child: AdaptiveCopyText(
-                          chatStyle: chatStyle,
-                          clipboardText: text,
-                          onEdit: onEdit,
-                          child: Text(text, style: userStyle.textStyle),
-                        ),
-                      ),
+          return Align(
+            alignment: Alignment.topRight,
+            child: Padding(
+              padding: const EdgeInsets.only(right: 16),
+              child: HoveringButtons(
+                isUserMessage: true,
+                chatStyle: chatStyle,
+                clipboardText: text,
+                onEdit: onEdit,
+                child: DecoratedBox(
+                  decoration: userStyle.decoration!,
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                      left: 16,
+                      right: 16,
+                      top: 12,
+                      bottom: 12,
+                    ),
+                    child: AdaptiveCopyText(
+                      chatStyle: chatStyle,
+                      clipboardText: text,
+                      onEdit: onEdit,
+                      child: Text(text, style: userStyle.textStyle),
                     ),
                   ),
                 ),
-              );
-            },
-          ),
-        ],
-      );
+              ),
+            ),
+          );
+        },
+      ),
+    ],
+  );
 }

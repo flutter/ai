@@ -27,11 +27,12 @@ class ImageAttachmentView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Align(
-        alignment: Alignment.centerRight,
-        child: GestureDetector(
-            onTap: () => unawaited(_showPreviewDialog(context)),
-            child: Image.memory(attachment.bytes)),
-      );
+    alignment: Alignment.centerRight,
+    child: GestureDetector(
+      onTap: () => unawaited(_showPreviewDialog(context)),
+      child: Image.memory(attachment.bytes),
+    ),
+  );
 
   Future<void> _showPreviewDialog(BuildContext context) async =>
       AdaptiveAlertDialog.show<void>(

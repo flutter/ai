@@ -17,10 +17,10 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => MaterialApp(
-        title: title,
-        home: ChatPage(),
-        debugShowCheckedModeBanner: false,
-      );
+    title: title,
+    home: ChatPage(),
+    debugShowCheckedModeBanner: false,
+  );
 }
 
 class ChatPage extends StatefulWidget {
@@ -32,32 +32,26 @@ class ChatPage extends StatefulWidget {
 
 class _ChatPageState extends State<ChatPage> {
   final _provider = GeminiProvider(
-    model: GenerativeModel(
-      model: 'gemini-1.5-flash',
-      apiKey: geminiApiKey,
-    ),
+    model: GenerativeModel(model: 'gemini-1.5-flash', apiKey: geminiApiKey),
   );
 
   @override
   Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(
-          title: const Text(App.title),
-          actions: [
-            IconButton(
-              onPressed: _clearHistory,
-              icon: const Icon(Icons.history),
-            ),
-          ],
-        ),
-        body: LlmChatView(
-          provider: _provider,
-          suggestions: const [
-            'Tell me a joke.',
-            'Write me a limerick.',
-            'Perform a haiku.',
-          ],
-        ),
-      );
+    appBar: AppBar(
+      title: const Text(App.title),
+      actions: [
+        IconButton(onPressed: _clearHistory, icon: const Icon(Icons.history)),
+      ],
+    ),
+    body: LlmChatView(
+      provider: _provider,
+      suggestions: const [
+        'Tell me a joke.',
+        'Write me a limerick.',
+        'Perform a haiku.',
+      ],
+    ),
+  );
 
   void _clearHistory() => _provider.history = [];
 }

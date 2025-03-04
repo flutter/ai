@@ -25,50 +25,50 @@ class FileAttachmentView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => ChatViewModelClient(
-        builder: (context, viewModel, child) {
-          final attachmentStyle = FileAttachmentStyle.resolve(
-            viewModel.style?.fileAttachmentStyle,
-          );
-
-          return Container(
-            height: 80,
-            padding: const EdgeInsets.all(8),
-            decoration: attachmentStyle.decoration,
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              spacing: 8,
-              children: [
-                Container(
-                  height: 64,
-                  padding: const EdgeInsets.all(10),
-                  decoration: attachmentStyle.iconDecoration,
-                  child: Icon(
-                    attachmentStyle.icon,
-                    color: attachmentStyle.iconColor,
-                    size: 24,
-                  ),
-                ),
-                Flexible(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        attachment.name,
-                        style: attachmentStyle.filenameStyle,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      Text(
-                        attachment.mimeType,
-                        style: attachmentStyle.filetypeStyle,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          );
-        },
+    builder: (context, viewModel, child) {
+      final attachmentStyle = FileAttachmentStyle.resolve(
+        viewModel.style?.fileAttachmentStyle,
       );
+
+      return Container(
+        height: 80,
+        padding: const EdgeInsets.all(8),
+        decoration: attachmentStyle.decoration,
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          spacing: 8,
+          children: [
+            Container(
+              height: 64,
+              padding: const EdgeInsets.all(10),
+              decoration: attachmentStyle.iconDecoration,
+              child: Icon(
+                attachmentStyle.icon,
+                color: attachmentStyle.iconColor,
+                size: 24,
+              ),
+            ),
+            Flexible(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    attachment.name,
+                    style: attachmentStyle.filenameStyle,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  Text(
+                    attachment.mimeType,
+                    style: attachmentStyle.filetypeStyle,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      );
+    },
+  );
 }

@@ -16,33 +16,28 @@ class App extends StatelessWidget {
   const App({super.key});
 
   @override
-  Widget build(BuildContext context) => const MaterialApp(
-        title: title,
-        home: ChatPage(),
-      );
+  Widget build(BuildContext context) =>
+      const MaterialApp(title: title, home: ChatPage());
 }
 
 class ChatPage extends StatelessWidget {
   const ChatPage({super.key});
 
   void _onError(BuildContext context, LlmException error) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Error: ${error.message}')),
-    );
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(SnackBar(content: Text('Error: ${error.message}')));
   }
 
   @override
   Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(title: const Text(App.title)),
-        body: LlmChatView(
-          onErrorCallback: _onError,
-          errorMessage: 'An error occurred',
-          provider: GeminiProvider(
-            model: GenerativeModel(
-              model: 'gemini-1.5-flash',
-              apiKey: geminiApiKey,
-            ),
-          ),
-        ),
-      );
+    appBar: AppBar(title: const Text(App.title)),
+    body: LlmChatView(
+      onErrorCallback: _onError,
+      errorMessage: 'An error occurred',
+      provider: GeminiProvider(
+        model: GenerativeModel(model: 'gemini-1.5-flash', apiKey: geminiApiKey),
+      ),
+    ),
+  );
 }

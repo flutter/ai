@@ -43,9 +43,10 @@ class ChatViewModelProvider extends InheritedWidget {
   /// Returns null if no [ChatViewModelProvider] is found.
   ///
   /// [context] must not be null.
-  static ChatViewModel? maybeOf(BuildContext context) => context
-      .dependOnInheritedWidgetOfExactType<ChatViewModelProvider>()
-      ?.viewModel;
+  static ChatViewModel? maybeOf(BuildContext context) =>
+      context
+          .dependOnInheritedWidgetOfExactType<ChatViewModelProvider>()
+          ?.viewModel;
 
   @override
   bool updateShouldNotify(ChatViewModelProvider oldWidget) =>

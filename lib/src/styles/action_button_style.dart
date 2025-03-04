@@ -34,17 +34,15 @@ class ActionButtonStyle {
   factory ActionButtonStyle.resolve(
     ActionButtonStyle? style, {
     required ActionButtonStyle defaultStyle,
-  }) =>
-      ActionButtonStyle(
-        icon: style?.icon ?? defaultStyle.icon,
-        iconColor: style?.iconColor ?? defaultStyle.iconColor,
-        iconDecoration: style?.iconDecoration ?? defaultStyle.iconDecoration,
-        tooltip: style?.tooltip ?? defaultStyle.tooltip,
-        tooltipTextStyle:
-            style?.tooltipTextStyle ?? defaultStyle.tooltipTextStyle,
-        tooltipDecoration:
-            style?.tooltipDecoration ?? defaultStyle.tooltipDecoration,
-      );
+  }) => ActionButtonStyle(
+    icon: style?.icon ?? defaultStyle.icon,
+    iconColor: style?.iconColor ?? defaultStyle.iconColor,
+    iconDecoration: style?.iconDecoration ?? defaultStyle.iconDecoration,
+    tooltip: style?.tooltip ?? defaultStyle.tooltip,
+    tooltipTextStyle: style?.tooltipTextStyle ?? defaultStyle.tooltipTextStyle,
+    tooltipDecoration:
+        style?.tooltipDecoration ?? defaultStyle.tooltipDecoration,
+  );
 
   /// Provides default style for icon buttons.
   factory ActionButtonStyle.defaultStyle(ActionButtonType type) =>

@@ -28,14 +28,17 @@ class _GeminiApiKeyPageState extends State<GeminiApiKeyPage> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(title: Text(widget.title)),
-        body: Center(
-          child: ValueListenableBuilder(
-            valueListenable: _controller,
-            builder: (context, value, child) => Column(
+    appBar: AppBar(title: Text(widget.title)),
+    body: Center(
+      child: ValueListenableBuilder(
+        valueListenable: _controller,
+        builder:
+            (context, value, child) => Column(
               children: [
-                const Text('To run this sample, you need a Gemini API key.\n'
-                    'Get your Gemini API Key from the following URL:'),
+                const Text(
+                  'To run this sample, you need a Gemini API key.\n'
+                  'Get your Gemini API Key from the following URL:',
+                ),
                 GestureDetector(
                   onTap: () => launchUrl(url, webOnlyWindowName: '_blank'),
                   child: MouseRegion(
@@ -64,34 +67,37 @@ class _GeminiApiKeyPageState extends State<GeminiApiKeyPage> {
                     controller: _controller,
                     decoration: InputDecoration(
                       labelText: 'Gemini API Key',
-                      errorText: _isValidApiKey()
-                          ? null
-                          : 'API key must be 39 characters',
+                      errorText:
+                          _isValidApiKey()
+                              ? null
+                              : 'API key must be 39 characters',
                     ),
-                    onSubmitted: _isValidApiKey()
-                        ? (apiKey) => widget.onApiKey(apiKey)
-                        : null,
+                    onSubmitted:
+                        _isValidApiKey()
+                            ? (apiKey) => widget.onApiKey(apiKey)
+                            : null,
                   ),
                 ),
                 const SizedBox(height: 16),
                 ElevatedButton(
-                  onPressed: _isValidApiKey()
-                      ? () => widget.onApiKey(_controller.text)
-                      : null,
+                  onPressed:
+                      _isValidApiKey()
+                          ? () => widget.onApiKey(_controller.text)
+                          : null,
                   child: const Text('Submit'),
                 ),
               ],
             ),
-          ),
-        ),
-      );
+      ),
+    ),
+  );
 
   bool _isValidApiKey() => _controller.text.length == 39;
 
   void _copyUrl() {
     Clipboard.setData(ClipboardData(text: url.toString()));
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Copied URL to clipboard')),
-    );
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(const SnackBar(content: Text('Copied URL to clipboard')));
   }
 }

@@ -26,57 +26,52 @@ class _HomePageState extends State<HomePage> {
 
   // create a new provider with the given history and the current settings
   LlmProvider _createProvider([List<ChatMessage>? history]) => GeminiProvider(
-        history: history,
-        model: GenerativeModel(
-          model: 'gemini-1.5-flash', //'gemini-1.5-pro',
-          apiKey: geminiApiKey,
-          generationConfig: GenerationConfig(
-            responseMimeType: 'application/json',
-            responseSchema: Schema(
-              SchemaType.object,
-              properties: {
-                'recipes': Schema(
-                  SchemaType.array,
-                  items: Schema(
+    history: history,
+    model: GenerativeModel(
+      model: 'gemini-1.5-flash', //'gemini-1.5-pro',
+      apiKey: geminiApiKey,
+      generationConfig: GenerationConfig(
+        responseMimeType: 'application/json',
+        responseSchema: Schema(
+          SchemaType.object,
+          properties: {
+            'recipes': Schema(
+              SchemaType.array,
+              items: Schema(
+                SchemaType.object,
+                properties: {
+                  'text': Schema(SchemaType.string),
+                  'recipe': Schema(
                     SchemaType.object,
                     properties: {
-                      'text': Schema(SchemaType.string),
-                      'recipe': Schema(
-                        SchemaType.object,
-                        properties: {
-                          'title': Schema(SchemaType.string),
-                          'description': Schema(SchemaType.string),
-                          'ingredients': Schema(
-                            SchemaType.array,
-                            items: Schema(SchemaType.string),
-                          ),
-                          'instructions': Schema(
-                            SchemaType.array,
-                            items: Schema(SchemaType.string),
-                          ),
-                        },
-                        requiredProperties: [
-                          'title',
-                          'description',
-                          'ingredients',
-                          'instructions',
-                        ],
+                      'title': Schema(SchemaType.string),
+                      'description': Schema(SchemaType.string),
+                      'ingredients': Schema(
+                        SchemaType.array,
+                        items: Schema(SchemaType.string),
+                      ),
+                      'instructions': Schema(
+                        SchemaType.array,
+                        items: Schema(SchemaType.string),
                       ),
                     },
                     requiredProperties: [
-                      'recipe',
+                      'title',
+                      'description',
+                      'ingredients',
+                      'instructions',
                     ],
                   ),
-                ),
-                'text': Schema(SchemaType.string),
-              },
-              requiredProperties: [
-                'recipes',
-              ],
+                },
+                requiredProperties: ['recipe'],
+              ),
             ),
-          ),
-          systemInstruction: Content.system(
-            '''
+            'text': Schema(SchemaType.string),
+          },
+          requiredProperties: ['recipes'],
+        ),
+      ),
+      systemInstruction: Content.system('''
 You are a helpful assistant that generates recipes based on the ingredients and 
 instructions provided as well as my food preferences, which are as follows:
 ${Settings.foodPreferences.isEmpty ? 'I don\'t have any food preferences' : Settings.foodPreferences}
@@ -101,10 +96,9 @@ well as any trailing text commentary you care to provide:
   ],
   "text": "any final commentary you care to provide",
 }
-''',
-          ),
-        ),
-      );
+'''),
+    ),
+  );
 
   final _welcomeMessage =
       'Hello and welcome to the Recipes sample app!\n\nIn this app, you can '
@@ -114,52 +108,47 @@ well as any trailing text commentary you care to provide:
 
   @override
   Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(
-          title: const Text('Example: Recipes'),
-          actions: [
-            IconButton(
-              onPressed: _onAdd,
-              tooltip: 'Add Recipe',
-              icon: const Icon(Icons.add),
-            ),
-          ],
+    appBar: AppBar(
+      title: const Text('Example: Recipes'),
+      actions: [
+        IconButton(
+          onPressed: _onAdd,
+          tooltip: 'Add Recipe',
+          icon: const Icon(Icons.add),
         ),
-        drawer: Builder(
-          builder: (context) => SettingsDrawer(onSave: _onSettingsSave),
-        ),
-        body: SplitOrTabs(
-          tabs: const [
-            Tab(text: 'Recipes'),
-            Tab(text: 'Chat'),
-          ],
+      ],
+    ),
+    drawer: Builder(
+      builder: (context) => SettingsDrawer(onSave: _onSettingsSave),
+    ),
+    body: SplitOrTabs(
+      tabs: const [Tab(text: 'Recipes'), Tab(text: 'Chat')],
+      children: [
+        Column(
           children: [
-            Column(
-              children: [
-                SearchBox(onSearchChanged: _updateSearchText),
-                Expanded(child: RecipeListView(searchText: _searchText)),
-              ],
-            ),
-            LlmChatView(
-              provider: _provider,
-              welcomeMessage: _welcomeMessage,
-              responseBuilder: (context, response) => RecipeResponseView(
-                response,
-              ),
-            ),
+            SearchBox(onSearchChanged: _updateSearchText),
+            Expanded(child: RecipeListView(searchText: _searchText)),
           ],
         ),
-      );
+        LlmChatView(
+          provider: _provider,
+          welcomeMessage: _welcomeMessage,
+          responseBuilder: (context, response) => RecipeResponseView(response),
+        ),
+      ],
+    ),
+  );
 
   void _updateSearchText(String text) => setState(() => _searchText = text);
 
   void _onAdd() => context.goNamed(
-        'edit',
-        pathParameters: {'recipe': RecipeRepository.newRecipeID},
-      );
+    'edit',
+    pathParameters: {'recipe': RecipeRepository.newRecipeID},
+  );
 
   void _onSettingsSave() => setState(() {
-        // move the history over from the old provider to the new one
-        final history = _provider.history.toList();
-        _provider = _createProvider(history);
-      });
+    // move the history over from the old provider to the new one
+    final history = _provider.history.toList();
+    _provider = _createProvider(history);
+  });
 }

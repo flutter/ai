@@ -66,7 +66,12 @@ Future<void> copyToClipboard(BuildContext context, String text) async {
 ///   * [color]: The [Color] to be inverted. This parameter must not be null.
 ///
 /// Returns: A new [Color] object with the inverted RGB values.
-Color? invertColor(Color? color) => color != null
-    ? Color.from(
-        alpha: color.a, red: 1 - color.r, green: 1 - color.g, blue: 1 - color.b)
-    : null;
+Color? invertColor(Color? color) =>
+    color != null
+        ? Color.from(
+          alpha: color.a,
+          red: 1 - color.r,
+          green: 1 - color.g,
+          blue: 1 - color.b,
+        )
+        : null;

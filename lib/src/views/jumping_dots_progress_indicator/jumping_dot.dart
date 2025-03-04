@@ -29,14 +29,14 @@ class JumpingDot extends AnimatedWidget {
 
   @override
   Widget build(BuildContext context) => SizedBox(
-        height: _animation.value + fontSize,
-        child: Text(
-          '.',
-          style: TextStyle(
-            color: color,
-            fontSize: fontSize,
-            height: 1, // Center the text vertically within its line height
-          ),
-        ),
-      );
+    height: _animation.value + fontSize,
+    child: Text(
+      '.',
+      style: TextStyle(
+        color: color,
+        fontSize: fontSize,
+        height: 1, // Center the text vertically within its line height
+      ),
+    ),
+  );
 }

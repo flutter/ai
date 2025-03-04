@@ -18,25 +18,25 @@ class Recipe {
   });
 
   Recipe.empty(String id)
-      : this(
-          id: id,
-          title: '',
-          description: '',
-          ingredients: [],
-          instructions: [],
-          tags: [],
-          notes: '',
-        );
+    : this(
+        id: id,
+        title: '',
+        description: '',
+        ingredients: [],
+        instructions: [],
+        tags: [],
+        notes: '',
+      );
 
   factory Recipe.fromJson(Map<String, dynamic> json) => Recipe(
-        id: json['id'] ?? const Uuid().v4(),
-        title: json['title'],
-        description: json['description'],
-        ingredients: List<String>.from(json['ingredients']),
-        instructions: List<String>.from(json['instructions']),
-        tags: json['tags'] == null ? [] : List<String>.from(json['tags']),
-        notes: json['notes'] ?? '',
-      );
+    id: json['id'] ?? const Uuid().v4(),
+    title: json['title'],
+    description: json['description'],
+    ingredients: List<String>.from(json['ingredients']),
+    instructions: List<String>.from(json['instructions']),
+    tags: json['tags'] == null ? [] : List<String>.from(json['tags']),
+    notes: json['notes'] ?? '',
+  );
 
   final String id;
   final String title;
@@ -47,14 +47,14 @@ class Recipe {
   final String notes;
 
   Map<String, dynamic> toJson() => {
-        'id': id,
-        'title': title,
-        'description': description,
-        'ingredients': ingredients,
-        'instructions': instructions,
-        'tags': tags,
-        'notes': notes,
-      };
+    'id': id,
+    'title': title,
+    'description': description,
+    'ingredients': ingredients,
+    'instructions': instructions,
+    'tags': tags,
+    'notes': notes,
+  };
 
   static Future<List<Recipe>> loadFrom(String json) async {
     final jsonList = jsonDecode(json) as List;
@@ -74,10 +74,7 @@ ${instructions.join('\n')}
 }
 
 class RecipeEmbedding {
-  RecipeEmbedding({
-    required this.id,
-    required this.embedding,
-  });
+  RecipeEmbedding({required this.id, required this.embedding});
 
   factory RecipeEmbedding.fromJson(Map<String, dynamic> json) =>
       RecipeEmbedding(
@@ -93,8 +90,5 @@ class RecipeEmbedding {
     return [for (final json in jsonList) RecipeEmbedding.fromJson(json)];
   }
 
-  Map<String, dynamic> toJson() => {
-        'id': id,
-        'embedding': embedding,
-      };
+  Map<String, dynamic> toJson() => {'id': id, 'embedding': embedding};
 }

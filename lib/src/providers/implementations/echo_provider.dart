@@ -20,7 +20,7 @@ class EchoProvider extends LlmProvider with ChangeNotifier {
   /// representing the chat history. If provided, it will be converted to a list
   /// and stored internally. If not provided, an empty list will be used.
   EchoProvider({Iterable<ChatMessage>? history})
-      : _history = List<ChatMessage>.from(history ?? []);
+    : _history = List<ChatMessage>.from(history ?? []);
 
   final List<ChatMessage> _history;
 

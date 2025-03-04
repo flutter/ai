@@ -32,10 +32,10 @@ class GeminiProvider extends LlmProvider with ChangeNotifier {
     Iterable<ChatMessage>? history,
     List<SafetySetting>? chatSafetySettings,
     GenerationConfig? chatGenerationConfig,
-  })  : _model = model,
-        _history = history?.toList() ?? [],
-        _chatSafetySettings = chatSafetySettings,
-        _chatGenerationConfig = chatGenerationConfig {
+  }) : _model = model,
+       _history = history?.toList() ?? [],
+       _chatSafetySettings = chatSafetySettings,
+       _chatGenerationConfig = chatGenerationConfig {
     _chat = _startChat(history);
   }
 
@@ -49,12 +49,11 @@ class GeminiProvider extends LlmProvider with ChangeNotifier {
   Stream<String> generateStream(
     String prompt, {
     Iterable<Attachment> attachments = const [],
-  }) =>
-      _generateStream(
-        prompt: prompt,
-        attachments: attachments,
-        contentStreamGenerator: (c) => _model.generateContentStream([c]),
-      );
+  }) => _generateStream(
+    prompt: prompt,
+    attachments: attachments,
+    contentStreamGenerator: (c) => _model.generateContentStream([c]),
+  );
 
   @override
   Stream<String> sendMessageStream(
@@ -90,7 +89,7 @@ class GeminiProvider extends LlmProvider with ChangeNotifier {
     required String prompt,
     required Iterable<Attachment> attachments,
     required Stream<GenerateContentResponse> Function(Content)
-        contentStreamGenerator,
+    contentStreamGenerator,
   }) async* {
     final content = Content('user', [
       TextPart(prompt),
@@ -122,21 +121,18 @@ class GeminiProvider extends LlmProvider with ChangeNotifier {
   }
 
   ChatSession? _startChat(Iterable<ChatMessage>? history) => _model.startChat(
-        history: history?.map(_contentFrom).toList(),
-        safetySettings: _chatSafetySettings,
-        generationConfig: _chatGenerationConfig,
-      );
+    history: history?.map(_contentFrom).toList(),
+    safetySettings: _chatSafetySettings,
+    generationConfig: _chatGenerationConfig,
+  );
 
   static Part _partFrom(Attachment attachment) => switch (attachment) {
-        (final FileAttachment a) => DataPart(a.mimeType, a.bytes),
-        (final LinkAttachment a) => FilePart(a.url),
-      };
+    (final FileAttachment a) => DataPart(a.mimeType, a.bytes),
+    (final LinkAttachment a) => FilePart(a.url),
+  };
 
   static Content _contentFrom(ChatMessage message) => Content(
-        message.origin.isUser ? 'user' : 'model',
-        [
-          TextPart(message.text ?? ''),
-          ...message.attachments.map(_partFrom),
-        ],
-      );
+    message.origin.isUser ? 'user' : 'model',
+    [TextPart(message.text ?? ''), ...message.attachments.map(_partFrom)],
+  );
 }

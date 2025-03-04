@@ -18,13 +18,13 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => MaterialApp(
-        title: title,
-        theme: ThemeData.from(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.orange),
-        ),
-        debugShowCheckedModeBanner: false,
-        home: ChatPage(),
-      );
+    title: title,
+    theme: ThemeData.from(
+      colorScheme: ColorScheme.fromSeed(seedColor: Colors.orange),
+    ),
+    debugShowCheckedModeBanner: false,
+    home: ChatPage(),
+  );
 }
 
 class ChatPage extends StatefulWidget {
@@ -44,10 +44,7 @@ class _ChatPageState extends State<ChatPage>
   );
 
   final _provider = GeminiProvider(
-    model: GenerativeModel(
-      model: 'gemini-1.5-flash',
-      apiKey: geminiApiKey,
-    ),
+    model: GenerativeModel(model: 'gemini-1.5-flash', apiKey: geminiApiKey),
   );
 
   @override
@@ -83,33 +80,35 @@ class _ChatPageState extends State<ChatPage>
       ),
       body: AnimatedBuilder(
         animation: _animationController,
-        builder: (context, child) => Stack(
-          children: [
-            SizedBox(
-              height: double.infinity,
-              width: double.infinity,
-              child: Image.asset(
-                'assets/halloween-bg.png',
-                fit: BoxFit.cover,
-                opacity: _animationController,
-              ),
-            ),
-            LlmChatView(
-              provider: _provider,
-              welcomeMessage: 'Welcome to the Custom Styles Example! Use the '
-                  'butons on the action bar at the top right of the app to '
-                  'explore light and dark styles in combination with normal '
-                  'and Halloween-themed styles. Enjoy!',
-              suggestions: [
-                'I\'m a Star Wars fan. What should I wear for Halloween?',
-                'I\'m allergic to peanuts. What candy should I avoid at '
-                    'Halloween?',
-                'What\'s the difference between a pumpkin and a squash?',
+        builder:
+            (context, child) => Stack(
+              children: [
+                SizedBox(
+                  height: double.infinity,
+                  width: double.infinity,
+                  child: Image.asset(
+                    'assets/halloween-bg.png',
+                    fit: BoxFit.cover,
+                    opacity: _animationController,
+                  ),
+                ),
+                LlmChatView(
+                  provider: _provider,
+                  welcomeMessage:
+                      'Welcome to the Custom Styles Example! Use the '
+                      'butons on the action bar at the top right of the app to '
+                      'explore light and dark styles in combination with normal '
+                      'and Halloween-themed styles. Enjoy!',
+                  suggestions: [
+                    'I\'m a Star Wars fan. What should I wear for Halloween?',
+                    'I\'m allergic to peanuts. What candy should I avoid at '
+                        'Halloween?',
+                    'What\'s the difference between a pumpkin and a squash?',
+                  ],
+                  style: style,
+                ),
               ],
-              style: style,
             ),
-          ],
-        ),
       ),
     );
   }
@@ -150,17 +149,19 @@ class _ChatPageState extends State<ChatPage>
         ),
       ),
       chatInputStyle: ChatInputStyle(
-        backgroundColor: _animationController.isAnimating
-            ? Colors.transparent
-            : Colors.black,
+        backgroundColor:
+            _animationController.isAnimating
+                ? Colors.transparent
+                : Colors.black,
         decoration: BoxDecoration(
           color: Colors.yellow,
           border: Border.all(color: Colors.orange),
         ),
         textStyle: halloweenTextStyle.copyWith(color: Colors.black),
         hintText: 'good evening...',
-        hintStyle:
-            halloweenTextStyle.copyWith(color: Colors.orange.withAlpha(128)),
+        hintStyle: halloweenTextStyle.copyWith(
+          color: Colors.orange.withAlpha(128),
+        ),
       ),
       userMessageStyle: UserMessageStyle(
         textStyle: halloweenTextStyle.copyWith(color: Colors.black),
@@ -168,11 +169,7 @@ class _ChatPageState extends State<ChatPage>
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            colors: [
-              Colors.white,
-              Colors.grey.shade300,
-              Colors.grey.shade400,
-            ],
+            colors: [Colors.white, Colors.grey.shade300, Colors.grey.shade400],
           ),
           borderRadius: BorderRadius.circular(20),
           boxShadow: [
@@ -243,9 +240,7 @@ class _ChatPageState extends State<ChatPage>
         borderRadius: BorderRadius.circular(8),
       ),
       fileAttachmentStyle: FileAttachmentStyle(
-        decoration: BoxDecoration(
-          color: Colors.black,
-        ),
+        decoration: BoxDecoration(color: Colors.black),
         iconDecoration: BoxDecoration(
           color: Colors.orange,
           borderRadius: BorderRadius.circular(8),

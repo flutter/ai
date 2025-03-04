@@ -14,10 +14,7 @@ class SuggestionStyle {
   ///
   /// The [textStyle] and [decoration] parameters can be used to customize
   /// the appearance of the suggestion.
-  const SuggestionStyle({
-    this.textStyle,
-    this.decoration,
-  });
+  const SuggestionStyle({this.textStyle, this.decoration});
 
   /// Resolves the [SuggestionStyle] by merging the provided [style] with the
   /// [defaultStyle].
@@ -45,12 +42,12 @@ class SuggestionStyle {
   ///
   /// This style is typically used for suggestions in light mode.
   factory SuggestionStyle._lightStyle() => SuggestionStyle(
-        textStyle: ToolkitTextStyles.body1,
-        decoration: const BoxDecoration(
-          color: ToolkitColors.userMessageBackground,
-          borderRadius: BorderRadius.all(Radius.circular(8)),
-        ),
-      );
+    textStyle: ToolkitTextStyles.body1,
+    decoration: const BoxDecoration(
+      color: ToolkitColors.userMessageBackground,
+      borderRadius: BorderRadius.all(Radius.circular(8)),
+    ),
+  );
 
   /// The text style for the suggestion.
   final TextStyle? textStyle;

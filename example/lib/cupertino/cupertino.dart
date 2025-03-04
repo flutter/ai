@@ -16,10 +16,8 @@ class App extends StatelessWidget {
   const App({super.key});
 
   @override
-  Widget build(BuildContext context) => const CupertinoApp(
-        title: title,
-        home: ChatPage(),
-      );
+  Widget build(BuildContext context) =>
+      const CupertinoApp(title: title, home: ChatPage());
 }
 
 class ChatPage extends StatelessWidget {
@@ -27,16 +25,11 @@ class ChatPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => CupertinoPageScaffold(
-        navigationBar: CupertinoNavigationBar(
-          middle: Text(App.title),
-        ),
-        child: LlmChatView(
-          provider: GeminiProvider(
-            model: GenerativeModel(
-              model: 'gemini-1.5-flash',
-              apiKey: geminiApiKey,
-            ),
-          ),
-        ),
-      );
+    navigationBar: CupertinoNavigationBar(middle: Text(App.title)),
+    child: LlmChatView(
+      provider: GeminiProvider(
+        model: GenerativeModel(model: 'gemini-1.5-flash', apiKey: geminiApiKey),
+      ),
+    ),
+  );
 }

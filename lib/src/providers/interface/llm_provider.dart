@@ -70,7 +70,8 @@ abstract class LlmProvider implements Listenable {
 
 /// A function that generates a stream of text based on a prompt and
 /// attachments.
-typedef LlmStreamGenerator = Stream<String> Function(
-  String prompt, {
-  required Iterable<Attachment> attachments,
-});
+typedef LlmStreamGenerator =
+    Stream<String> Function(
+      String prompt, {
+      required Iterable<Attachment> attachments,
+    });

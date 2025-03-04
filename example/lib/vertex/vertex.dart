@@ -21,10 +21,8 @@ class App extends StatelessWidget {
 
   const App({super.key});
   @override
-  Widget build(BuildContext context) => const MaterialApp(
-        title: title,
-        home: ChatPage(),
-      );
+  Widget build(BuildContext context) =>
+      const MaterialApp(title: title, home: ChatPage());
 }
 
 class ChatPage extends StatelessWidget {
@@ -32,13 +30,13 @@ class ChatPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(title: const Text(App.title)),
-        body: LlmChatView(
-          provider: VertexProvider(
-            model: FirebaseVertexAI.instance.generativeModel(
-              model: 'gemini-1.5-flash',
-            ),
-          ),
+    appBar: AppBar(title: const Text(App.title)),
+    body: LlmChatView(
+      provider: VertexProvider(
+        model: FirebaseVertexAI.instance.generativeModel(
+          model: 'gemini-1.5-flash',
         ),
-      );
+      ),
+    ),
+  );
 }

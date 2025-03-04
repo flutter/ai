@@ -22,10 +22,10 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => MaterialApp(
-        title: title,
-        home: ChatPage(),
-        debugShowCheckedModeBanner: false,
-      );
+    title: title,
+    home: ChatPage(),
+    debugShowCheckedModeBanner: false,
+  );
 }
 
 class ChatPage extends StatefulWidget {
@@ -37,10 +37,7 @@ class ChatPage extends StatefulWidget {
 
 class _ChatPageState extends State<ChatPage> {
   late final _provider = GeminiProvider(
-    model: GenerativeModel(
-      model: 'gemini-1.5-flash',
-      apiKey: geminiApiKey,
-    ),
+    model: GenerativeModel(model: 'gemini-1.5-flash', apiKey: geminiApiKey),
   );
 
   @override
@@ -58,24 +55,19 @@ class _ChatPageState extends State<ChatPage> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(
-          title: const Text(App.title),
-          actions: [
-            IconButton(
-              onPressed: _clearHistory,
-              icon: const Icon(Icons.history),
-            ),
-          ],
-        ),
-        body: LlmChatView(
-          provider: _provider,
-          welcomeMessage: _welcomeMessage,
-        ),
-      );
+    appBar: AppBar(
+      title: const Text(App.title),
+      actions: [
+        IconButton(onPressed: _clearHistory, icon: const Icon(Icons.history)),
+      ],
+    ),
+    body: LlmChatView(provider: _provider, welcomeMessage: _welcomeMessage),
+  );
 
   io.Directory? _historyDir;
 
-  final _welcomeMessage = '# Welcome\n'
+  final _welcomeMessage =
+      '# Welcome\n'
       'Hello and welcome to the chat! This sample shows off a simple way to '
       'use the Flutter AI Toolkit to create a chat history that is saved to '
       'disk and restored the next time the app is launched.\n\n'
@@ -106,7 +98,7 @@ class _ChatPageState extends State<ChatPage> {
   Future<void> _loadHistory() async {
     // read the history from disk
     final history = <ChatMessage>[];
-    for (var i = 0;; ++i) {
+    for (var i = 0; ; ++i) {
       final file = await _messageFile(i);
       if (!file.existsSync()) break;
 
@@ -140,25 +132,26 @@ class _ChatPageState extends State<ChatPage> {
   void _clearHistory() async {
     final ok = await showDialog<bool>(
       context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Clear history?'),
-        actions: [
-          ElevatedButton(
-            onPressed: () => Navigator.pop(context, true),
-            child: const Text('Clear'),
+      builder:
+          (context) => AlertDialog(
+            title: const Text('Clear history?'),
+            actions: [
+              ElevatedButton(
+                onPressed: () => Navigator.pop(context, true),
+                child: const Text('Clear'),
+              ),
+              OutlinedButton(
+                onPressed: () => Navigator.pop(context, false),
+                child: const Text('Cancel'),
+              ),
+            ],
           ),
-          OutlinedButton(
-            onPressed: () => Navigator.pop(context, false),
-            child: const Text('Cancel'),
-          ),
-        ],
-      ),
     );
 
     if (ok != true) return;
 
     // delete any old messages
-    for (var i = 0;; ++i) {
+    for (var i = 0; ; ++i) {
       final file = await _messageFile(i);
       if (!file.existsSync()) break;
       debugPrint('Deleting: ${file.path}');

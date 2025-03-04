@@ -4,7 +4,7 @@ description: >-
 publish_to: none
 
 environment:
-  sdk: ^3.5.0
+  sdk: ^3.7.0
   flutter: '>=3.27.0-0'
 
 dependencies:
@@ -24,7 +24,7 @@ dependencies:
   path_provider: ^2.1.4
   flutter_markdown: ^0.7.4+1
   google_fonts: ^6.2.1
-  future_builder_ex: ^4.0.0
+  future_builder_ex: ^5.0.0
   split_view: ^3.2.1
 
 dev_dependencies:

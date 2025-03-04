@@ -61,16 +61,8 @@ final class FileAttachment extends Attachment {
     required Uint8List bytes,
   }) =>
       Attachment._isImage(mimeType)
-          ? ImageFileAttachment(
-              name: name,
-              mimeType: mimeType,
-              bytes: bytes,
-            )
-          : FileAttachment(
-              name: name,
-              mimeType: mimeType,
-              bytes: bytes,
-            );
+          ? ImageFileAttachment(name: name, mimeType: mimeType, bytes: bytes)
+          : FileAttachment(name: name, mimeType: mimeType, bytes: bytes);
 
   /// The MIME type of the file attachment.
   final String mimeType;
@@ -79,7 +71,8 @@ final class FileAttachment extends Attachment {
   final Uint8List bytes;
 
   @override
-  String toString() => 'FileAttachment('
+  String toString() =>
+      'FileAttachment('
       'name: $name, '
       'mimeType: $mimeType, '
       // I want to avoid the trailing whitespace here for readability.
@@ -121,7 +114,8 @@ final class ImageFileAttachment extends FileAttachment {
   }) : assert(Attachment._isImage(mimeType));
 
   @override
-  String toString() => 'ImageFileAttachment('
+  String toString() =>
+      'ImageFileAttachment('
       'name: $name, '
       'mimeType: $mimeType, '
       // I want to avoid the trailing whitespace here for readability.
@@ -162,10 +156,8 @@ final class LinkAttachment extends Attachment {
   ///
   /// [name] is the name of the link attachment.
   /// [url] is the URI of the link.
-  LinkAttachment({
-    required super.name,
-    required this.url,
-  }) : mimeType = lookupMimeType(url.path) ?? 'application/octet-stream';
+  LinkAttachment({required super.name, required this.url})
+    : mimeType = lookupMimeType(url.path) ?? 'application/octet-stream';
 
   /// The URL of the link attachment.
   final Uri url;
@@ -177,7 +169,8 @@ final class LinkAttachment extends Attachment {
   final String mimeType;
 
   @override
-  String toString() => 'LinkAttachment('
+  String toString() =>
+      'LinkAttachment('
       'name: $name, '
       'url: $url, '
       'mimeType: $mimeType'

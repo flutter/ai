@@ -88,12 +88,12 @@ class LlmChatView extends StatefulWidget {
     this.errorMessage = 'ERROR',
     super.key,
   }) : viewModel = ChatViewModel(
-          provider: provider,
-          responseBuilder: responseBuilder,
-          messageSender: messageSender,
-          style: style,
-          welcomeMessage: welcomeMessage,
-        );
+         provider: provider,
+         responseBuilder: responseBuilder,
+         messageSender: messageSender,
+         style: style,
+         welcomeMessage: welcomeMessage,
+       );
 
   /// The list of suggestions to display in the chat interface.
   ///
@@ -118,7 +118,7 @@ class LlmChatView extends StatefulWidget {
   ///
   /// By default, an alert dialog is displayed with the error message.
   final void Function(BuildContext context, LlmException error)?
-      onErrorCallback;
+  onErrorCallback;
 
   /// The text message to display when the user cancels a chat operation.
   ///
@@ -163,49 +163,54 @@ class _LlmChatViewState extends State<LlmChatView>
     final chatStyle = LlmChatViewStyle.resolve(widget.viewModel.style);
     return ListenableBuilder(
       listenable: widget.viewModel.provider,
-      builder: (context, child) => ChatViewModelProvider(
-        viewModel: widget.viewModel,
-        child: Container(
-          color: chatStyle.backgroundColor,
-          child: Column(
-            children: [
-              Expanded(
-                child: Stack(
-                  children: [
-                    ChatHistoryView(
-                      // can only edit if we're not waiting on the LLM or if
-                      // we're not already editing an LLM response
-                      onEditMessage: _pendingPromptResponse == null &&
-                              _associatedResponse == null
-                          ? _onEditMessage
-                          : null,
-                    ),
-                    if (widget.suggestions.isNotEmpty &&
-                        widget.viewModel.provider.history.isEmpty)
-                      Align(
-                        alignment: Alignment.topCenter,
-                        child: ChatSuggestionsView(
-                          suggestions: widget.suggestions,
-                          onSelectSuggestion: _onSelectSuggestion,
+      builder:
+          (context, child) => ChatViewModelProvider(
+            viewModel: widget.viewModel,
+            child: Container(
+              color: chatStyle.backgroundColor,
+              child: Column(
+                children: [
+                  Expanded(
+                    child: Stack(
+                      children: [
+                        ChatHistoryView(
+                          // can only edit if we're not waiting on the LLM or if
+                          // we're not already editing an LLM response
+                          onEditMessage:
+                              _pendingPromptResponse == null &&
+                                      _associatedResponse == null
+                                  ? _onEditMessage
+                                  : null,
                         ),
-                      ),
-                  ],
-                ),
+                        if (widget.suggestions.isNotEmpty &&
+                            widget.viewModel.provider.history.isEmpty)
+                          Align(
+                            alignment: Alignment.topCenter,
+                            child: ChatSuggestionsView(
+                              suggestions: widget.suggestions,
+                              onSelectSuggestion: _onSelectSuggestion,
+                            ),
+                          ),
+                      ],
+                    ),
+                  ),
+                  ChatInput(
+                    initialMessage: _initialMessage,
+                    onCancelEdit:
+                        _associatedResponse != null ? _onCancelEdit : null,
+                    onSendMessage: _onSendMessage,
+                    onCancelMessage:
+                        _pendingPromptResponse == null
+                            ? null
+                            : _onCancelMessage,
+                    onTranslateStt: _onTranslateStt,
+                    onCancelStt:
+                        _pendingSttResponse == null ? null : _onCancelStt,
+                  ),
+                ],
               ),
-              ChatInput(
-                initialMessage: _initialMessage,
-                onCancelEdit:
-                    _associatedResponse != null ? _onCancelEdit : null,
-                onSendMessage: _onSendMessage,
-                onCancelMessage:
-                    _pendingPromptResponse == null ? null : _onCancelMessage,
-                onTranslateStt: _onTranslateStt,
-                onCancelStt: _pendingSttResponse == null ? null : _onCancelStt,
-              ),
-            ],
+            ),
           ),
-        ),
-      ),
     );
   }
 
@@ -217,7 +222,8 @@ class _LlmChatViewState extends State<LlmChatView>
     _associatedResponse = null;
 
     // check the viewmodel for a user-provided message sender to use instead
-    final sendMessageStream = widget.viewModel.messageSender ??
+    final sendMessageStream =
+        widget.viewModel.messageSender ??
         widget.viewModel.provider.sendMessageStream;
 
     _pendingPromptResponse = LlmResponse(

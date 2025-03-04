@@ -58,20 +58,27 @@ class LlmChatViewStyle {
       backgroundColor: style?.backgroundColor ?? defaultStyle.backgroundColor,
       progressIndicatorColor:
           style?.progressIndicatorColor ?? defaultStyle.progressIndicatorColor,
-      userMessageStyle: UserMessageStyle.resolve(style?.userMessageStyle,
-          defaultStyle: defaultStyle.userMessageStyle),
-      llmMessageStyle: LlmMessageStyle.resolve(style?.llmMessageStyle,
-          defaultStyle: defaultStyle.llmMessageStyle),
-      chatInputStyle: ChatInputStyle.resolve(style?.chatInputStyle,
-          defaultStyle: defaultStyle.chatInputStyle),
+      userMessageStyle: UserMessageStyle.resolve(
+        style?.userMessageStyle,
+        defaultStyle: defaultStyle.userMessageStyle,
+      ),
+      llmMessageStyle: LlmMessageStyle.resolve(
+        style?.llmMessageStyle,
+        defaultStyle: defaultStyle.llmMessageStyle,
+      ),
+      chatInputStyle: ChatInputStyle.resolve(
+        style?.chatInputStyle,
+        defaultStyle: defaultStyle.chatInputStyle,
+      ),
       addButtonStyle: ActionButtonStyle.resolve(
         style?.addButtonStyle,
         defaultStyle: ActionButtonStyle.defaultStyle(ActionButtonType.add),
       ),
       attachFileButtonStyle: ActionButtonStyle.resolve(
         style?.attachFileButtonStyle,
-        defaultStyle:
-            ActionButtonStyle.defaultStyle(ActionButtonType.attachFile),
+        defaultStyle: ActionButtonStyle.defaultStyle(
+          ActionButtonType.attachFile,
+        ),
       ),
       cameraButtonStyle: ActionButtonStyle.resolve(
         style?.cameraButtonStyle,
@@ -111,10 +118,12 @@ class LlmChatViewStyle {
       ),
       closeMenuButtonStyle: ActionButtonStyle.resolve(
         style?.closeMenuButtonStyle,
-        defaultStyle:
-            ActionButtonStyle.defaultStyle(ActionButtonType.closeMenu),
+        defaultStyle: ActionButtonStyle.defaultStyle(
+          ActionButtonType.closeMenu,
+        ),
       ),
-      actionButtonBarDecoration: style?.actionButtonBarDecoration ??
+      actionButtonBarDecoration:
+          style?.actionButtonBarDecoration ??
           defaultStyle.actionButtonBarDecoration,
       suggestionStyle: SuggestionStyle.resolve(
         style?.suggestionStyle,
@@ -128,38 +137,36 @@ class LlmChatViewStyle {
 
   /// Provides a default light style.
   factory LlmChatViewStyle._lightStyle() => LlmChatViewStyle(
-        backgroundColor: ToolkitColors.containerBackground,
-        progressIndicatorColor: ToolkitColors.black,
-        userMessageStyle: UserMessageStyle.defaultStyle(),
-        llmMessageStyle: LlmMessageStyle.defaultStyle(),
-        chatInputStyle: ChatInputStyle.defaultStyle(),
-        addButtonStyle: ActionButtonStyle.defaultStyle(ActionButtonType.add),
-        stopButtonStyle: ActionButtonStyle.defaultStyle(ActionButtonType.stop),
-        recordButtonStyle:
-            ActionButtonStyle.defaultStyle(ActionButtonType.record),
-        submitButtonStyle:
-            ActionButtonStyle.defaultStyle(ActionButtonType.submit),
-        closeMenuButtonStyle:
-            ActionButtonStyle.defaultStyle(ActionButtonType.closeMenu),
-        attachFileButtonStyle:
-            ActionButtonStyle.defaultStyle(ActionButtonType.attachFile),
-        galleryButtonStyle:
-            ActionButtonStyle.defaultStyle(ActionButtonType.gallery),
-        cameraButtonStyle:
-            ActionButtonStyle.defaultStyle(ActionButtonType.camera),
-        closeButtonStyle:
-            ActionButtonStyle.defaultStyle(ActionButtonType.close),
-        cancelButtonStyle:
-            ActionButtonStyle.defaultStyle(ActionButtonType.cancel),
-        copyButtonStyle: ActionButtonStyle.defaultStyle(ActionButtonType.copy),
-        editButtonStyle: ActionButtonStyle.defaultStyle(ActionButtonType.edit),
-        actionButtonBarDecoration: BoxDecoration(
-          color: ToolkitColors.darkButtonBackground,
-          borderRadius: BorderRadius.circular(20),
-        ),
-        fileAttachmentStyle: FileAttachmentStyle.defaultStyle(),
-        suggestionStyle: SuggestionStyle.defaultStyle(),
-      );
+    backgroundColor: ToolkitColors.containerBackground,
+    progressIndicatorColor: ToolkitColors.black,
+    userMessageStyle: UserMessageStyle.defaultStyle(),
+    llmMessageStyle: LlmMessageStyle.defaultStyle(),
+    chatInputStyle: ChatInputStyle.defaultStyle(),
+    addButtonStyle: ActionButtonStyle.defaultStyle(ActionButtonType.add),
+    stopButtonStyle: ActionButtonStyle.defaultStyle(ActionButtonType.stop),
+    recordButtonStyle: ActionButtonStyle.defaultStyle(ActionButtonType.record),
+    submitButtonStyle: ActionButtonStyle.defaultStyle(ActionButtonType.submit),
+    closeMenuButtonStyle: ActionButtonStyle.defaultStyle(
+      ActionButtonType.closeMenu,
+    ),
+    attachFileButtonStyle: ActionButtonStyle.defaultStyle(
+      ActionButtonType.attachFile,
+    ),
+    galleryButtonStyle: ActionButtonStyle.defaultStyle(
+      ActionButtonType.gallery,
+    ),
+    cameraButtonStyle: ActionButtonStyle.defaultStyle(ActionButtonType.camera),
+    closeButtonStyle: ActionButtonStyle.defaultStyle(ActionButtonType.close),
+    cancelButtonStyle: ActionButtonStyle.defaultStyle(ActionButtonType.cancel),
+    copyButtonStyle: ActionButtonStyle.defaultStyle(ActionButtonType.copy),
+    editButtonStyle: ActionButtonStyle.defaultStyle(ActionButtonType.edit),
+    actionButtonBarDecoration: BoxDecoration(
+      color: ToolkitColors.darkButtonBackground,
+      borderRadius: BorderRadius.circular(20),
+    ),
+    fileAttachmentStyle: FileAttachmentStyle.defaultStyle(),
+    suggestionStyle: SuggestionStyle.defaultStyle(),
+  );
 
   /// Background color of the entire chat widget.
   final Color? backgroundColor;

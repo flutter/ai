@@ -48,7 +48,8 @@ class JumpingDotsProgressIndicator extends StatefulWidget {
 }
 
 class _JumpingDotsProgressIndicatorState
-    extends State<JumpingDotsProgressIndicator> with TickerProviderStateMixin {
+    extends State<JumpingDotsProgressIndicator>
+    with TickerProviderStateMixin {
   final _controllers = <AnimationController>[];
   final _animations = <Animation<double>>[];
   final _widgets = <Widget>[];
@@ -62,16 +63,18 @@ class _JumpingDotsProgressIndicatorState
     // for each dot...
     for (var dot = 0; dot < widget.numberOfDots; dot++) {
       // add an animation controller for the dot
-      _controllers.add(AnimationController(
-        duration: Duration(milliseconds: widget.milliseconds),
-        vsync: this,
-      ));
+      _controllers.add(
+        AnimationController(
+          duration: Duration(milliseconds: widget.milliseconds),
+          vsync: this,
+        ),
+      );
 
       // build an animation for the dot using the controller
       _animations.add(
-        Tween(begin: _beginTweenValue, end: _endTweenValue)
-            .animate(_controllers[dot])
-          ..addStatusListener((status) => _dotListener(status, dot)),
+        Tween(begin: _beginTweenValue, end: _endTweenValue).animate(
+          _controllers[dot],
+        )..addStatusListener((status) => _dotListener(status, dot)),
       );
 
       // add a dot widget with that animation
@@ -108,12 +111,9 @@ class _JumpingDotsProgressIndicatorState
 
   @override
   Widget build(BuildContext context) => SizedBox(
-        height: widget.fontSize + (widget.fontSize * 0.5),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: _widgets,
-        ),
-      );
+    height: widget.fontSize + (widget.fontSize * 0.5),
+    child: Row(mainAxisAlignment: MainAxisAlignment.center, children: _widgets),
+  );
 
   @override
   void dispose() {

@@ -27,8 +27,9 @@ class AdaptiveSnackBar {
     if (isCupertinoApp(context)) {
       _showCupertinoSnackBar(context: context, message: message);
     } else {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text(message)));
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(message)));
     }
   }
 
@@ -39,11 +40,12 @@ class AdaptiveSnackBar {
   }) {
     const animationDurationMillis = 200;
     final overlayEntry = OverlayEntry(
-      builder: (context) => CupertinoSnackBar(
-        message: message,
-        animationDurationMillis: animationDurationMillis,
-        waitDurationMillis: durationMillis,
-      ),
+      builder:
+          (context) => CupertinoSnackBar(
+            message: message,
+            animationDurationMillis: animationDurationMillis,
+            waitDurationMillis: durationMillis,
+          ),
     );
     Future.delayed(
       Duration(milliseconds: durationMillis + 2 * animationDurationMillis),

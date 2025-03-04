@@ -21,10 +21,10 @@ class _AppState extends State<App> {
 
   @override
   Widget build(BuildContext context) => MaterialApp(
-        title: App.title,
-        home: Scaffold(
-          appBar: AppBar(title: const Text(App.title)),
-          body: LlmChatView(provider: _provider),
-        ),
-      );
+    title: App.title,
+    home: Scaffold(
+      appBar: AppBar(title: const Text(App.title)),
+      body: LlmChatView(provider: _provider),
+    ),
+  );
 }

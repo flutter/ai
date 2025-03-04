@@ -25,36 +25,33 @@ class RecipeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Card(
-        child: Column(
+    child: Column(
+      children: [
+        ExpansionTile(
+          title: Text(recipe.title),
+          subtitle: Text(recipe.description),
+          initiallyExpanded: expanded,
+          onExpansionChanged: onExpansionChanged,
           children: [
-            ExpansionTile(
-              title: Text(recipe.title),
-              subtitle: Text(recipe.description),
-              initiallyExpanded: expanded,
-              onExpansionChanged: onExpansionChanged,
-              children: [
-                RecipeContentView(recipe: recipe),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: OverflowBar(
-                    spacing: 8,
-                    alignment: MainAxisAlignment.end,
-                    children: [
-                      ElevatedButton(
-                        onPressed: onDelete,
-                        child: const Text('Delete'),
-                      ),
-                      OutlinedButton(
-                        onPressed: onEdit,
-                        child: const Text('Edit'),
-                      ),
-                    ],
+            RecipeContentView(recipe: recipe),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: OverflowBar(
+                spacing: 8,
+                alignment: MainAxisAlignment.end,
+                children: [
+                  ElevatedButton(
+                    onPressed: onDelete,
+                    child: const Text('Delete'),
                   ),
-                ),
-                const SizedBox(height: 16),
-              ],
+                  OutlinedButton(onPressed: onEdit, child: const Text('Edit')),
+                ],
+              ),
             ),
+            const SizedBox(height: 16),
           ],
         ),
-      );
+      ],
+    ),
+  );
 }

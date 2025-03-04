@@ -19,13 +19,9 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => ValueListenableBuilder<ThemeMode>(
-        valueListenable: themeMode,
-        builder: (
-          BuildContext context,
-          ThemeMode mode,
-          Widget? child,
-        ) =>
-            MaterialApp(
+    valueListenable: themeMode,
+    builder:
+        (BuildContext context, ThemeMode mode, Widget? child) => MaterialApp(
           title: title,
           theme: ThemeData.light(),
           darkTheme: ThemeData.dark(),
@@ -33,7 +29,7 @@ class App extends StatelessWidget {
           home: ChatPage(),
           debugShowCheckedModeBanner: false,
         ),
-      );
+  );
 }
 
 class ChatPage extends StatefulWidget {
@@ -45,10 +41,7 @@ class ChatPage extends StatefulWidget {
 
 class _ChatPageState extends State<ChatPage> {
   final _provider = GeminiProvider(
-    model: GenerativeModel(
-      model: 'gemini-1.5-flash',
-      apiKey: geminiApiKey,
-    ),
+    model: GenerativeModel(model: 'gemini-1.5-flash', apiKey: geminiApiKey),
   );
 
   final _lightStyle = LlmChatViewStyle.defaultStyle();
@@ -56,25 +49,27 @@ class _ChatPageState extends State<ChatPage> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(
-          title: const Text(App.title),
-          actions: [
-            IconButton(
-              onPressed: () => App.themeMode.value =
-                  App.themeMode.value == ThemeMode.light
-                      ? ThemeMode.dark
-                      : ThemeMode.light,
-              tooltip: App.themeMode.value == ThemeMode.light
+    appBar: AppBar(
+      title: const Text(App.title),
+      actions: [
+        IconButton(
+          onPressed:
+              () =>
+                  App.themeMode.value =
+                      App.themeMode.value == ThemeMode.light
+                          ? ThemeMode.dark
+                          : ThemeMode.light,
+          tooltip:
+              App.themeMode.value == ThemeMode.light
                   ? 'Dark Mode'
                   : 'Light Mode',
-              icon: const Icon(Icons.brightness_4_outlined),
-            ),
-          ],
+          icon: const Icon(Icons.brightness_4_outlined),
         ),
-        body: LlmChatView(
-          provider: _provider,
-          style:
-              App.themeMode.value == ThemeMode.dark ? _darkStyle : _lightStyle,
-        ),
-      );
+      ],
+    ),
+    body: LlmChatView(
+      provider: _provider,
+      style: App.themeMode.value == ThemeMode.dark ? _darkStyle : _lightStyle,
+    ),
+  );
 }

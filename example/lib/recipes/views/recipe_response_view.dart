@@ -34,20 +34,24 @@ class RecipeResponseView extends StatelessWidget {
         // extract the recipe
         final json = recipeWithText['recipe'] as Map<String, dynamic>;
         final recipe = Recipe.fromJson(json);
-        children.add(Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(recipe.title, style: Theme.of(context).textTheme.titleLarge),
-            Text(recipe.description),
-            RecipeContentView(recipe: recipe),
-          ],
-        ));
+        children.add(
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(recipe.title, style: Theme.of(context).textTheme.titleLarge),
+              Text(recipe.description),
+              RecipeContentView(recipe: recipe),
+            ],
+          ),
+        );
 
         // add a button to add the recipe to the list
-        children.add(OutlinedButton(
-          onPressed: () => RecipeRepository.addNewRecipe(recipe),
-          child: const Text('Add Recipe'),
-        ));
+        children.add(
+          OutlinedButton(
+            onPressed: () => RecipeRepository.addNewRecipe(recipe),
+            child: const Text('Add Recipe'),
+          ),
+        );
       }
     } catch (e) {
       debugPrint('Error parsing response: $e');

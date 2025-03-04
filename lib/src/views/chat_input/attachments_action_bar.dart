@@ -46,34 +46,34 @@ class _AttachmentActionBarState extends State<AttachmentActionBar> {
 
   @override
   Widget build(BuildContext context) => ChatViewModelClient(
-        builder: (context, viewModel, child) {
-          final chatStyle = LlmChatViewStyle.resolve(viewModel.style);
-          return _expanded
-              ? ActionButtonBar(style: chatStyle, [
-                  ActionButton(
-                    onPressed: _onToggleMenu,
-                    style: chatStyle.closeMenuButtonStyle!,
-                  ),
-                  if (_canCamera)
-                    ActionButton(
-                      onPressed: _onCamera,
-                      style: chatStyle.cameraButtonStyle!,
-                    ),
-                  ActionButton(
-                    onPressed: _onGallery,
-                    style: chatStyle.galleryButtonStyle!,
-                  ),
-                  ActionButton(
-                    onPressed: _onFile,
-                    style: chatStyle.attachFileButtonStyle!,
-                  ),
-                ])
-              : ActionButton(
-                  onPressed: _onToggleMenu,
-                  style: chatStyle.addButtonStyle!,
-                );
-        },
-      );
+    builder: (context, viewModel, child) {
+      final chatStyle = LlmChatViewStyle.resolve(viewModel.style);
+      return _expanded
+          ? ActionButtonBar(style: chatStyle, [
+            ActionButton(
+              onPressed: _onToggleMenu,
+              style: chatStyle.closeMenuButtonStyle!,
+            ),
+            if (_canCamera)
+              ActionButton(
+                onPressed: _onCamera,
+                style: chatStyle.cameraButtonStyle!,
+              ),
+            ActionButton(
+              onPressed: _onGallery,
+              style: chatStyle.galleryButtonStyle!,
+            ),
+            ActionButton(
+              onPressed: _onFile,
+              style: chatStyle.attachFileButtonStyle!,
+            ),
+          ])
+          : ActionButton(
+            onPressed: _onToggleMenu,
+            style: chatStyle.addButtonStyle!,
+          );
+    },
+  );
 
   void _onToggleMenu() => setState(() => _expanded = !_expanded);
   void _onCamera() => unawaited(_pickImage(ImageSource.camera));
@@ -91,9 +91,9 @@ class _AttachmentActionBarState extends State<AttachmentActionBar> {
     try {
       if (source == ImageSource.gallery) {
         final pics = await picker.pickMultiImage();
-        final attachments = await Future.wait(pics.map(
-          ImageFileAttachment.fromFile,
-        ));
+        final attachments = await Future.wait(
+          pics.map(ImageFileAttachment.fromFile),
+        );
         widget.onAttachments(attachments);
       } else {
         final pic = await takePhoto(context);

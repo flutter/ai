@@ -16,33 +16,28 @@ class App extends StatelessWidget {
   const App({super.key});
 
   @override
-  Widget build(BuildContext context) => const MaterialApp(
-        title: title,
-        home: ChatPage(),
-      );
+  Widget build(BuildContext context) =>
+      const MaterialApp(title: title, home: ChatPage());
 }
 
 class ChatPage extends StatelessWidget {
   const ChatPage({super.key});
 
   void _onCancel(BuildContext context) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Chat cancelled')),
-    );
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(const SnackBar(content: Text('Chat cancelled')));
   }
 
   @override
   Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(title: const Text(App.title)),
-        body: LlmChatView(
-          onCancelCallback: _onCancel,
-          cancelMessage: 'Request cancelled',
-          provider: GeminiProvider(
-            model: GenerativeModel(
-              model: 'gemini-1.5-flash',
-              apiKey: geminiApiKey,
-            ),
-          ),
-        ),
-      );
+    appBar: AppBar(title: const Text(App.title)),
+    body: LlmChatView(
+      onCancelCallback: _onCancel,
+      cancelMessage: 'Request cancelled',
+      provider: GeminiProvider(
+        model: GenerativeModel(model: 'gemini-1.5-flash', apiKey: geminiApiKey),
+      ),
+    ),
+  );
 }

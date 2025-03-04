@@ -43,10 +43,10 @@ class LlmResponse {
   StreamSubscription<String>? _subscription;
 
   LlmException _exception(dynamic err) => switch (err) {
-        (LlmCancelException _) => const LlmCancelException(),
-        (final LlmFailureException ex) => ex,
-        _ => LlmFailureException(err.toString()),
-      };
+    (LlmCancelException _) => const LlmCancelException(),
+    (final LlmFailureException ex) => ex,
+    _ => LlmFailureException(err.toString()),
+  };
 
   void _close(LlmException error) {
     assert(_subscription != null);

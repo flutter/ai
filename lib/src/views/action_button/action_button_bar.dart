@@ -18,11 +18,7 @@ class ActionButtonBar extends StatelessWidget {
   ///
   /// The [buttons] parameter is required and specifies the list of
   /// [ActionButton]s to be displayed in the bar.
-  const ActionButtonBar(
-    this.buttons, {
-    required this.style,
-    super.key,
-  });
+  const ActionButtonBar(this.buttons, {required this.style, super.key});
 
   /// The list of [ActionButton]s to be displayed in the bar.
   final List<ActionButton> buttons;
@@ -32,9 +28,7 @@ class ActionButtonBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => DecoratedBox(
-        decoration: style.actionButtonBarDecoration!,
-        child: OverflowBar(
-          children: buttons,
-        ),
-      );
+    decoration: style.actionButtonBarDecoration!,
+    child: OverflowBar(children: buttons),
+  );
 }

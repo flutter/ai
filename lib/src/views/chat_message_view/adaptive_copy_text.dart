@@ -65,12 +65,12 @@ class AdaptiveCopyText extends StatelessWidget {
     return isMobile
         ? ContextMenuRegion(contextMenu: contextMenu, child: child)
         : Localizations(
-            locale: Localizations.localeOf(context),
-            delegates: const [
-              DefaultWidgetsLocalizations.delegate,
-              DefaultMaterialLocalizations.delegate,
-            ],
-            child: SelectionArea(child: child),
-          );
+          locale: Localizations.localeOf(context),
+          delegates: const [
+            DefaultWidgetsLocalizations.delegate,
+            DefaultMaterialLocalizations.delegate,
+          ],
+          child: SelectionArea(child: child),
+        );
   }
 }

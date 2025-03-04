@@ -16,10 +16,7 @@ import '../data/recipe_repository.dart';
 import '../data/settings.dart';
 
 class EditRecipePage extends StatefulWidget {
-  const EditRecipePage({
-    super.key,
-    required this.recipe,
-  });
+  const EditRecipePage({super.key, required this.recipe});
 
   final Recipe recipe;
 
@@ -65,15 +62,13 @@ class _EditRecipePageState extends State<EditRecipePage> {
           },
         ),
       ),
-      systemInstruction: Content.system(
-        '''
+      systemInstruction: Content.system('''
 You are a helpful assistant that generates recipes based on the ingredients and 
 instructions provided:
 ${Settings.foodPreferences.isEmpty ? 'I don\'t have any food preferences' : Settings.foodPreferences}
 
 When you generate a recipe, you should generate a JSON object.
-''',
-      ),
+'''),
     ),
   );
 
@@ -81,9 +76,7 @@ When you generate a recipe, you should generate a JSON object.
   void initState() {
     super.initState();
 
-    _titleController = TextEditingController(
-      text: widget.recipe.title,
-    );
+    _titleController = TextEditingController(text: widget.recipe.title);
     _descriptionController = TextEditingController(
       text: widget.recipe.description,
     );
@@ -108,66 +101,62 @@ When you generate a recipe, you should generate a JSON object.
 
   @override
   Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(title: Text('${_isNewRecipe ? "Add" : "Edit"} Recipe')),
-        body: Form(
-          key: _formKey,
-          child: SingleChildScrollView(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
+    appBar: AppBar(title: Text('${_isNewRecipe ? "Add" : "Edit"} Recipe')),
+    body: Form(
+      key: _formKey,
+      child: SingleChildScrollView(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          children: [
+            TextFormField(
+              controller: _titleController,
+              decoration: const InputDecoration(
+                labelText: 'Title',
+                hintText: 'Enter a name for your recipe...',
+              ),
+              validator:
+                  (value) =>
+                      (value == null || value.isEmpty)
+                          ? 'Recipe title is requires'
+                          : null,
+            ),
+            TextField(
+              controller: _descriptionController,
+              decoration: const InputDecoration(
+                labelText: 'Description',
+                hintText: 'In a few words, describe your recipe...',
+              ),
+              maxLines: null,
+            ),
+            TextField(
+              controller: _ingredientsController,
+              decoration: const InputDecoration(
+                labelText: 'Ingredients🍎 (one per line)',
+                hintText: 'e.g., 2 cups flour\n1 tsp salt\n1 cup sugar',
+              ),
+              maxLines: null,
+            ),
+            TextField(
+              controller: _instructionsController,
+              decoration: const InputDecoration(
+                labelText: 'Instructions🥧 (one per line)',
+                hintText: 'e.g., Mix ingredients\nBake for 30 minutes',
+              ),
+              maxLines: null,
+            ),
+            const SizedBox(height: 16),
+            OverflowBar(
+              spacing: 16,
               children: [
-                TextFormField(
-                  controller: _titleController,
-                  decoration: const InputDecoration(
-                    labelText: 'Title',
-                    hintText: 'Enter a name for your recipe...',
-                  ),
-                  validator: (value) => (value == null || value.isEmpty)
-                      ? 'Recipe title is requires'
-                      : null,
-                ),
-                TextField(
-                  controller: _descriptionController,
-                  decoration: const InputDecoration(
-                    labelText: 'Description',
-                    hintText: 'In a few words, describe your recipe...',
-                  ),
-                  maxLines: null,
-                ),
-                TextField(
-                  controller: _ingredientsController,
-                  decoration: const InputDecoration(
-                    labelText: 'Ingredients🍎 (one per line)',
-                    hintText: 'e.g., 2 cups flour\n1 tsp salt\n1 cup sugar',
-                  ),
-                  maxLines: null,
-                ),
-                TextField(
-                  controller: _instructionsController,
-                  decoration: const InputDecoration(
-                    labelText: 'Instructions🥧 (one per line)',
-                    hintText: 'e.g., Mix ingredients\nBake for 30 minutes',
-                  ),
-                  maxLines: null,
-                ),
-                const SizedBox(height: 16),
-                OverflowBar(
-                  spacing: 16,
-                  children: [
-                    ElevatedButton(
-                      onPressed: _onMagic,
-                      child: const Text('Magic'),
-                    ),
-                    OutlinedButton(
-                      onPressed: _onDone,
-                      child: const Text('Done'),
-                    ),
-                  ],
-                ),
+                ElevatedButton(onPressed: _onMagic, child: const Text('Magic')),
+                OutlinedButton(onPressed: _onDone, child: const Text('Done')),
               ],
             ),
-          ),
+          ],
         ),
-      );
+      ),
+    ),
+  );
 
   void _onDone() {
     if (!_formKey.currentState!.validate()) return;
@@ -205,27 +194,28 @@ When you generate a recipe, you should generate a JSON object.
       final accept = await showDialog<bool>(
         // ignore: use_build_context_synchronously
         context: context,
-        builder: (context) => AlertDialog(
-          title: Text(recipe.title),
-          content: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            spacing: 16,
-            children: [
-              const Text('Modifications:'),
-              Text(_wrapText(modifications)),
-            ],
-          ),
-          actions: [
-            TextButton(
-              onPressed: () => context.pop(true),
-              child: const Text('Accept'),
+        builder:
+            (context) => AlertDialog(
+              title: Text(recipe.title),
+              content: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                spacing: 16,
+                children: [
+                  const Text('Modifications:'),
+                  Text(_wrapText(modifications)),
+                ],
+              ),
+              actions: [
+                TextButton(
+                  onPressed: () => context.pop(true),
+                  child: const Text('Accept'),
+                ),
+                TextButton(
+                  onPressed: () => context.pop(false),
+                  child: const Text('Reject'),
+                ),
+              ],
             ),
-            TextButton(
-              onPressed: () => context.pop(false),
-              child: const Text('Reject'),
-            ),
-          ],
-        ),
       );
 
       if (accept == true) {
@@ -241,16 +231,17 @@ When you generate a recipe, you should generate a JSON object.
         showDialog(
           // ignore: use_build_context_synchronously
           context: context,
-          builder: (context) => AlertDialog(
-            title: const Text('Error'),
-            content: Text(ex.toString()),
-            actions: [
-              TextButton(
-                onPressed: () => context.pop(),
-                child: const Text('OK'),
+          builder:
+              (context) => AlertDialog(
+                title: const Text('Error'),
+                content: Text(ex.toString()),
+                actions: [
+                  TextButton(
+                    onPressed: () => context.pop(),
+                    child: const Text('OK'),
+                  ),
+                ],
               ),
-            ],
-          ),
         );
       }
     }

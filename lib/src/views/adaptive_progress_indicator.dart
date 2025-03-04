@@ -25,7 +25,8 @@ class AdaptiveCircularProgressIndicator extends StatelessWidget {
   final Color color;
 
   @override
-  Widget build(BuildContext context) => isCupertinoApp(context)
-      ? CupertinoActivityIndicator(color: color)
-      : CircularProgressIndicator(color: color);
+  Widget build(BuildContext context) =>
+      isCupertinoApp(context)
+          ? CupertinoActivityIndicator(color: color)
+          : CircularProgressIndicator(color: color);
 }

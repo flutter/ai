@@ -38,32 +38,33 @@ class RemovableAttachment extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Stack(
-        children: [
-          GestureDetector(
-            onTap: attachment is ImageFileAttachment
+    children: [
+      GestureDetector(
+        onTap:
+            attachment is ImageFileAttachment
                 ? () => unawaited(_showPreviewDialog(context))
                 : null,
-            child: Container(
-              padding: const EdgeInsets.only(right: 12),
-              height: 80,
-              child: AttachmentView(attachment),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(2),
-            child: ChatViewModelClient(
-              builder: (context, viewModel, child) {
-                final chatStyle = LlmChatViewStyle.resolve(viewModel.style);
-                return ActionButton(
-                  style: chatStyle.closeButtonStyle!,
-                  size: 20,
-                  onPressed: () => onRemove(attachment),
-                );
-              },
-            ),
-          ),
-        ],
-      );
+        child: Container(
+          padding: const EdgeInsets.only(right: 12),
+          height: 80,
+          child: AttachmentView(attachment),
+        ),
+      ),
+      Padding(
+        padding: const EdgeInsets.all(2),
+        child: ChatViewModelClient(
+          builder: (context, viewModel, child) {
+            final chatStyle = LlmChatViewStyle.resolve(viewModel.style);
+            return ActionButton(
+              style: chatStyle.closeButtonStyle!,
+              size: 20,
+              onPressed: () => onRemove(attachment),
+            );
+          },
+        ),
+      ),
+    ],
+  );
 
   Future<void> _showPreviewDialog(BuildContext context) async =>
       AdaptiveAlertDialog.show<void>(

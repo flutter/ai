@@ -18,9 +18,7 @@ class ImagePreviewDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Padding(
-        padding: const EdgeInsets.all(8),
-        child: Center(
-          child: Image.memory(attachment.bytes, fit: BoxFit.contain),
-        ),
-      );
+    padding: const EdgeInsets.all(8),
+    child: Center(child: Image.memory(attachment.bytes, fit: BoxFit.contain)),
+  );
 }

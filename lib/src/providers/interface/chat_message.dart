@@ -41,33 +41,30 @@ class ChatMessage {
   ///   - 'data': The data of the attachment, either as a base64 encoded string
   ///     (for files) or a URL (for links).
   factory ChatMessage.fromJson(Map<String, dynamic> map) => ChatMessage(
-        origin: MessageOrigin.values.byName(map['origin'] as String),
-        text: map['text'] as String,
-        attachments: [
-          for (final attachment in map['attachments'] as List<dynamic>)
-            switch (attachment['type'] as String) {
-              'file' => FileAttachment.fileOrImage(
-                  name: attachment['name'] as String,
-                  mimeType: attachment['mimeType'] as String,
-                  bytes: base64Decode(attachment['data'] as String),
-                ),
-              'link' => LinkAttachment(
-                  name: attachment['name'] as String,
-                  url: Uri.parse(attachment['data'] as String),
-                ),
-              _ => throw UnimplementedError(),
-            },
-        ],
-      );
+    origin: MessageOrigin.values.byName(map['origin'] as String),
+    text: map['text'] as String,
+    attachments: [
+      for (final attachment in map['attachments'] as List<dynamic>)
+        switch (attachment['type'] as String) {
+          'file' => FileAttachment.fileOrImage(
+            name: attachment['name'] as String,
+            mimeType: attachment['mimeType'] as String,
+            bytes: base64Decode(attachment['data'] as String),
+          ),
+          'link' => LinkAttachment(
+            name: attachment['name'] as String,
+            url: Uri.parse(attachment['data'] as String),
+          ),
+          _ => throw UnimplementedError(),
+        },
+    ],
+  );
 
   /// Factory constructor for creating an LLM-originated message.
   ///
   /// Creates a message with an empty text content and no attachments.
-  factory ChatMessage.llm() => ChatMessage(
-        origin: MessageOrigin.llm,
-        text: null,
-        attachments: [],
-      );
+  factory ChatMessage.llm() =>
+      ChatMessage(origin: MessageOrigin.llm, text: null, attachments: []);
 
   /// Factory constructor for creating a user-originated message.
   ///
@@ -95,7 +92,8 @@ class ChatMessage {
   void append(String text) => this.text = (this.text ?? '') + text;
 
   @override
-  String toString() => 'ChatMessage('
+  String toString() =>
+      'ChatMessage('
       'origin: $origin, '
       'text: $text, '
       'attachments: $attachments'
@@ -113,25 +111,25 @@ class ChatMessage {
   ///   - 'data': The data of the attachment, either as a base64 encoded string
   ///     (for files) or a URL (for links).
   Map<String, dynamic> toJson() => {
-        'origin': origin.name,
-        'text': text,
-        'attachments': [
-          for (final attachment in attachments)
-            {
-              'type': switch (attachment) {
-                (FileAttachment _) => 'file',
-                (LinkAttachment _) => 'link',
-              },
-              'name': attachment.name,
-              'mimeType': switch (attachment) {
-                (final FileAttachment a) => a.mimeType,
-                (final LinkAttachment a) => a.mimeType,
-              },
-              'data': switch (attachment) {
-                (final FileAttachment a) => base64Encode(a.bytes),
-                (final LinkAttachment a) => a.url,
-              },
-            },
-        ],
-      };
+    'origin': origin.name,
+    'text': text,
+    'attachments': [
+      for (final attachment in attachments)
+        {
+          'type': switch (attachment) {
+            (FileAttachment _) => 'file',
+            (LinkAttachment _) => 'link',
+          },
+          'name': attachment.name,
+          'mimeType': switch (attachment) {
+            (final FileAttachment a) => a.mimeType,
+            (final LinkAttachment a) => a.mimeType,
+          },
+          'data': switch (attachment) {
+            (final FileAttachment a) => base64Encode(a.bytes),
+            (final LinkAttachment a) => a.url,
+          },
+        },
+    ],
+  };
 }

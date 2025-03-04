@@ -16,10 +16,8 @@ class App extends StatelessWidget {
   const App({super.key});
 
   @override
-  Widget build(BuildContext context) => const MaterialApp(
-        title: title,
-        home: ChatPage(),
-      );
+  Widget build(BuildContext context) =>
+      const MaterialApp(title: title, home: ChatPage());
 }
 
 class ChatPage extends StatelessWidget {
@@ -27,15 +25,12 @@ class ChatPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(title: const Text(App.title)),
-        body: LlmChatView(
-          welcomeMessage: 'Hello and welcome to the Flutter AI Toolkit!',
-          provider: GeminiProvider(
-            model: GenerativeModel(
-              model: 'gemini-1.5-flash',
-              apiKey: geminiApiKey,
-            ),
-          ),
-        ),
-      );
+    appBar: AppBar(title: const Text(App.title)),
+    body: LlmChatView(
+      welcomeMessage: 'Hello and welcome to the Flutter AI Toolkit!',
+      provider: GeminiProvider(
+        model: GenerativeModel(model: 'gemini-1.5-flash', apiKey: geminiApiKey),
+      ),
+    ),
+  );
 }
