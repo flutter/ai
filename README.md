@@ -212,7 +212,7 @@ the AI toolkit in to your own applications.
     for an API key in your client app and replaces it with a more secure Firebase
     project.
 
- 6. **Set up device permissions**
+ 4. **Set up device permissions**
 
     To enable your users to take advantage of features like
     voice input and media attachments,
