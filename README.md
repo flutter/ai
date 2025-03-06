@@ -142,7 +142,7 @@ the AI toolkit in to your own applications.
     For a complete usage example,
     check out the [`vertex.dart` sample][].
 
- 4. **Gemini AI configuration**
+ 3. **Gemini AI configuration**
 
     To use Google Gemini AI, obtain an API key from [Google AI Studio][].
     Be careful not to check this key into your source code repository to
