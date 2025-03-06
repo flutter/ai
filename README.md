@@ -85,7 +85,7 @@ the AI toolkit in to your own applications.
 
     Once that's complete, integrate the new Firebase project into
     your Flutter app using the `flutterfire` CLI tool, as described in
-    [Add Firebase to your Flutter app docs][].
+    [Add Firebase to your Flutter app][] docs.
 
     After following these instructions, you're ready to
     use Firebase Vertex AI in your Flutter app.
