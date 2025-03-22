@@ -19,4 +19,7 @@ enum InputState {
 
   /// Speech is being translated to text and a progress indicator is shown.
   canCancelStt,
+
+  /// Can't submit, cancel, or record
+  disabled,
 }

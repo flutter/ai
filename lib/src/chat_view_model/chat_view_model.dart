@@ -22,13 +22,17 @@ class ChatViewModel {
   /// appearance. [welcomeMessage] is an optional message displayed when the
   /// chat interface is first opened. [responseBuilder] is an optional builder
   /// for customizing chat responses. [messageSender] is an optional
-  /// [LlmStreamGenerator] for sending messages.
+  /// [LlmStreamGenerator] for sending messages. [enableAttachments] and
+  /// [enableVoiceNotes] are optional boolean flags for enabling or disabling
+  /// file and voice note attachments in the chat input.
   const ChatViewModel({
     required this.provider,
     required this.style,
     required this.welcomeMessage,
     required this.responseBuilder,
     required this.messageSender,
+    required this.enableAttachments,
+    required this.enableVoiceNotes,
   });
 
   /// The LLM provider for the chat interface.
@@ -61,6 +65,18 @@ class ChatViewModel {
   /// asynchronous communication and response handling.
   final LlmStreamGenerator? messageSender;
 
+  /// Whether file and image attachments are enabled in the chat input.
+  ///
+  /// When set to false, the attachment button and related functionality will be
+  /// disabled.
+  final bool enableAttachments;
+
+  /// Whether voice notes are enabled in the chat input.
+  ///
+  /// When set to false, the voice recording button and related functionality
+  /// will be disabled.
+  final bool enableVoiceNotes;
+
   // The following is needed to support the
   // ChatViewModelProvider.updateShouldNotify implementation
   @override
@@ -71,7 +87,9 @@ class ChatViewModel {
           other.style == style &&
           other.welcomeMessage == welcomeMessage &&
           other.responseBuilder == responseBuilder &&
-          other.messageSender == messageSender);
+          other.messageSender == messageSender &&
+          other.enableAttachments == enableAttachments &&
+          other.enableVoiceNotes == enableVoiceNotes);
 
   // the following is best practices when overriding operator ==
   @override
@@ -81,5 +99,7 @@ class ChatViewModel {
     welcomeMessage,
     responseBuilder,
     messageSender,
+    enableAttachments,
+    enableVoiceNotes,
   );
 }

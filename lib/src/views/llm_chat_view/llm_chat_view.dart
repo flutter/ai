@@ -75,6 +75,8 @@ class LlmChatView extends StatefulWidget {
   ///   a chat operation. Defaults to 'CANCEL'.
   /// - [errorMessage]: Optional. The message to display when an error occurs
   ///   during a chat operation. Defaults to 'ERROR'.
+  /// - [enableAttachments]: Optional. Whether to enable file and image attachments in the chat input.
+  /// - [enableVoiceNotes]: Optional. Whether to enable voice notes in the chat input.
   LlmChatView({
     required LlmProvider provider,
     LlmChatViewStyle? style,
@@ -86,6 +88,8 @@ class LlmChatView extends StatefulWidget {
     this.onErrorCallback,
     this.cancelMessage = 'CANCEL',
     this.errorMessage = 'ERROR',
+    this.enableAttachments = true,
+    this.enableVoiceNotes = true,
     super.key,
   }) : viewModel = ChatViewModel(
          provider: provider,
@@ -93,6 +97,8 @@ class LlmChatView extends StatefulWidget {
          messageSender: messageSender,
          style: style,
          welcomeMessage: welcomeMessage,
+         enableAttachments: enableAttachments,
+         enableVoiceNotes: enableVoiceNotes,
        );
 
   /// The list of suggestions to display in the chat interface.
@@ -101,6 +107,18 @@ class LlmChatView extends StatefulWidget {
   /// when the chat history is empty. The user can select any of these
   /// suggestions to quickly start a conversation with the LLM.
   final List<String> suggestions;
+
+  /// Whether to enable file and image attachments in the chat input.
+  ///
+  /// When set to false, the attachment button and related functionality will be
+  /// disabled.
+  final bool enableAttachments;
+
+  /// Whether to enable voice notes in the chat input.
+  ///
+  /// When set to false, the voice recording button and related functionality
+  /// will be disabled.
+  final bool enableVoiceNotes;
 
   /// The view model containing the chat state and configuration.
   ///
@@ -268,6 +286,7 @@ class _LlmChatViewState extends State<LlmChatView>
   }
 
   Future<void> _onTranslateStt(XFile file) async {
+    assert(widget.enableVoiceNotes);
     _initialMessage = null;
     _associatedResponse = null;
 

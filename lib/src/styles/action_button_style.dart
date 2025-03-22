@@ -110,6 +110,11 @@ class ActionButtonStyle {
         color = ToolkitColors.whiteIcon;
         bgColor = ToolkitColors.darkButtonBackground;
         tooltip = 'Submit Message';
+      case ActionButtonType.disabled:
+        icon = ToolkitIcons.submit_icon;
+        color = ToolkitColors.darkIcon;
+        bgColor = ToolkitColors.disabledButton;
+        tooltip = '';
       case ActionButtonType.closeMenu:
         icon = ToolkitIcons.close;
         color = ToolkitColors.whiteIcon;

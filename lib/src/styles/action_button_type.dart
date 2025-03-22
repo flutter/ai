@@ -39,4 +39,7 @@ enum ActionButtonType {
 
   /// Button to submit the current input or action.
   submit,
+
+  /// Disabled button.
+  disabled,
 }
