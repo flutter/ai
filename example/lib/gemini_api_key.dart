@@ -1,2 +1,2 @@
-// TODO(csells): REMOVE API KEY.
-String geminiApiKey = 'AIzaSyChJAI2oyjwztQjBBhcVJcLj6lRIMSWr90';
+// TODO: Add API key
+String geminiApiKey = '';
