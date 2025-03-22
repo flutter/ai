@@ -36,7 +36,7 @@ class ChatPage extends StatelessWidget {
       onErrorCallback: _onError,
       errorMessage: 'An error occurred',
       provider: GeminiProvider(
-        model: GenerativeModel(model: 'gemini-1.5-flash', apiKey: geminiApiKey),
+        model: GenerativeModel(model: 'gemini-2.0-flash', apiKey: geminiApiKey),
       ),
     ),
   );
