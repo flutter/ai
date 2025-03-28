@@ -1,2 +1,2 @@
-// TODO: Insert Gemini API Key.
+// TODO: Add API key
 String geminiApiKey = '';

@@ -28,7 +28,7 @@ class _HomePageState extends State<HomePage> {
   LlmProvider _createProvider([List<ChatMessage>? history]) => GeminiProvider(
     history: history,
     model: GenerativeModel(
-      model: 'gemini-1.5-flash', //'gemini-1.5-pro',
+      model: 'gemini-2.0-flash',
       apiKey: geminiApiKey,
       generationConfig: GenerationConfig(
         responseMimeType: 'application/json',

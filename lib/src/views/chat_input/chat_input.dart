@@ -8,7 +8,8 @@ import 'package:flutter/widgets.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:waveform_recorder/waveform_recorder.dart';
 
-import '../../chat_view_model/chat_view_model_client.dart';
+import '../../chat_view_model/chat_view_model.dart';
+import '../../chat_view_model/chat_view_model_provider.dart';
 import '../../dialogs/adaptive_snack_bar/adaptive_snack_bar.dart';
 import '../../providers/interface/attachments.dart';
 import '../../providers/interface/chat_message.dart';
@@ -53,7 +54,7 @@ class ChatInput extends StatefulWidget {
 
   /// Callback function triggered when a message is sent.
   ///
-  /// Takes a [String] for the message text and an [`Iterable<Attachment>`] for
+  /// Takes a [String] for the message text and [`Iterable<Attachment>`] for
   /// any attachments.
   final void Function(String, Iterable<Attachment>) onSendMessage;
 
@@ -113,8 +114,20 @@ class _ChatInputState extends State<ChatInput> {
   static const _minInputHeight = 48.0;
   static const _maxInputHeight = 144.0;
 
+  ChatViewModel? _viewModel;
+  ChatInputStyle? _inputStyle;
+  LlmChatViewStyle? _chatStyle;
+
   @override
-  void didUpdateWidget(covariant ChatInput oldWidget) {
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _viewModel = ChatViewModelProvider.of(context);
+    _chatStyle = LlmChatViewStyle.resolve(_viewModel!.style);
+    _inputStyle = ChatInputStyle.resolve(_viewModel!.style?.chatInputStyle);
+  }
+
+  @override
+  void didUpdateWidget(ChatInput oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (widget.initialMessage != null) {
       _textController.text = widget.initialMessage!.text ?? '';
@@ -132,142 +145,135 @@ class _ChatInputState extends State<ChatInput> {
   }
 
   @override
-  Widget build(BuildContext context) => ChatViewModelClient(
-    builder: (context, viewModel, child) {
-      final chatStyle = LlmChatViewStyle.resolve(viewModel.style);
-      final inputStyle = ChatInputStyle.resolve(
-        viewModel.style?.chatInputStyle,
-      );
-
-      return Container(
-        color: inputStyle.backgroundColor,
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          children: [
-            AttachmentsView(
-              attachments: _attachments,
-              onRemove: onRemoveAttachment,
-            ),
-            if (_attachments.isNotEmpty) const SizedBox(height: 6),
-            ValueListenableBuilder(
-              valueListenable: _textController,
-              builder:
-                  (context, value, child) => ListenableBuilder(
-                    listenable: _waveController,
-                    builder:
-                        (context, child) => Row(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(bottom: 14),
-                              child: AttachmentActionBar(
-                                onAttachments: onAttachments,
-                              ),
-                            ),
-                            Expanded(
-                              child: Stack(
-                                children: [
-                                  Padding(
-                                    padding: EdgeInsets.only(
-                                      left: 16,
-                                      right: 16,
-                                      top: widget.onCancelEdit != null ? 24 : 8,
-                                      bottom: 8,
-                                    ),
-                                    child: DecoratedBox(
-                                      decoration: inputStyle.decoration!,
-                                      child: ConstrainedBox(
-                                        constraints: const BoxConstraints(
-                                          minHeight: _minInputHeight,
-                                          maxHeight: _maxInputHeight,
-                                        ),
-                                        child:
-                                            _waveController.isRecording
-                                                ? WaveformRecorder(
-                                                  controller: _waveController,
-                                                  height: _minInputHeight,
-                                                  onRecordingStopped:
-                                                      onRecordingStopped,
-                                                )
-                                                : SingleChildScrollView(
-                                                  child: ChatTextField(
-                                                    minLines: 1,
-                                                    maxLines: 1024,
-                                                    controller: _textController,
-                                                    autofocus: true,
-                                                    focusNode: _focusNode,
-                                                    textInputAction:
-                                                        isMobile
-                                                            ? TextInputAction
-                                                                .newline
-                                                            : TextInputAction
-                                                                .done,
-                                                    onSubmitted:
-                                                        _inputState ==
-                                                                InputState
-                                                                    .canSubmitPrompt
-                                                            ? (_) =>
-                                                                onSubmitPrompt()
-                                                            : (_) =>
-                                                                _focusNode
-                                                                    .requestFocus(),
-                                                    style:
-                                                        inputStyle.textStyle!,
-                                                    hintText:
-                                                        inputStyle.hintText!,
-                                                    hintStyle:
-                                                        inputStyle.hintStyle!,
-                                                    hintPadding:
-                                                        const EdgeInsets.symmetric(
-                                                          horizontal: 12,
-                                                          vertical: 8,
-                                                        ),
-                                                  ),
-                                                ),
-                                      ),
-                                    ),
-                                  ),
-                                  Align(
-                                    alignment: Alignment.topRight,
-                                    child:
-                                        widget.onCancelEdit != null
-                                            ? EditingIndicator(
-                                              onCancelEdit:
-                                                  widget.onCancelEdit!,
-                                              cancelButtonStyle:
-                                                  chatStyle.cancelButtonStyle!,
-                                            )
-                                            : const SizedBox(),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(bottom: 14),
-                              child: InputButton(
-                                inputState: _inputState,
-                                chatStyle: chatStyle,
-                                onSubmitPrompt: onSubmitPrompt,
-                                onCancelPrompt: onCancelPrompt,
-                                onStartRecording: onStartRecording,
-                                onStopRecording: onStopRecording,
-                              ),
-                            ),
-                          ],
-                        ),
-                  ),
-            ),
-          ],
+  Widget build(BuildContext context) => Container(
+    color: _inputStyle!.backgroundColor,
+    padding: const EdgeInsets.all(16),
+    child: Column(
+      children: [
+        AttachmentsView(
+          attachments: _attachments,
+          onRemove: onRemoveAttachment,
         ),
-      );
-    },
+        if (_attachments.isNotEmpty) const SizedBox(height: 6),
+        ValueListenableBuilder(
+          valueListenable: _textController,
+          builder:
+              (context, value, child) => ListenableBuilder(
+                listenable: _waveController,
+                builder:
+                    (context, child) => Row(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        if (_viewModel!.enableAttachments)
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 14),
+                            child: AttachmentActionBar(
+                              onAttachments: onAttachments,
+                            ),
+                          ),
+                        Expanded(
+                          child: Stack(
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.only(
+                                  left: 16,
+                                  right: 16,
+                                  top: widget.onCancelEdit != null ? 24 : 8,
+                                  bottom: 8,
+                                ),
+                                child: DecoratedBox(
+                                  decoration: _inputStyle!.decoration!,
+                                  child: ConstrainedBox(
+                                    constraints: const BoxConstraints(
+                                      minHeight: _minInputHeight,
+                                      maxHeight: _maxInputHeight,
+                                    ),
+                                    child:
+                                        _waveController.isRecording
+                                            ? WaveformRecorder(
+                                              controller: _waveController,
+                                              height: _minInputHeight,
+                                              onRecordingStopped:
+                                                  onRecordingStopped,
+                                            )
+                                            : SingleChildScrollView(
+                                              child: ChatTextField(
+                                                minLines: 1,
+                                                maxLines: 1024,
+                                                controller: _textController,
+                                                autofocus: true,
+                                                focusNode: _focusNode,
+                                                textInputAction:
+                                                    isMobile
+                                                        ? TextInputAction
+                                                            .newline
+                                                        : TextInputAction.done,
+                                                onSubmitted:
+                                                    _inputState ==
+                                                            InputState
+                                                                .canSubmitPrompt
+                                                        ? (_) =>
+                                                            onSubmitPrompt()
+                                                        : (_) =>
+                                                            _focusNode
+                                                                .requestFocus(),
+                                                style: _inputStyle!.textStyle!,
+                                                hintText:
+                                                    _inputStyle!.hintText!,
+                                                hintStyle:
+                                                    _inputStyle!.hintStyle!,
+                                                hintPadding:
+                                                    const EdgeInsets.symmetric(
+                                                      horizontal: 12,
+                                                      vertical: 8,
+                                                    ),
+                                              ),
+                                            ),
+                                  ),
+                                ),
+                              ),
+                              Align(
+                                alignment: Alignment.topRight,
+                                child:
+                                    widget.onCancelEdit != null
+                                        ? EditingIndicator(
+                                          onCancelEdit: widget.onCancelEdit!,
+                                          cancelButtonStyle:
+                                              _chatStyle!.cancelButtonStyle!,
+                                        )
+                                        : const SizedBox(),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 14),
+                          child: InputButton(
+                            inputState: _inputState,
+                            chatStyle: _chatStyle!,
+                            onSubmitPrompt: onSubmitPrompt,
+                            onCancelPrompt: onCancelPrompt,
+                            onStartRecording: onStartRecording,
+                            onStopRecording: onStopRecording,
+                          ),
+                        ),
+                      ],
+                    ),
+              ),
+        ),
+      ],
+    ),
   );
 
   InputState get _inputState {
     if (_waveController.isRecording) return InputState.isRecording;
     if (widget.onCancelMessage != null) return InputState.canCancelPrompt;
     if (widget.onCancelStt != null) return InputState.canCancelStt;
-    if (_textController.text.trim().isEmpty) return InputState.canStt;
+    if (_textController.text.trim().isEmpty) {
+      return _viewModel!.enableVoiceNotes
+          ? InputState.canStt
+          : InputState.disabled;
+    }
     return InputState.canSubmitPrompt;
   }
 
@@ -310,8 +316,10 @@ class _ChatInputState extends State<ChatInput> {
     widget.onTranslateStt(file);
   }
 
-  void onAttachments(Iterable<Attachment> attachments) =>
-      setState(() => _attachments.addAll(attachments));
+  void onAttachments(Iterable<Attachment> attachments) {
+    assert(_viewModel!.enableAttachments);
+    setState(() => _attachments.addAll(attachments));
+  }
 
   void onRemoveAttachment(Attachment attachment) =>
       setState(() => _attachments.remove(attachment));

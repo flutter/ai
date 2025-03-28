@@ -44,7 +44,3 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
-
-# custom
-gemini_api_key.dart
-firebase_options.dart

@@ -71,5 +71,9 @@ class InputButton extends StatelessWidget {
     InputState.canCancelStt => AdaptiveCircularProgressIndicator(
       color: chatStyle.progressIndicatorColor!,
     ),
+    InputState.disabled => ActionButton(
+      style: chatStyle.disabledButtonStyle!,
+      onPressed: () {},
+    ),
   };
 }

@@ -34,6 +34,7 @@ class LlmChatViewStyle {
     this.galleryButtonStyle,
     this.recordButtonStyle,
     this.submitButtonStyle,
+    this.disabledButtonStyle,
     this.closeMenuButtonStyle,
     this.actionButtonBarDecoration,
     this.fileAttachmentStyle,
@@ -115,6 +116,10 @@ class LlmChatViewStyle {
       submitButtonStyle: ActionButtonStyle.resolve(
         style?.submitButtonStyle,
         defaultStyle: ActionButtonStyle.defaultStyle(ActionButtonType.submit),
+      ),
+      disabledButtonStyle: ActionButtonStyle.resolve(
+        style?.disabledButtonStyle,
+        defaultStyle: ActionButtonStyle.defaultStyle(ActionButtonType.disabled),
       ),
       closeMenuButtonStyle: ActionButtonStyle.resolve(
         style?.closeMenuButtonStyle,
@@ -215,6 +220,9 @@ class LlmChatViewStyle {
 
   /// Style for the submit button.
   final ActionButtonStyle? submitButtonStyle;
+
+  /// Style for the disabled button.
+  final ActionButtonStyle? disabledButtonStyle;
 
   /// Style for the close menu button.
   final ActionButtonStyle? closeMenuButtonStyle;
