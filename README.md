@@ -214,17 +214,43 @@ the AI toolkit in to your own applications.
 
  4. **Set up device permissions**
 
-    To enable your users to take advantage of features like
-    voice input and media attachments,
-    ensure that your app has the necessary permissions:
+    To enable your users to take advantage of features like voice input and
+    media attachments, ensure that your app has the necessary permissions:
+
+    - **Network access:**
+    To enable network access on macOS, add the following to your
+    `*.entitlements` files:
+
+```xml
+<plist version="1.0">
+    <dict>
+      ...
+      <key>com.apple.security.network.client</key>
+      <true/>
+    </dict>
+</plist>
+```
+
+    To enable network access on Android, ensure that your `AndroidManifest.xml`
+    file contains the following:
+
+
+```xml
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    ...
+    <uses-permission android:name="android.permission.INTERNET"/>
+</manifest>
+```
 
     - **Microphone access:**
       To enable voice input for users, update configs according to the
       [permission and setup instructions][record-setup] for `package:record`.
+
     - **File selection:**
       To enable users to select and attach files,
       follow the [usage instructions][file-setup] for `package:file_selector`.
     - **Image selection:**
+
       To enable users to take or select a picture from their device, refer to
       the [installation instructions][image-setup] for `package:image_picker`.
 
