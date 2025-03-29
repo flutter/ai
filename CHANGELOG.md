@@ -1,3 +1,19 @@
+## 0.7.0
+
+* fixed [#55](https://github.com/flutter/ai/issues/55): The input field does
+  not unfocus on iPhone simulator
+
+* fixed [#52](https://github.com/flutter/ai/issues/52): Make Chat Input
+  Configurable to Disable Attachments and Voice Notes
+
+* fixed [#63](https://github.com/flutter/ai/issues/63): update all samples to
+  use the 2.0 flash model
+
+* fixed [#49](https://github.com/flutter/ai/issues/49): pub publish has warnings
+
+* fixed [#61](https://github.com/flutter/ai/issues/61): [test] add a smoke test
+
+
 ## 0.6.8
 
 * Require Dart 3.5 or later.
