@@ -184,48 +184,54 @@ class _LlmChatViewState extends State<LlmChatView>
       builder:
           (context, child) => ChatViewModelProvider(
             viewModel: widget.viewModel,
-            child: Container(
-              color: chatStyle.backgroundColor,
-              child: Column(
-                children: [
-                  Expanded(
-                    child: Stack(
-                      children: [
-                        ChatHistoryView(
-                          // can only edit if we're not waiting on the LLM or if
-                          // we're not already editing an LLM response
-                          onEditMessage:
-                              _pendingPromptResponse == null &&
-                                      _associatedResponse == null
-                                  ? _onEditMessage
-                                  : null,
-                        ),
-                        if (widget.suggestions.isNotEmpty &&
-                            widget.viewModel.provider.history.isEmpty)
-                          Align(
-                            alignment: Alignment.topCenter,
-                            child: ChatSuggestionsView(
-                              suggestions: widget.suggestions,
-                              onSelectSuggestion: _onSelectSuggestion,
-                            ),
+            child: GestureDetector(
+              onTap: () {
+                // Dismiss keyboard when tapping anywhere in the view
+                FocusScope.of(context).unfocus();
+              },
+              child: Container(
+                color: chatStyle.backgroundColor,
+                child: Column(
+                  children: [
+                    Expanded(
+                      child: Stack(
+                        children: [
+                          ChatHistoryView(
+                            // can only edit if we're not waiting on the LLM or if
+                            // we're not already editing an LLM response
+                            onEditMessage:
+                                _pendingPromptResponse == null &&
+                                        _associatedResponse == null
+                                    ? _onEditMessage
+                                    : null,
                           ),
-                      ],
+                          if (widget.suggestions.isNotEmpty &&
+                              widget.viewModel.provider.history.isEmpty)
+                            Align(
+                              alignment: Alignment.topCenter,
+                              child: ChatSuggestionsView(
+                                suggestions: widget.suggestions,
+                                onSelectSuggestion: _onSelectSuggestion,
+                              ),
+                            ),
+                        ],
+                      ),
                     ),
-                  ),
-                  ChatInput(
-                    initialMessage: _initialMessage,
-                    onCancelEdit:
-                        _associatedResponse != null ? _onCancelEdit : null,
-                    onSendMessage: _onSendMessage,
-                    onCancelMessage:
-                        _pendingPromptResponse == null
-                            ? null
-                            : _onCancelMessage,
-                    onTranslateStt: _onTranslateStt,
-                    onCancelStt:
-                        _pendingSttResponse == null ? null : _onCancelStt,
-                  ),
-                ],
+                    ChatInput(
+                      initialMessage: _initialMessage,
+                      onCancelEdit:
+                          _associatedResponse != null ? _onCancelEdit : null,
+                      onSendMessage: _onSendMessage,
+                      onCancelMessage:
+                          _pendingPromptResponse == null
+                              ? null
+                              : _onCancelMessage,
+                      onTranslateStt: _onTranslateStt,
+                      onCancelStt:
+                          _pendingSttResponse == null ? null : _onCancelStt,
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
