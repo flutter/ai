@@ -1,2 +1,5 @@
 // TODO: Add API key
-String geminiApiKey = '';
+String geminiApiKey = String.fromEnvironment(
+  'GEMINI_API_KEY',
+  defaultValue: '',
+);

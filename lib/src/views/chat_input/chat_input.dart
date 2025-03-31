@@ -42,6 +42,7 @@ class ChatInput extends StatefulWidget {
     this.onCancelEdit,
     this.onCancelMessage,
     this.onCancelStt,
+    this.autofocus = true,
     super.key,
   }) : assert(
          !(onCancelMessage != null && onCancelStt != null),
@@ -78,6 +79,9 @@ class ChatInput extends StatefulWidget {
   /// Optional callback function to cancel an ongoing speech-to-text
   /// translation.
   final void Function()? onCancelStt;
+
+  /// Whether the input should automatically focus
+  final bool autofocus;
 
   @override
   State<ChatInput> createState() => _ChatInputState();
@@ -201,7 +205,7 @@ class _ChatInputState extends State<ChatInput> {
                                                 minLines: 1,
                                                 maxLines: 1024,
                                                 controller: _textController,
-                                                autofocus: true,
+                                                autofocus: widget.autofocus,
                                                 focusNode: _focusNode,
                                                 textInputAction:
                                                     isMobile
