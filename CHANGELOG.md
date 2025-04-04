@@ -13,6 +13,8 @@
 
 * fixed [#61](https://github.com/flutter/ai/issues/61): [test] add a smoke test
 
+* fixed [#75](https://github.com/flutter/ai/issues/75): "No MaterialLocalizations
+  found" error in SelectionArea widget
 
 ## 0.6.8
 
