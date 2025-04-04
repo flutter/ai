@@ -34,6 +34,7 @@ class ChatSuggestionsView extends StatelessWidget {
         viewModel.style?.suggestionStyle,
       );
       return Wrap(
+        alignment: WrapAlignment.center,
         children: [
           for (final suggestion in suggestions)
             GestureDetector(
