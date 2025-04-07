@@ -28,6 +28,7 @@ class ChatViewModel {
   const ChatViewModel({
     required this.provider,
     required this.style,
+    required this.suggestions,
     required this.welcomeMessage,
     required this.responseBuilder,
     required this.messageSender,
@@ -46,6 +47,13 @@ class ChatViewModel {
   /// Defines visual properties like colors, decorations, and layout parameters
   /// for the chat interface. If null, default styling will be applied.
   final LlmChatViewStyle? style;
+
+  /// The list of suggestions to display in the chat interface.
+  ///
+  /// This list contains predefined suggestions that can be shown to the user
+  /// when the chat history is empty. The user can select any of these
+  /// suggestions to quickly start a conversation with the LLM.
+  final List<String> suggestions;
 
   /// The welcome message to display in the chat interface.
   ///
@@ -85,6 +93,7 @@ class ChatViewModel {
       (other is ChatViewModel &&
           other.provider == provider &&
           other.style == style &&
+          other.suggestions == suggestions &&
           other.welcomeMessage == welcomeMessage &&
           other.responseBuilder == responseBuilder &&
           other.messageSender == messageSender &&
@@ -96,6 +105,7 @@ class ChatViewModel {
   int get hashCode => Object.hash(
     provider,
     style,
+    suggestions,
     welcomeMessage,
     responseBuilder,
     messageSender,

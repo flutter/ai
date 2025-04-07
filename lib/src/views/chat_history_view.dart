@@ -2,7 +2,9 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_ai_toolkit/src/views/chat_input/chat_suggestion_view.dart';
 
 import '../chat_view_model/chat_view_model_client.dart';
 import '../providers/interface/chat_message.dart';
@@ -22,7 +24,11 @@ class ChatHistoryView extends StatefulWidget {
   /// If [onEditMessage] is provided, it will be called when a user initiates an
   /// edit action on an editable message (typically the last user message in the
   /// history).
-  const ChatHistoryView({this.onEditMessage, super.key});
+  const ChatHistoryView({
+    this.onEditMessage,
+    required this.onSelectSuggestion,
+    super.key,
+  });
 
   /// Optional callback function for editing a message.
   ///
@@ -31,6 +37,9 @@ class ChatHistoryView extends StatefulWidget {
   /// history). The function receives the [ChatMessage] to be edited as its
   /// parameter.
   final void Function(ChatMessage message)? onEditMessage;
+
+  /// The callback function to call when a suggestion is selected.
+  final void Function(String suggestion) onSelectSuggestion;
 
   @override
   State<ChatHistoryView> createState() => _ChatHistoryViewState();
@@ -42,8 +51,12 @@ class _ChatHistoryViewState extends State<ChatHistoryView> {
     padding: const EdgeInsets.only(top: 16, left: 16, right: 16),
     child: ChatViewModelClient(
       builder: (context, viewModel, child) {
+        final showWelcomeMessage = viewModel.welcomeMessage != null;
+        final showSuggestions =
+            viewModel.suggestions.isNotEmpty &&
+            viewModel.provider.history.isEmpty;
         final history = [
-          if (viewModel.welcomeMessage != null)
+          if (showWelcomeMessage)
             ChatMessage(
               origin: MessageOrigin.llm,
               text: viewModel.welcomeMessage,
@@ -54,8 +67,17 @@ class _ChatHistoryViewState extends State<ChatHistoryView> {
 
         return ListView.builder(
           reverse: true,
-          itemCount: history.length,
+          itemCount: history.length + (showSuggestions ? 1 : 0),
           itemBuilder: (context, index) {
+            if (showSuggestions) {
+              index -= showWelcomeMessage ? 1 : 0;
+              if (index == history.length - (showWelcomeMessage ? 2 : 0)) {
+                return ChatSuggestionsView(
+                  suggestions: viewModel.suggestions,
+                  onSelectSuggestion: widget.onSelectSuggestion,
+                );
+              }
+            }
             final messageIndex = history.length - index - 1;
             final message = history[messageIndex];
             final isLastUserMessage =

@@ -19,7 +19,6 @@ import '../../providers/interface/llm_provider.dart';
 import '../../styles/llm_chat_view_style.dart';
 import '../chat_history_view.dart';
 import '../chat_input/chat_input.dart';
-import '../chat_input/chat_suggestion_view.dart';
 import '../response_builder.dart';
 import 'llm_response.dart';
 
@@ -82,7 +81,7 @@ class LlmChatView extends StatefulWidget {
     LlmChatViewStyle? style,
     ResponseBuilder? responseBuilder,
     LlmStreamGenerator? messageSender,
-    this.suggestions = const [],
+    List<String> suggestions = const [],
     String? welcomeMessage,
     this.onCancelCallback,
     this.onErrorCallback,
@@ -96,17 +95,11 @@ class LlmChatView extends StatefulWidget {
          responseBuilder: responseBuilder,
          messageSender: messageSender,
          style: style,
+         suggestions: suggestions,
          welcomeMessage: welcomeMessage,
          enableAttachments: enableAttachments,
          enableVoiceNotes: enableVoiceNotes,
        );
-
-  /// The list of suggestions to display in the chat interface.
-  ///
-  /// This list contains predefined suggestions that can be shown to the user
-  /// when the chat history is empty. The user can select any of these
-  /// suggestions to quickly start a conversation with the LLM.
-  final List<String> suggestions;
 
   /// Whether to enable file and image attachments in the chat input.
   ///
@@ -153,7 +146,7 @@ class LlmChatView extends StatefulWidget {
 }
 
 class _LlmChatViewState extends State<LlmChatView>
-    with AutomaticKeepAliveClientMixin, WidgetsBindingObserver {
+    with AutomaticKeepAliveClientMixin {
   @override
   bool get wantKeepAlive => true;
 
@@ -161,13 +154,11 @@ class _LlmChatViewState extends State<LlmChatView>
   ChatMessage? _initialMessage;
   ChatMessage? _associatedResponse;
   LlmResponse? _pendingSttResponse;
-  bool isKeyboardVisible = false;
 
   @override
   void initState() {
     super.initState();
     widget.viewModel.provider.addListener(_onHistoryChanged);
-    WidgetsBinding.instance.addObserver(this);
   }
 
   @override
@@ -175,25 +166,6 @@ class _LlmChatViewState extends State<LlmChatView>
     super.dispose();
     widget.viewModel.provider.removeListener(_onHistoryChanged);
   }
-
-  @override
-  void didChangeMetrics() {
-    super.didChangeMetrics();
-    checkKeyboardVisibility();
-  }
-
-  void checkKeyboardVisibility() {
-    if (!mounted) return;
-    bool keyboardVisible = View.of(context).viewInsets.bottom > 0.0;
-    if (isKeyboardVisible != keyboardVisible) {
-      setState(() => isKeyboardVisible = keyboardVisible);
-    }
-  }
-
-  bool get showSuggestions =>
-      widget.suggestions.isNotEmpty &&
-      widget.viewModel.provider.history.isEmpty &&
-      !isKeyboardVisible;
 
   @override
   Widget build(BuildContext context) {
@@ -225,30 +197,14 @@ class _LlmChatViewState extends State<LlmChatView>
                                         _associatedResponse == null
                                     ? _onEditMessage
                                     : null,
-                          ),
-                          AnimatedSwitcher(
-                            duration: Duration(milliseconds: 200),
-                            child:
-                                !showSuggestions
-                                    ? SizedBox()
-                                    : Container(
-                                      width: double.infinity,
-                                      color: chatStyle.backgroundColor,
-                                      child: SingleChildScrollView(
-                                        child: ChatSuggestionsView(
-                                          suggestions: widget.suggestions,
-                                          onSelectSuggestion:
-                                              _onSelectSuggestion,
-                                        ),
-                                      ),
-                                    ),
+                            onSelectSuggestion: _onSelectSuggestion,
                           ),
                         ],
                       ),
                     ),
                     ChatInput(
                       initialMessage: _initialMessage,
-                      autofocus: !showSuggestions,
+                      autofocus: widget.viewModel.suggestions.isEmpty,
                       onCancelEdit:
                           _associatedResponse != null ? _onCancelEdit : null,
                       onSendMessage: _onSendMessage,

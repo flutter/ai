@@ -40,6 +40,13 @@ void main() {
       Finder suggestionsView = find.byType(ChatSuggestionsView);
       expect(suggestionsView, findsOne);
 
+      // Suggestions must be a child of ListView
+      final listView = find.ancestor(
+        of: suggestionsView,
+        matching: find.byType(ListView),
+      );
+      expect(listView, findsOne);
+
       // ChatTextField must be autofocus false and TextField must not be focused
       final chatTextField = find.byType(ChatTextField);
       final textField = find.byType(TextField);
@@ -55,12 +62,11 @@ void main() {
       );
       await tester.pumpAndSettle();
 
-      // Suggestions must not be visible now
+      // Suggestions must still be visible now
       suggestionsView = find.byType(ChatSuggestionsView);
-      expect(suggestionsView, findsNothing);
+      expect(suggestionsView, findsOne);
 
-      // ChatTextField must be autofocus true and TextField must be focused now
-      expect((tester.widget<ChatTextField>(chatTextField)).autofocus, true);
+      // TextField must be focused now
       expect((tester.widget<TextField>(textField)).focusNode?.hasFocus, true);
     });
     testWidgets('Welcome message with a lot of suggestions allowing scroll', (
@@ -83,7 +89,7 @@ void main() {
       final scrollableState = tester.state<ScrollableState>(scrollable);
 
       // Perform a scroll gesture
-      await tester.drag(scrollable, const Offset(0, -200));
+      await tester.drag(scrollable, const Offset(0, 200));
       await tester.pumpAndSettle();
 
       // Check that the scroll position has changed
