@@ -1,3 +1,9 @@
+## 0.7.1
+
+* fixed [#74](https://github.com/flutter/ai/issues/74): Suggestions overlapping
+  with welcome message. thanks to @luis901101 for working with me to define an
+  improved UX and for [the PR](https://github.com/flutter/ai/pull/79)!
+
 ## 0.7.0
 
 * fixed [#55](https://github.com/flutter/ai/issues/55): The input field does
