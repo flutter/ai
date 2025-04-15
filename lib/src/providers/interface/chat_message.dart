@@ -6,6 +6,9 @@
 // ignore_for_file: avoid_dynamic_calls
 
 import 'dart:convert';
+import 'dart:math' as math;
+
+import 'package:flutter/foundation.dart';
 
 import '../../providers/interface/attachments.dart';
 import 'message_origin.dart';
@@ -15,56 +18,134 @@ import 'message_origin.dart';
 /// This class encapsulates the properties and behavior of a chat message,
 /// including its unique identifier, origin (user or LLM), text content,
 /// and any attachments.
-class ChatMessage {
+class ChatMessage extends ChangeNotifier {
   /// Constructs a [ChatMessage] instance.
   ///
+  /// The [id] parameter is a unique identifier for the message.
   /// The [origin] parameter specifies the origin of the message (user or LLM).
   /// The [text] parameter is the content of the message. It can be null or
   /// empty if the message is from an LLM. For user-originated messages, [text]
-  /// must not be null or empty. The [attachments] parameter is a list of any
-  /// files or media attached to the message.
+  /// must not be null or empty. 
+  /// The [attachments] parameter is a list of any files or media attached to the message.
+  /// The [createdAt] and [updatedAt] parameters are the timestamps for when
+  /// the message was created and last updated, respectively.
+  /// The [children] parameter is a list of child messages associated with
+  /// this message. 
+  /// The [currentChild] parameter is the currently active child message.
   ChatMessage({
+    ValueKey<String>? id,
     required this.origin,
-    required this.text,
-    required this.attachments,
-  }) : assert(origin.isUser && text != null && text.isNotEmpty || origin.isLlm);
+    String? text,
+    this.attachments = const [],
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    List<ChatMessage>? children,
+    ChatMessage? currentChild,
+  })  : id = id ?? ValueKey<String>(math.Random().nextInt(2^62).toUnsigned(20).toRadixString(16)),
+        _updatedAt = updatedAt ?? DateTime.now(),
+        _text = text,
+        createdAt = createdAt ?? DateTime.now(),
+        _children = children ?? [],
+        _currentChild = currentChild {
+    if (currentChild == null) {
+      _currentChild = _children.isNotEmpty ? _children.first : null;
+    }
+    else if (!_children.contains(currentChild)) {
+      _children.add(currentChild);
+    }
+    
+    for (final child in _children) {
+      child.parent = this;
+    }
+  }
 
-  /// Converts a JSON map representation to a [ChatMessage].
-  ///
-  /// The map should contain the following keys:
-  /// - 'origin': The origin of the message (user or model).
-  /// - 'text': The text content of the message.
-  /// - 'attachments': A list of attachments, each represented as a map with:
-  ///   - 'type': The type of the attachment ('file' or 'link').
-  ///   - 'name': The name of the attachment.
-  ///   - 'mimeType': The MIME type of the attachment.
-  ///   - 'data': The data of the attachment, either as a base64 encoded string
-  ///     (for files) or a URL (for links).
-  factory ChatMessage.fromJson(Map<String, dynamic> map) => ChatMessage(
-    origin: MessageOrigin.values.byName(map['origin'] as String),
-    text: map['text'] as String,
-    attachments: [
-      for (final attachment in map['attachments'] as List<dynamic>)
+  /// Converts a JSON map list representation to a [ChatMessage].
+  /// 
+  /// If no [id] is provided, it will be derived from the first map in the list with a null parent.
+  /// Which is assumed to be the root message.
+  factory ChatMessage.fromMapList(List<Map<String, dynamic>> mapList, [ValueKey<String>? id]) {
+    id ??= ValueKey<String>(mapList.firstWhere(
+      (map) => map['parent'] == null,
+      orElse: () => throw ArgumentError('No root found in mapList'),
+    )['id']);
+
+    final map = mapList.firstWhere(
+      (map) => map['id'] == id!.value,
+      orElse: () => throw ArgumentError('No message found with id: ${id!.value}'),
+    );
+
+    List<Attachment> attachments = [];
+    if (map['attachments'] != null) {
+      for (final attachment in map['attachments']) {
         switch (attachment['type'] as String) {
-          'file' => FileAttachment.fileOrImage(
-            name: attachment['name'] as String,
-            mimeType: attachment['mimeType'] as String,
-            bytes: base64Decode(attachment['data'] as String),
-          ),
-          'link' => LinkAttachment(
-            name: attachment['name'] as String,
-            url: Uri.parse(attachment['data'] as String),
-          ),
-          _ => throw UnimplementedError(),
-        },
-    ],
-  );
+          case 'file':
+            attachments.add(
+              FileAttachment.fileOrImage(
+                name: attachment['name'] as String,
+                mimeType: attachment['mimeType'] as String,
+                bytes: base64Decode(attachment['data'] as String),
+              ),
+            );
+            break;
+          case 'link':
+            attachments.add(
+              LinkAttachment(
+                name: attachment['name'] as String,
+                url: Uri.parse(attachment['data'] as String),
+              ),
+            );
+            break;
+          default:
+            throw UnimplementedError('Unknown attachment type: ${attachment['type']}');
+        }
+      }
+    }
+
+    List<ChatMessage> children = [];
+    for (final childId in map['children']) {
+      children.add(ChatMessage.fromMapList(mapList, ValueKey<String>(childId)));
+    }
+
+    ChatMessage? currentChild;
+    if (map['current_child'] != null) {
+      currentChild = children.firstWhere(
+        (child) => child.id.value == map['current_child'],
+        orElse: () => throw ArgumentError('No child found with id: ${map['current_child']}'),
+      );
+    }
+
+    DateTime? createdAt;
+    if (map['create_time'] is String) {
+      createdAt = DateTime.parse(map['create_time']);
+    }
+    else if (map['create_time'] is double) {
+      createdAt = DateTime.fromMillisecondsSinceEpoch((map['create_time'] * 1000 as double).toInt());
+    }
+
+    DateTime? updatedAt;
+    if (map['update_time'] is String) {
+      updatedAt = DateTime.parse(map['update_time']);
+    }
+    else if (map['update_time'] is double) {
+      updatedAt = DateTime.fromMillisecondsSinceEpoch((map['update_time'] * 1000 as double).toInt());
+    }
+
+    return ChatMessage(
+      id: id,
+      origin: MessageOrigin.fromString(map['role']),
+      text: map['text'],
+      attachments: attachments,
+      createdAt: createdAt,
+      updatedAt: updatedAt,
+      children: children,
+      currentChild: currentChild,
+    );
+  }
 
   /// Factory constructor for creating an LLM-originated message.
   ///
   /// Creates a message with an empty text content and no attachments.
-  factory ChatMessage.llm() =>
-      ChatMessage(origin: MessageOrigin.llm, text: null, attachments: []);
+  factory ChatMessage.llm() => ChatMessage(origin: MessageOrigin.llm);
 
   /// Factory constructor for creating a user-originated message.
   ///
@@ -77,8 +158,41 @@ class ChatMessage {
         attachments: attachments,
       );
 
+  /// Appends additional text to the existing message content.
+  ///
+  /// This is typically used for LLM messages that are streamed in parts.
+  void append(String text) => this.text = (this.text ?? '') + text;
+
+  final List<ChatMessage> _children;
+
+  List<ChatMessage> get children => _children;
+
+  ChatMessage? _parent;
+
+  ChatMessage? get parent => _parent;
+
+  set parent(ChatMessage? value) {
+    if (_parent != null) {
+      throw ArgumentError('Parent already set');
+    }
+
+    _parent = value;
+    notifyListeners();
+  }
+
+  /// A Unique identifier for the message.
+  final ValueKey<String> id;
+
+  String? _text;
+
   /// Text content of the message.
-  String? text;
+  String? get text => _text;
+  
+  set text(String? value) {
+    _text = value;
+    _updatedAt = DateTime.now();
+    notifyListeners();
+  }
 
   /// The origin of the message (user or LLM).
   final MessageOrigin origin;
@@ -86,50 +200,153 @@ class ChatMessage {
   /// Any attachments associated with the message.
   final Iterable<Attachment> attachments;
 
-  /// Appends additional text to the existing message content.
-  ///
-  /// This is typically used for LLM messages that are streamed in parts.
-  void append(String text) => this.text = (this.text ?? '') + text;
+
+  final DateTime createdAt;
+
+  DateTime _updatedAt;
+
+  DateTime get updatedAt => _updatedAt;
+
+  ChatMessage? _currentChild;
+
+  ChatMessage? get currentChild => _currentChild;
+
+  void nextChild() {
+    if (_children.isEmpty) return;
+
+    int index = 0;
+    if (_currentChild != null) {
+      final lastIndex = _children.indexOf(_currentChild!);
+      index = math.min(_children.length - 1, lastIndex + 1);
+    }
+    _currentChild = _children[index];
+
+    _updatedAt = DateTime.now();
+    notifyListeners();
+  }
+
+  void previousChild() {
+    if (_children.isEmpty) return;
+
+    int index = 0;
+    if (_currentChild != null) {
+      final lastIndex = _children.indexOf(_currentChild!);
+      index = math.max(0, lastIndex - 1);
+    }
+    _currentChild = _children[index];
+
+    _updatedAt = DateTime.now();
+    notifyListeners();
+  }
+
+  void addChild(ChatMessage child) {
+    _children.add(child);
+    child.parent = this;
+    _currentChild = child;
+    _updatedAt = DateTime.now();
+    notifyListeners();
+  }
+
+  void removeChild(ChatMessage child) {
+    _children.remove(child);
+    _currentChild = _children.isNotEmpty ? _children.first : null;
+    _updatedAt = DateTime.now();
+    notifyListeners();
+  }
+
+  ChatMessage get tail {
+    if (_children.isEmpty) return this;
+
+    ChatMessage tail = this;
+    do {
+      if (tail.currentChild != null) {
+        tail = tail.currentChild!;
+      }
+    } while (tail.currentChild != null);
+
+    return tail;
+  }
+
+  List<ChatMessage> get chain {
+    final List<ChatMessage> chain = [];
+
+    ChatMessage current = this;
+    do {
+      chain.add(current);
+      
+      if (current.currentChild != null) {
+        current = current.currentChild!;
+      }
+    } while (current.currentChild != null);
+
+    return chain;
+  }
+
+  List<ChatMessage> get chainReverse {
+    final List<ChatMessage> chain = [];
+
+    ChatMessage current = this;
+    do {
+      chain.add(current);
+
+      if (current.parent != null) {
+        current = current.parent!;
+      }
+    } while (current.parent != null);
+
+    return chain;
+  }
+
+  int get currentChildIndex => _children.indexOf(_currentChild!);
+
+  List<Map<String, dynamic>> toMapList() {
+    final mapList = [{
+      'id': id.value,
+      'parent': parent?.id.value,
+      'children': children.map((child) => child.id.value).toList(),
+      'current_child': currentChild?.id.value,
+      'origin': origin.name,
+      'text': text,
+      'attachments': [
+        for (final attachment in attachments)
+          {
+            'type': switch (attachment) {
+              (FileAttachment _) => 'file',
+              (LinkAttachment _) => 'link',
+            },
+            'name': attachment.name,
+            'mimeType': switch (attachment) {
+              (final FileAttachment a) => a.mimeType,
+              (final LinkAttachment a) => a.mimeType,
+            },
+            'data': switch (attachment) {
+              (final FileAttachment a) => base64Encode(a.bytes),
+              (final LinkAttachment a) => a.url,
+            },
+          },
+      ],
+      'create_time': createdAt.toIso8601String(),
+      'update_time': updatedAt.toIso8601String(),
+    }];
+
+    for (final child in _children) {
+      mapList.addAll(child.toMapList());
+    }
+
+    return mapList;
+  }
 
   @override
   String toString() =>
       'ChatMessage('
+      'id: $id, '
+      'parent: ${parent?.id.value}, '
+      'currentChild: ${currentChild?.id.value}, '
+      'children: ${_children.map((child) => child.id.value).toList()}, '
+      'createdAt: $createdAt, '
+      'updatedAt: $_updatedAt, '
       'origin: $origin, '
       'text: $text, '
       'attachments: $attachments'
       ')';
-
-  /// Converts a [ChatMessage] to a JSON map representation.
-  ///
-  /// The map contains the following keys:
-  /// - 'origin': The origin of the message (user or model).
-  /// - 'text': The text content of the message.
-  /// - 'attachments': A list of attachments, each represented as a map with:
-  ///   - 'type': The type of the attachment ('file' or 'link').
-  ///   - 'name': The name of the attachment.
-  ///   - 'mimeType': The MIME type of the attachment.
-  ///   - 'data': The data of the attachment, either as a base64 encoded string
-  ///     (for files) or a URL (for links).
-  Map<String, dynamic> toJson() => {
-    'origin': origin.name,
-    'text': text,
-    'attachments': [
-      for (final attachment in attachments)
-        {
-          'type': switch (attachment) {
-            (FileAttachment _) => 'file',
-            (LinkAttachment _) => 'link',
-          },
-          'name': attachment.name,
-          'mimeType': switch (attachment) {
-            (final FileAttachment a) => a.mimeType,
-            (final LinkAttachment a) => a.mimeType,
-          },
-          'data': switch (attachment) {
-            (final FileAttachment a) => base64Encode(a.bytes),
-            (final LinkAttachment a) => a.url,
-          },
-        },
-    ],
-  };
 }
