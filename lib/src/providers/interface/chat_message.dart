@@ -165,10 +165,12 @@ class ChatMessage extends ChangeNotifier {
 
   final List<ChatMessage> _children;
 
+  /// List of child messages associated with this message.
   List<ChatMessage> get children => _children;
 
   ChatMessage? _parent;
 
+  /// The parent message of this message.
   ChatMessage? get parent => _parent;
 
   set parent(ChatMessage? value) {
@@ -200,17 +202,22 @@ class ChatMessage extends ChangeNotifier {
   /// Any attachments associated with the message.
   final Iterable<Attachment> attachments;
 
-
+  /// The time when the message was created.
   final DateTime createdAt;
 
   DateTime _updatedAt;
 
+  /// The time when the message was last updated.
   DateTime get updatedAt => _updatedAt;
 
   ChatMessage? _currentChild;
 
+  /// The currently active child message.
   ChatMessage? get currentChild => _currentChild;
 
+  /// Sets the currently active child message to the next child in the list.
+  /// If there are no children or if the current child is the last one, it does nothing.
+  /// If the current child is null, it sets the first child as the current child.
   void nextChild() {
     if (_children.isEmpty) return;
 
@@ -225,6 +232,9 @@ class ChatMessage extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// Sets the currently active child message to the previous child in the list.
+  /// If there are no children or if the current child is the first one, it does nothing.
+  /// If the current child is null, it sets the first child as the current child.
   void previousChild() {
     if (_children.isEmpty) return;
 
@@ -239,6 +249,8 @@ class ChatMessage extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// Adds a child message to the list of children.
+  /// Sets the added child as the current child.
   void addChild(ChatMessage child) {
     _children.add(child);
     child.parent = this;
@@ -247,6 +259,8 @@ class ChatMessage extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// Removes a child message from the list of children.
+  /// If the removed child was the current child, sets the first child as the current child.
   void removeChild(ChatMessage child) {
     _children.remove(child);
     _currentChild = _children.isNotEmpty ? _children.first : null;
@@ -254,19 +268,15 @@ class ChatMessage extends ChangeNotifier {
     notifyListeners();
   }
 
-  ChatMessage get tail {
-    if (_children.isEmpty) return this;
+  /// Returns the last message in the chain of messages.
+  ChatMessage get tail => chain.last;
 
-    ChatMessage tail = this;
-    do {
-      if (tail.currentChild != null) {
-        tail = tail.currentChild!;
-      }
-    } while (tail.currentChild != null);
+  /// Returns the first message in the chain of messages.
+  ChatMessage get root => chainReverse.last;
 
-    return tail;
-  }
-
+  /// Returns the current conversation chain of messages.
+  /// 
+  /// The chain starts from the current message and goes down to the last message.
   List<ChatMessage> get chain {
     final List<ChatMessage> chain = [];
 
@@ -282,6 +292,9 @@ class ChatMessage extends ChangeNotifier {
     return chain;
   }
 
+  /// Returns the reverse of the current conversation chain of messages.
+  /// 
+  /// The chain starts from the this message and goes up to the first message.
   List<ChatMessage> get chainReverse {
     final List<ChatMessage> chain = [];
 
@@ -297,8 +310,11 @@ class ChatMessage extends ChangeNotifier {
     return chain;
   }
 
+  /// Returns the index of the current child in the list of children.
+  /// If the current child is null, it returns -1.
   int get currentChildIndex => _children.indexOf(_currentChild!);
 
+  /// Converts the message and its children to a list of maps.
   List<Map<String, dynamic>> toMapList() {
     final mapList = [{
       'id': id.value,
