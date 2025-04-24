@@ -10,8 +10,9 @@ import 'dart:math' as math;
 
 import 'package:flutter/foundation.dart';
 
-import '../../providers/interface/attachments.dart';
+import 'attachments.dart';
 import 'message_origin.dart';
+import '../../utility.dart';
 
 /// Represents a message in a chat conversation.
 ///
@@ -27,8 +28,6 @@ class ChatMessage extends ChangeNotifier {
   /// empty if the message is from an LLM. For user-originated messages, [text]
   /// must not be null or empty. 
   /// The [attachments] parameter is a list of any files or media attached to the message.
-  /// The [createdAt] and [updatedAt] parameters are the timestamps for when
-  /// the message was created and last updated, respectively.
   /// The [children] parameter is a list of child messages associated with
   /// this message. 
   /// The [currentChild] parameter is the currently active child message.
@@ -37,14 +36,10 @@ class ChatMessage extends ChangeNotifier {
     required this.origin,
     String? text,
     this.attachments = const [],
-    DateTime? createdAt,
-    DateTime? updatedAt,
     List<ChatMessage>? children,
     ChatMessage? currentChild,
-  })  : id = id ?? ValueKey<String>(math.Random().nextInt(2^62).toUnsigned(20).toRadixString(16)),
-        _updatedAt = updatedAt ?? DateTime.now(),
+  })  : id = id ?? ValueKey<String>(generateUuidV4()),
         _text = text,
-        createdAt = createdAt ?? DateTime.now(),
         _children = children ?? [],
         _currentChild = currentChild {
     if (currentChild == null) {
@@ -114,29 +109,11 @@ class ChatMessage extends ChangeNotifier {
       );
     }
 
-    DateTime? createdAt;
-    if (map['create_time'] is String) {
-      createdAt = DateTime.parse(map['create_time']);
-    }
-    else if (map['create_time'] is double) {
-      createdAt = DateTime.fromMillisecondsSinceEpoch((map['create_time'] * 1000 as double).toInt());
-    }
-
-    DateTime? updatedAt;
-    if (map['update_time'] is String) {
-      updatedAt = DateTime.parse(map['update_time']);
-    }
-    else if (map['update_time'] is double) {
-      updatedAt = DateTime.fromMillisecondsSinceEpoch((map['update_time'] * 1000 as double).toInt());
-    }
-
     return ChatMessage(
       id: id,
       origin: MessageOrigin.fromString(map['role']),
       text: map['text'],
       attachments: attachments,
-      createdAt: createdAt,
-      updatedAt: updatedAt,
       children: children,
       currentChild: currentChild,
     );
@@ -192,7 +169,6 @@ class ChatMessage extends ChangeNotifier {
   
   set text(String? value) {
     _text = value;
-    _updatedAt = DateTime.now();
     notifyListeners();
   }
 
@@ -201,14 +177,6 @@ class ChatMessage extends ChangeNotifier {
 
   /// Any attachments associated with the message.
   final Iterable<Attachment> attachments;
-
-  /// The time when the message was created.
-  final DateTime createdAt;
-
-  DateTime _updatedAt;
-
-  /// The time when the message was last updated.
-  DateTime get updatedAt => _updatedAt;
 
   ChatMessage? _currentChild;
 
@@ -227,8 +195,6 @@ class ChatMessage extends ChangeNotifier {
       index = math.min(_children.length - 1, lastIndex + 1);
     }
     _currentChild = _children[index];
-
-    _updatedAt = DateTime.now();
     notifyListeners();
   }
 
@@ -244,8 +210,6 @@ class ChatMessage extends ChangeNotifier {
       index = math.max(0, lastIndex - 1);
     }
     _currentChild = _children[index];
-
-    _updatedAt = DateTime.now();
     notifyListeners();
   }
 
@@ -255,7 +219,6 @@ class ChatMessage extends ChangeNotifier {
     _children.add(child);
     child.parent = this;
     _currentChild = child;
-    _updatedAt = DateTime.now();
     notifyListeners();
   }
 
@@ -264,7 +227,6 @@ class ChatMessage extends ChangeNotifier {
   void removeChild(ChatMessage child) {
     _children.remove(child);
     _currentChild = _children.isNotEmpty ? _children.first : null;
-    _updatedAt = DateTime.now();
     notifyListeners();
   }
 
@@ -340,9 +302,7 @@ class ChatMessage extends ChangeNotifier {
               (final LinkAttachment a) => a.url,
             },
           },
-      ],
-      'create_time': createdAt.toIso8601String(),
-      'update_time': updatedAt.toIso8601String(),
+      ]
     }];
 
     for (final child in _children) {
@@ -359,8 +319,6 @@ class ChatMessage extends ChangeNotifier {
       'parent: ${parent?.id.value}, '
       'currentChild: ${currentChild?.id.value}, '
       'children: ${_children.map((child) => child.id.value).toList()}, '
-      'createdAt: $createdAt, '
-      'updatedAt: $_updatedAt, '
       'origin: $origin, '
       'text: $text, '
       'attachments: $attachments'
