@@ -45,7 +45,7 @@
 
           adb -s localhost:5555 wait-for-device
         '';
-        installDependencies = "flutter pub get";
+        installDependencies = "flutter channel stable && flutter upgrade && flutter pub get";
       };
     };
     # Enable previews and customize configuration
