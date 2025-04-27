@@ -1,10 +1,15 @@
 ## 0.8.0
-* fixed [#90]([TODO](https://github.com/flutter/ai/issues/90)): Input box
+* fixed [#90]([TODO](https://github.com/flutter/ai/issues/90): Input box
   shrinks unexpectedly when clicking file attachment button – customization not
   supported by Flutter AI Toolkit. Moved from a menu that moves the text input
   to a pop-up menu. Added a `menuColor` setting to `LlmChatViewStyle`. Moved
   the `tooltip` related styles to `text` related styles, as some action buttons
   have icons (with tooltips) and some are menu items (with icon + text).
+
+* fixed [#92](https://github.com/flutter/ai/issues/92): Cupertino render doesn't
+  center text input inside text input area 
+
+* fixed an issue with missing localizations under Cupertino
 
 ## 0.7.1
 
