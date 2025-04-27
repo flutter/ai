@@ -213,7 +213,7 @@ class _ChatPageState extends State<ChatPage>
     );
 
     final TextStyle halloweenMenuItemTextStyle = GoogleFonts.hennyPenny(
-      color: Colors.black,
+      color: Colors.white,
       fontSize: 24,
     );
 
@@ -228,7 +228,7 @@ class _ChatPageState extends State<ChatPage>
 
     final halloweenMenuItemStyle = ActionButtonStyle(
       textStyle: halloweenMenuItemTextStyle,
-      iconColor: Colors.black,
+      iconColor: Colors.white,
     );
 
     final halloweenMenuButtonStyle = ActionButtonStyle(
@@ -243,7 +243,7 @@ class _ChatPageState extends State<ChatPage>
 
     return LlmChatViewStyle(
       backgroundColor: Colors.transparent,
-      menuColor: Colors.grey.shade300,
+      menuColor: Colors.grey.shade600,
       progressIndicatorColor: Colors.purple,
       suggestionStyle: SuggestionStyle(
         textStyle: halloweenTextStyle.copyWith(color: Colors.black),
