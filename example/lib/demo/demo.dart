@@ -212,8 +212,13 @@ class _ChatPageState extends State<ChatPage>
       fontSize: 24,
     );
 
+    final TextStyle halloweenMenuItemTextStyle = GoogleFonts.hennyPenny(
+      color: Colors.black,
+      fontSize: 24,
+    );
+
     final halloweenActionButtonStyle = ActionButtonStyle(
-      tooltipTextStyle: halloweenTextStyle,
+      textStyle: halloweenTextStyle,
       iconColor: Colors.black,
       iconDecoration: BoxDecoration(
         color: Colors.orange,
@@ -221,8 +226,13 @@ class _ChatPageState extends State<ChatPage>
       ),
     );
 
+    final halloweenMenuItemStyle = ActionButtonStyle(
+      textStyle: halloweenMenuItemTextStyle,
+      iconColor: Colors.black,
+    );
+
     final halloweenMenuButtonStyle = ActionButtonStyle(
-      tooltipTextStyle: halloweenTextStyle,
+      textStyle: halloweenTextStyle,
       iconColor: Colors.orange,
       iconDecoration: BoxDecoration(
         color: Colors.black,
@@ -233,6 +243,7 @@ class _ChatPageState extends State<ChatPage>
 
     return LlmChatViewStyle(
       backgroundColor: Colors.transparent,
+      menuColor: Colors.grey.shade300,
       progressIndicatorColor: Colors.purple,
       suggestionStyle: SuggestionStyle(
         textStyle: halloweenTextStyle.copyWith(color: Colors.black),
@@ -320,14 +331,14 @@ class _ChatPageState extends State<ChatPage>
       stopButtonStyle: halloweenActionButtonStyle,
       submitButtonStyle: halloweenActionButtonStyle,
       addButtonStyle: halloweenActionButtonStyle,
-      attachFileButtonStyle: halloweenMenuButtonStyle,
-      cameraButtonStyle: halloweenMenuButtonStyle,
+      attachFileButtonStyle: halloweenMenuItemStyle,
+      cameraButtonStyle: halloweenMenuItemStyle,
       closeButtonStyle: halloweenActionButtonStyle,
       cancelButtonStyle: halloweenActionButtonStyle,
       closeMenuButtonStyle: halloweenActionButtonStyle,
       copyButtonStyle: halloweenMenuButtonStyle,
       editButtonStyle: halloweenMenuButtonStyle,
-      galleryButtonStyle: halloweenMenuButtonStyle,
+      galleryButtonStyle: halloweenMenuItemStyle,
       actionButtonBarDecoration: BoxDecoration(
         color: Colors.orange,
         borderRadius: BorderRadius.circular(8),

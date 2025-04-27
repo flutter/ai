@@ -17,9 +17,8 @@ class ActionButtonStyle {
     this.icon,
     this.iconColor,
     this.iconDecoration,
-    this.tooltip,
-    this.tooltipTextStyle,
-    this.tooltipDecoration,
+    this.text,
+    this.textStyle,
   });
 
   /// Resolves the provided [style] with the [defaultStyle].
@@ -38,10 +37,8 @@ class ActionButtonStyle {
     icon: style?.icon ?? defaultStyle.icon,
     iconColor: style?.iconColor ?? defaultStyle.iconColor,
     iconDecoration: style?.iconDecoration ?? defaultStyle.iconDecoration,
-    tooltip: style?.tooltip ?? defaultStyle.tooltip,
-    tooltipTextStyle: style?.tooltipTextStyle ?? defaultStyle.tooltipTextStyle,
-    tooltipDecoration:
-        style?.tooltipDecoration ?? defaultStyle.tooltipDecoration,
+    text: style?.text ?? defaultStyle.text,
+    textStyle: style?.textStyle ?? defaultStyle.textStyle,
   );
 
   /// Provides default style for icon buttons.
@@ -53,82 +50,80 @@ class ActionButtonStyle {
     IconData icon;
     var color = ToolkitColors.darkIcon;
     var bgColor = ToolkitColors.lightButtonBackground;
-    String tooltip;
-    final tooltipTextStyle = ToolkitTextStyles.tooltip;
-    const tooltipDecoration = BoxDecoration(
-      color: ToolkitColors.tooltipBackground,
-      borderRadius: BorderRadius.all(Radius.circular(4)),
-    );
+    String text;
+    TextStyle textStyle = ToolkitTextStyles.tooltip;
 
     switch (type) {
       case ActionButtonType.add:
         icon = ToolkitIcons.add;
-        tooltip = 'Add Attachment';
+        text = 'Add Attachment';
       case ActionButtonType.attachFile:
         icon = ToolkitIcons.attach_file;
-        color = ToolkitColors.whiteIcon;
-        bgColor = ToolkitColors.darkButtonBackground;
-        tooltip = 'Attach File';
+        color = ToolkitColors.darkIcon;
+        bgColor = ToolkitColors.transparent;
+        text = 'Attach File';
+        textStyle = ToolkitTextStyles.body2;
       case ActionButtonType.camera:
         icon = ToolkitIcons.camera_alt;
-        color = ToolkitColors.whiteIcon;
-        bgColor = ToolkitColors.darkButtonBackground;
-        tooltip = 'Take Photo';
+        color = ToolkitColors.darkIcon;
+        bgColor = ToolkitColors.transparent;
+        text = 'Take Photo';
+        textStyle = ToolkitTextStyles.body2;
       case ActionButtonType.stop:
         icon = ToolkitIcons.stop;
-        tooltip = 'Stop';
+        text = 'Stop';
       case ActionButtonType.close:
         icon = ToolkitIcons.close;
         color = ToolkitColors.whiteIcon;
         bgColor = ToolkitColors.darkButtonBackground;
-        tooltip = 'Close';
+        text = 'Close';
       case ActionButtonType.cancel:
         icon = ToolkitIcons.close;
         color = ToolkitColors.whiteIcon;
         bgColor = ToolkitColors.darkButtonBackground;
-        tooltip = 'Cancel';
+        text = 'Cancel';
       case ActionButtonType.copy:
         icon = ToolkitIcons.content_copy;
         color = ToolkitColors.whiteIcon;
         bgColor = ToolkitColors.darkButtonBackground;
-        tooltip = 'Copy to Clipboard';
+        text = 'Copy to Clipboard';
       case ActionButtonType.edit:
         icon = ToolkitIcons.edit;
         color = ToolkitColors.whiteIcon;
         bgColor = ToolkitColors.darkButtonBackground;
-        tooltip = 'Edit Message';
+        text = 'Edit Message';
       case ActionButtonType.gallery:
         icon = ToolkitIcons.image;
-        color = ToolkitColors.whiteIcon;
-        bgColor = ToolkitColors.darkButtonBackground;
-        tooltip = 'Image Gallery';
+        color = ToolkitColors.darkIcon;
+        bgColor = ToolkitColors.transparent;
+        text = 'Attach Image';
+        textStyle = ToolkitTextStyles.body2;
       case ActionButtonType.record:
         icon = ToolkitIcons.mic;
-        tooltip = 'Record Audio';
+        text = 'Record Audio';
       case ActionButtonType.submit:
         icon = ToolkitIcons.submit_icon;
         color = ToolkitColors.whiteIcon;
         bgColor = ToolkitColors.darkButtonBackground;
-        tooltip = 'Submit Message';
+        text = 'Submit Message';
       case ActionButtonType.disabled:
         icon = ToolkitIcons.submit_icon;
         color = ToolkitColors.darkIcon;
         bgColor = ToolkitColors.disabledButton;
-        tooltip = '';
+        text = '';
       case ActionButtonType.closeMenu:
         icon = ToolkitIcons.close;
         color = ToolkitColors.whiteIcon;
         bgColor = ToolkitColors.greyBackground;
-        tooltip = 'Close Menu';
+        text = 'Close Menu';
     }
 
     return ActionButtonStyle(
       icon: icon,
       iconColor: color,
       iconDecoration: BoxDecoration(color: bgColor, shape: BoxShape.circle),
-      tooltip: tooltip,
-      tooltipTextStyle: tooltipTextStyle,
-      tooltipDecoration: tooltipDecoration,
+      text: text,
+      textStyle: textStyle,
     );
   }
 
@@ -141,12 +136,9 @@ class ActionButtonStyle {
   /// The decoration for the icon.
   final Decoration? iconDecoration;
 
-  /// The tooltip for the icon button.
-  final String? tooltip;
+  /// The tooltip for the icon button (could be menu item text or a tooltip).
+  final String? text;
 
   /// The text style of the tooltip.
-  final TextStyle? tooltipTextStyle;
-
-  /// The decoration of the tooltip.
-  final Decoration? tooltipDecoration;
+  final TextStyle? textStyle;
 }

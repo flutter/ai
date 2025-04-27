@@ -11,7 +11,7 @@ import '../../dialogs/adaptive_dialog.dart';
 import '../../dialogs/image_preview_dialog.dart';
 import '../../providers/interface/attachments.dart';
 import '../../styles/llm_chat_view_style.dart';
-import '../action_button/action_button.dart';
+import '../action_button.dart';
 import '../attachment_view/attachment_view.dart';
 
 /// A widget that displays an attachment with a remove button.

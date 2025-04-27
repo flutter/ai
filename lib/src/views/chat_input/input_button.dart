@@ -5,7 +5,7 @@
 import 'package:flutter/widgets.dart';
 
 import '../../styles/llm_chat_view_style.dart';
-import '../action_button/action_button.dart';
+import '../action_button.dart';
 import '../adaptive_progress_indicator.dart';
 import 'input_state.dart';
 

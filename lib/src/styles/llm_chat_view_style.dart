@@ -19,6 +19,7 @@ class LlmChatViewStyle {
   /// Creates a style object for the chat widget.
   const LlmChatViewStyle({
     this.backgroundColor,
+    this.menuColor,
     this.progressIndicatorColor,
     this.userMessageStyle,
     this.llmMessageStyle,
@@ -57,6 +58,7 @@ class LlmChatViewStyle {
     defaultStyle ??= LlmChatViewStyle.defaultStyle();
     return LlmChatViewStyle(
       backgroundColor: style?.backgroundColor ?? defaultStyle.backgroundColor,
+      menuColor: style?.menuColor ?? defaultStyle.menuColor,
       progressIndicatorColor:
           style?.progressIndicatorColor ?? defaultStyle.progressIndicatorColor,
       userMessageStyle: UserMessageStyle.resolve(
@@ -143,6 +145,7 @@ class LlmChatViewStyle {
   /// Provides a default light style.
   factory LlmChatViewStyle._lightStyle() => LlmChatViewStyle(
     backgroundColor: ToolkitColors.containerBackground,
+    menuColor: ToolkitColors.containerBackground,
     progressIndicatorColor: ToolkitColors.black,
     userMessageStyle: UserMessageStyle.defaultStyle(),
     llmMessageStyle: LlmMessageStyle.defaultStyle(),
@@ -175,6 +178,9 @@ class LlmChatViewStyle {
 
   /// Background color of the entire chat widget.
   final Color? backgroundColor;
+
+  /// The color of the menu.
+  final Color? menuColor;
 
   /// The color of the progress indicator.
   final Color? progressIndicatorColor;

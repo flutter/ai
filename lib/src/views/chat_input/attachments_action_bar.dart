@@ -5,6 +5,8 @@
 import 'dart:async';
 
 import 'package:file_selector/file_selector.dart';
+import 'package:flutter/material.dart'
+    show MenuAnchor, MenuItemButton, MenuStyle;
 import 'package:flutter/widgets.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -13,8 +15,7 @@ import '../../dialogs/adaptive_snack_bar/adaptive_snack_bar.dart';
 import '../../platform_helper/platform_helper.dart';
 import '../../providers/interface/attachments.dart';
 import '../../styles/llm_chat_view_style.dart';
-import '../action_button/action_button.dart';
-import '../action_button/action_button_bar.dart';
+import '../action_button.dart';
 
 /// A widget that provides an action bar for attaching files or images.
 @immutable
@@ -35,7 +36,6 @@ class AttachmentActionBar extends StatefulWidget {
 }
 
 class _AttachmentActionBarState extends State<AttachmentActionBar> {
-  var _expanded = false;
   late final bool _canCamera;
 
   @override
@@ -48,40 +48,60 @@ class _AttachmentActionBarState extends State<AttachmentActionBar> {
   Widget build(BuildContext context) => ChatViewModelClient(
     builder: (context, viewModel, child) {
       final chatStyle = LlmChatViewStyle.resolve(viewModel.style);
-      return _expanded
-          ? ActionButtonBar(style: chatStyle, [
-            ActionButton(
-              onPressed: _onToggleMenu,
-              style: chatStyle.closeMenuButtonStyle!,
+      return MenuAnchor(
+        style: MenuStyle(
+          backgroundColor: WidgetStateProperty.all(chatStyle.menuColor),
+        ),
+        consumeOutsideTap: true,
+        builder:
+            (_, controller, _) => ActionButton(
+              onPressed: controller.isOpen ? controller.close : controller.open,
+              style: chatStyle.addButtonStyle!,
             ),
-            if (_canCamera)
-              ActionButton(
-                onPressed: _onCamera,
-                style: chatStyle.cameraButtonStyle!,
+        menuChildren: [
+          if (_canCamera)
+            MenuItemButton(
+              leadingIcon: Icon(
+                chatStyle.cameraButtonStyle!.icon!,
+                color: chatStyle.cameraButtonStyle!.iconColor,
               ),
-            ActionButton(
-              onPressed: _onGallery,
-              style: chatStyle.galleryButtonStyle!,
+              onPressed: () => _onCamera(),
+              child: Text(
+                chatStyle.cameraButtonStyle!.text!,
+                style: chatStyle.cameraButtonStyle!.textStyle,
+              ),
             ),
-            ActionButton(
-              onPressed: _onFile,
-              style: chatStyle.attachFileButtonStyle!,
+          MenuItemButton(
+            leadingIcon: Icon(
+              chatStyle.galleryButtonStyle!.icon!,
+              color: chatStyle.galleryButtonStyle!.iconColor,
             ),
-          ])
-          : ActionButton(
-            onPressed: _onToggleMenu,
-            style: chatStyle.addButtonStyle!,
-          );
+            onPressed: () => _onGallery(),
+            child: Text(
+              chatStyle.galleryButtonStyle!.text!,
+              style: chatStyle.galleryButtonStyle!.textStyle,
+            ),
+          ),
+          MenuItemButton(
+            leadingIcon: Icon(
+              chatStyle.attachFileButtonStyle!.icon!,
+              color: chatStyle.attachFileButtonStyle!.iconColor,
+            ),
+            onPressed: () => _onFile(),
+            child: Text(
+              chatStyle.attachFileButtonStyle!.text!,
+              style: chatStyle.attachFileButtonStyle!.textStyle,
+            ),
+          ),
+        ],
+      );
     },
   );
 
-  void _onToggleMenu() => setState(() => _expanded = !_expanded);
   void _onCamera() => unawaited(_pickImage(ImageSource.camera));
   void _onGallery() => unawaited(_pickImage(ImageSource.gallery));
 
   Future<void> _pickImage(ImageSource source) async {
-    _onToggleMenu(); // close the menu
-
     assert(
       source == ImageSource.camera || source == ImageSource.gallery,
       'Unsupported image source: $source',
@@ -110,8 +130,6 @@ class _AttachmentActionBarState extends State<AttachmentActionBar> {
   }
 
   Future<void> _onFile() async {
-    _onToggleMenu(); // close the menu
-
     try {
       final files = await openFiles();
       final attachments = await Future.wait(files.map(FileAttachment.fromFile));

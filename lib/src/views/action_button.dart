@@ -5,8 +5,8 @@
 import 'package:flutter/material.dart' show Tooltip;
 import 'package:flutter/widgets.dart';
 
-import '../../styles/action_button_style.dart';
-import '../../utility.dart';
+import '../styles/action_button_style.dart';
+import '../utility.dart';
 
 /// A button widget with an icon.
 ///
@@ -48,9 +48,8 @@ class ActionButton extends StatelessWidget {
           isCupertinoApp(context)
               ? Icon(style.icon, color: style.iconColor, size: size * 0.6)
               : Tooltip(
-                message: style.tooltip,
-                textStyle: style.tooltipTextStyle,
-                decoration: style.tooltipDecoration,
+                message: style.text,
+                textStyle: style.textStyle,
                 child: Icon(
                   style.icon,
                   color: style.iconColor,

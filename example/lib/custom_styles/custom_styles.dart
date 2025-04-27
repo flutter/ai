@@ -120,7 +120,7 @@ class _ChatPageState extends State<ChatPage>
     );
 
     final halloweenActionButtonStyle = ActionButtonStyle(
-      tooltipTextStyle: halloweenTextStyle,
+      textStyle: halloweenTextStyle,
       iconColor: Colors.black,
       iconDecoration: BoxDecoration(
         color: Colors.orange,
@@ -129,7 +129,7 @@ class _ChatPageState extends State<ChatPage>
     );
 
     final halloweenMenuButtonStyle = ActionButtonStyle(
-      tooltipTextStyle: halloweenTextStyle,
+      textStyle: halloweenTextStyle,
       iconColor: Colors.orange,
       iconDecoration: BoxDecoration(
         color: Colors.black,
@@ -140,6 +140,7 @@ class _ChatPageState extends State<ChatPage>
 
     return LlmChatViewStyle(
       backgroundColor: Colors.transparent,
+      menuColor: Colors.grey,
       progressIndicatorColor: Colors.purple,
       suggestionStyle: SuggestionStyle(
         textStyle: halloweenTextStyle.copyWith(color: Colors.black),

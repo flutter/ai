@@ -11,6 +11,7 @@ LlmChatViewStyle darkChatViewStyle() {
   final style = LlmChatViewStyle.defaultStyle();
   return LlmChatViewStyle(
     backgroundColor: _invertColor(style.backgroundColor),
+    menuColor: Colors.grey.shade800,
     progressIndicatorColor: _invertColor(style.progressIndicatorColor),
     userMessageStyle: _darkUserMessageStyle(),
     llmMessageStyle: _darkLlmMessageStyle(),
@@ -94,9 +95,8 @@ ActionButtonStyle _darkActionButtonStyle(ActionButtonType type) {
       ),
       _ => _invertDecoration(style.iconDecoration),
     },
-    tooltip: style.tooltip,
-    tooltipTextStyle: _invertTextStyle(style.tooltipTextStyle),
-    tooltipDecoration: _invertDecoration(style.tooltipDecoration),
+    text: style.text,
+    textStyle: _invertTextStyle(style.textStyle),
   );
 }
 
