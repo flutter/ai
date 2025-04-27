@@ -1,5 +1,5 @@
 ## 0.8.0
-* fixed [#90]([TODO](https://github.com/flutter/ai/issues/90): Input box
+* fixed [#90](https://github.com/flutter/ai/issues/90): Input box
   shrinks unexpectedly when clicking file attachment button – customization not
   supported by Flutter AI Toolkit. Moved from a menu that moves the text input
   to a pop-up menu. Added a `menuColor` setting to `LlmChatViewStyle`. Moved
