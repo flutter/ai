@@ -3,7 +3,6 @@
 // found in the LICENSE file.
 
 import 'package:file_selector/file_selector.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:waveform_recorder/waveform_recorder.dart';
@@ -13,15 +12,12 @@ import '../../chat_view_model/chat_view_model_provider.dart';
 import '../../dialogs/adaptive_snack_bar/adaptive_snack_bar.dart';
 import '../../providers/interface/attachments.dart';
 import '../../providers/interface/chat_message.dart';
-import '../../styles/chat_input_style.dart';
-import '../../styles/llm_chat_view_style.dart';
-import '../../utility.dart';
-import '../chat_text_field.dart';
+import '../../styles/styles.dart';
 import 'attachments_action_bar.dart';
 import 'attachments_view.dart';
-import 'editing_indicator.dart';
 import 'input_button.dart';
 import 'input_state.dart';
+import 'text_or_audio_input.dart';
 
 /// A widget that provides a chat input interface with support for text input,
 /// speech-to-text, and attachments.
@@ -115,8 +111,6 @@ class _ChatInputState extends State<ChatInput> {
   final _textController = TextEditingController();
   final _waveController = WaveformRecorderController();
   final _attachments = <Attachment>[];
-  static const _minInputHeight = 48.0;
-  static const _maxInputHeight = 144.0;
 
   ChatViewModel? _viewModel;
   ChatInputStyle? _inputStyle;
@@ -176,73 +170,17 @@ class _ChatInputState extends State<ChatInput> {
                             ),
                           ),
                         Expanded(
-                          child: Stack(
-                            children: [
-                              Padding(
-                                padding: EdgeInsets.only(
-                                  left: 16,
-                                  right: 16,
-                                  top: widget.onCancelEdit != null ? 24 : 8,
-                                  bottom: 8,
-                                ),
-                                child: DecoratedBox(
-                                  decoration: _inputStyle!.decoration!,
-                                  child: ConstrainedBox(
-                                    constraints: const BoxConstraints(
-                                      minHeight: _minInputHeight,
-                                      maxHeight: _maxInputHeight,
-                                    ),
-                                    child:
-                                        _waveController.isRecording
-                                            ? WaveformRecorder(
-                                              controller: _waveController,
-                                              height: _minInputHeight,
-                                              onRecordingStopped:
-                                                  onRecordingStopped,
-                                            )
-                                            : ChatTextField(
-                                              minLines: 1,
-                                              maxLines: 1024,
-                                              controller: _textController,
-                                              autofocus: widget.autofocus,
-                                              focusNode: _focusNode,
-                                              textInputAction:
-                                                  isMobile
-                                                      ? TextInputAction.newline
-                                                      : TextInputAction.done,
-                                              onSubmitted:
-                                                  _inputState ==
-                                                          InputState
-                                                              .canSubmitPrompt
-                                                      ? (_) => onSubmitPrompt()
-                                                      : (_) =>
-                                                          _focusNode
-                                                              .requestFocus(),
-                                              style: _inputStyle!.textStyle!,
-                                              hintText: _inputStyle!.hintText!,
-                                              hintStyle:
-                                                  _inputStyle!.hintStyle!,
-                                              hintPadding:
-                                                  const EdgeInsets.symmetric(
-                                                    horizontal: 12,
-                                                    vertical: 8,
-                                                  ),
-                                            ),
-                                  ),
-                                ),
-                              ),
-                              Align(
-                                alignment: Alignment.topRight,
-                                child:
-                                    widget.onCancelEdit != null
-                                        ? EditingIndicator(
-                                          onCancelEdit: widget.onCancelEdit!,
-                                          cancelButtonStyle:
-                                              _chatStyle!.cancelButtonStyle!,
-                                        )
-                                        : const SizedBox(),
-                              ),
-                            ],
+                          child: TextOrAudioInput(
+                            inputStyle: _inputStyle!,
+                            waveController: _waveController,
+                            onCancelEdit: widget.onCancelEdit,
+                            onRecordingStopped: onRecordingStopped,
+                            onSubmitPrompt: onSubmitPrompt,
+                            textController: _textController,
+                            focusNode: _focusNode,
+                            autofocus: widget.autofocus,
+                            inputState: _inputState,
+                            cancelButtonStyle: _chatStyle!.cancelButtonStyle!,
                           ),
                         ),
                         Padding(
