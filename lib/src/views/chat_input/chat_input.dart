@@ -200,38 +200,33 @@ class _ChatInputState extends State<ChatInput> {
                                               onRecordingStopped:
                                                   onRecordingStopped,
                                             )
-                                            : SingleChildScrollView(
-                                              child: ChatTextField(
-                                                minLines: 1,
-                                                maxLines: 1024,
-                                                controller: _textController,
-                                                autofocus: widget.autofocus,
-                                                focusNode: _focusNode,
-                                                textInputAction:
-                                                    isMobile
-                                                        ? TextInputAction
-                                                            .newline
-                                                        : TextInputAction.done,
-                                                onSubmitted:
-                                                    _inputState ==
-                                                            InputState
-                                                                .canSubmitPrompt
-                                                        ? (_) =>
-                                                            onSubmitPrompt()
-                                                        : (_) =>
-                                                            _focusNode
-                                                                .requestFocus(),
-                                                style: _inputStyle!.textStyle!,
-                                                hintText:
-                                                    _inputStyle!.hintText!,
-                                                hintStyle:
-                                                    _inputStyle!.hintStyle!,
-                                                hintPadding:
-                                                    const EdgeInsets.symmetric(
-                                                      horizontal: 12,
-                                                      vertical: 8,
-                                                    ),
-                                              ),
+                                            : ChatTextField(
+                                              minLines: 1,
+                                              maxLines: 1024,
+                                              controller: _textController,
+                                              autofocus: widget.autofocus,
+                                              focusNode: _focusNode,
+                                              textInputAction:
+                                                  isMobile
+                                                      ? TextInputAction.newline
+                                                      : TextInputAction.done,
+                                              onSubmitted:
+                                                  _inputState ==
+                                                          InputState
+                                                              .canSubmitPrompt
+                                                      ? (_) => onSubmitPrompt()
+                                                      : (_) =>
+                                                          _focusNode
+                                                              .requestFocus(),
+                                              style: _inputStyle!.textStyle!,
+                                              hintText: _inputStyle!.hintText!,
+                                              hintStyle:
+                                                  _inputStyle!.hintStyle!,
+                                              hintPadding:
+                                                  const EdgeInsets.symmetric(
+                                                    horizontal: 12,
+                                                    vertical: 8,
+                                                  ),
                                             ),
                                   ),
                                 ),
