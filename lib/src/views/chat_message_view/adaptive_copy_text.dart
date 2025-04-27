@@ -1,6 +1,11 @@
 import 'dart:async';
 
-import 'package:flutter/material.dart' show SelectionArea;
+import 'package:flutter/cupertino.dart' show DefaultCupertinoLocalizations;
+import 'package:flutter/material.dart'
+    show
+        DefaultMaterialLocalizations,
+        SelectionArea,
+        DefaultWidgetsLocalizations;
 import 'package:flutter/widgets.dart';
 import 'package:flutter_context_menu/flutter_context_menu.dart';
 
@@ -63,6 +68,17 @@ class AdaptiveCopyText extends StatelessWidget {
     // on desktop and web, show the selection area for mouse-driven selection.
     return isMobile
         ? ContextMenuRegion(contextMenu: contextMenu, child: child)
+        : isCupertinoApp(context)
+        // Ensure MaterialLocalizations is available for SelectionArea
+        ? Localizations(
+          locale: Localizations.localeOf(context),
+          delegates: const [
+            DefaultMaterialLocalizations.delegate,
+            DefaultWidgetsLocalizations.delegate,
+            DefaultCupertinoLocalizations.delegate,
+          ],
+          child: SelectionArea(child: child),
+        )
         : SelectionArea(child: child);
   }
 }
