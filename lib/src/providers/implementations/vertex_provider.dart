@@ -29,6 +29,7 @@ class VertexProvider extends LlmProvider with ChangeNotifier {
   /// model's generation behavior.
   VertexProvider({
     required GenerativeModel model,
+    this.onDone,
     Iterable<ChatMessage>? history,
     List<SafetySetting>? chatSafetySettings,
     GenerationConfig? chatGenerationConfig,
@@ -39,6 +40,7 @@ class VertexProvider extends LlmProvider with ChangeNotifier {
     _chat = _startChat(history);
   }
 
+  final void Function(GenerateContentResponse)? onDone;
   final GenerativeModel _model;
   final List<SafetySetting>? _chatSafetySettings;
   final GenerationConfig? _chatGenerationConfig;
