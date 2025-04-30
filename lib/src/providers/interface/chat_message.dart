@@ -27,7 +27,6 @@ class ChatMessage {
     required this.origin,
     required this.text,
     required this.attachments,
-    this.functionCalls = const [],
   }) : assert(origin.isUser && text != null && text.isNotEmpty || origin.isLlm);
 
   /// Converts a JSON map representation to a [ChatMessage].
@@ -80,7 +79,6 @@ class ChatMessage {
 
   /// Text content of the message.
   String? text;
-  List<Map<String, dynamic>> functionCalls;
 
   /// The origin of the message (user or LLM).
   final MessageOrigin origin;
@@ -92,8 +90,6 @@ class ChatMessage {
   ///
   /// This is typically used for LLM messages that are streamed in parts.
   void append(String text) => this.text = (this.text ?? '') + text;
-  void appendFunctionCalls(Map<String, dynamic> functionCall) =>
-      functionCalls.add(functionCall);
 
   @override
   String toString() =>

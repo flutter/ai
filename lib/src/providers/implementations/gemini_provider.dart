@@ -109,8 +109,9 @@ class GeminiProvider extends LlmProvider with ChangeNotifier {
     // }
     yield* response
         .map((chunk) {
-          if (chunk.candidates.any((e) => e.finishReason != null))
+          if (chunk.candidates.any((e) => e.finishReason != null)) {
             onDone?.call(chunk);
+          }
           return chunk.text;
         })
         .where((text) => text != null)
