@@ -35,35 +35,8 @@ class ChatPage extends StatelessWidget {
       provider: VertexProvider(
         model: FirebaseVertexAI.instance.generativeModel(
           model: 'gemini-2.0-flash',
-          // TODO: remove all of this once we have a working example
-          tools: [
-            Tool.functionDeclarations([
-              FunctionDeclaration(
-                'get_temperature',
-                'Get the current local temperature',
-                parameters: {},
-              ),
-              FunctionDeclaration(
-                'get_time',
-                'Get the current local time',
-                parameters: {},
-              ),
-            ]),
-          ],
         ),
-        onFunctionCall: _onFunctionCall,
       ),
     ),
   );
-
-  Future<Map<String, Object?>?> _onFunctionCall(
-    FunctionCall functionCall,
-  ) async {
-    // note: just as an example, we're not actually calling any external APIs
-    return switch (functionCall.name) {
-      'get_temperature' => {'temperature': 60, 'unit': 'F'},
-      'get_time' => {'time': DateTime(1970, 1, 1).toIso8601String()},
-      _ => throw Exception('Unknown function call: ${functionCall.name}'),
-    };
-  }
 }
