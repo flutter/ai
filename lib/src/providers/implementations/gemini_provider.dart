@@ -110,7 +110,7 @@ class GeminiProvider extends LlmProvider with ChangeNotifier {
     //   final text = chunk.text;
     //   if (text != null) yield text;
     // }
-    yield* contentResponse.map((chunk) async {
+    yield* contentResponse.asyncMap((chunk) async {
       if (chunk.functionCalls.isEmpty) return chunk.text ?? '';
 
       final functionResponses = <FunctionResponse>[];
@@ -130,11 +130,7 @@ class GeminiProvider extends LlmProvider with ChangeNotifier {
       }
 
       final functionContentResponse = await _model.startChat().sendMessage(
-        Content.multi([
-          // TODO: Gemini requires a text part (Vertex doesn't?)
-          TextPart(''),
-          ...functionResponses,
-        ]),
+        Content.multi(functionResponses),
       );
 
       return '${chunk.text ?? ''}${functionContentResponse.text ?? ''}';

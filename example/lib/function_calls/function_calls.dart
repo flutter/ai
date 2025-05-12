@@ -28,7 +28,26 @@ class ChatPage extends StatelessWidget {
     appBar: AppBar(title: const Text(App.title)),
     body: LlmChatView(
       provider: GeminiProvider(
-        model: GenerativeModel(model: 'gemini-2.0-flash', apiKey: geminiApiKey),
+        model: GenerativeModel(
+          model: 'gemini-2.0-flash',
+          apiKey: geminiApiKey,
+          tools: [
+            Tool(
+              functionDeclarations: [
+                FunctionDeclaration(
+                  'get_temperature',
+                  'Get the current local temperature',
+                  Schema.object(properties: {}),
+                ),
+                FunctionDeclaration(
+                  'get_time',
+                  'Get the current local time',
+                  Schema.object(properties: {}),
+                ),
+              ],
+            ),
+          ],
+        ),
         onFunctionCall: _onFunctionCall,
       ),
     ),

@@ -33,10 +33,12 @@ class VertexProvider extends LlmProvider with ChangeNotifier {
     Iterable<ChatMessage>? history,
     List<SafetySetting>? chatSafetySettings,
     GenerationConfig? chatGenerationConfig,
+    Future<Map<String, Object?>?> Function(FunctionCall)? onFunctionCall,
   }) : _model = model,
        _history = history?.toList() ?? [],
        _chatSafetySettings = chatSafetySettings,
-       _chatGenerationConfig = chatGenerationConfig {
+       _chatGenerationConfig = chatGenerationConfig,
+       _onFunctionCall = onFunctionCall {
     _chat = _startChat(history);
   }
   final void Function(Iterable<FunctionCall>)? onFunctionCalls;
@@ -44,6 +46,7 @@ class VertexProvider extends LlmProvider with ChangeNotifier {
   final List<SafetySetting>? _chatSafetySettings;
   final GenerationConfig? _chatGenerationConfig;
   final List<ChatMessage> _history;
+  final Future<Map<String, Object?>?> Function(FunctionCall)? _onFunctionCall;
   ChatSession? _chat;
 
   @override
@@ -97,17 +100,39 @@ class VertexProvider extends LlmProvider with ChangeNotifier {
       ...attachments.map(_partFrom),
     ]);
 
-    final response = contentStreamGenerator(content);
+    final contentResponse = contentStreamGenerator(content);
+
     // don't write this code if you're targeting the web until this is fixed:
     // https://github.com/dart-lang/sdk/issues/47764
     // await for (final chunk in response) {
     //   final text = chunk.text;
     //   if (text != null) yield text;
     // }
-    yield* response
-        .map((chunk) => chunk.text)
-        .where((text) => text != null)
-        .cast<String>();
+    yield* contentResponse.asyncMap((chunk) async {
+      if (chunk.functionCalls.isEmpty) return chunk.text ?? '';
+
+      final functionResponses = <FunctionResponse>[];
+      for (final functionCall in chunk.functionCalls) {
+        try {
+          functionResponses.add(
+            FunctionResponse(
+              functionCall.name,
+              await _onFunctionCall?.call(functionCall) ?? {},
+            ),
+          );
+        } catch (ex) {
+          functionResponses.add(
+            FunctionResponse(functionCall.name, {'error': ex.toString()}),
+          );
+        }
+      }
+
+      final functionContentResponse = await _model.startChat().sendMessage(
+        Content.multi(functionResponses),
+      );
+
+      return '${chunk.text ?? ''}${functionContentResponse.text ?? ''}';
+    });
   }
 
   @override
