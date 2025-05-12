@@ -1,3 +1,8 @@
+## 0.8.1
+
+* fixed [#95](https://github.com/flutter/ai/issues/95): Image Attachment
+  Disappears After Audio Recording
+
 ## 0.8.0
 * fixed [#90](https://github.com/flutter/ai/issues/90): Input box
   shrinks unexpectedly when clicking file attachment button – customization not
