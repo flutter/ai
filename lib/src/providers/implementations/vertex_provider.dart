@@ -127,8 +127,8 @@ class VertexProvider extends LlmProvider with ChangeNotifier {
         }
       }
 
-      final functionContentResponse = await _model.startChat().sendMessage(
-        Content.multi(functionResponses),
+      final functionContentResponse = await _chat!.sendMessage(
+        Content.functionResponses(functionResponses),
       );
 
       return '${chunk.text ?? ''}${functionContentResponse.text ?? ''}';

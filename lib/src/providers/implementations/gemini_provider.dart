@@ -119,7 +119,7 @@ class GeminiProvider extends LlmProvider with ChangeNotifier {
           functionResponses.add(
             FunctionResponse(
               functionCall.name,
-              await _onFunctionCall?.call(functionCall),
+              await _onFunctionCall?.call(functionCall) ?? {},
             ),
           );
         } catch (ex) {
@@ -129,8 +129,8 @@ class GeminiProvider extends LlmProvider with ChangeNotifier {
         }
       }
 
-      final functionContentResponse = await _model.startChat().sendMessage(
-        Content.multi(functionResponses),
+      final functionContentResponse = await _chat!.sendMessage(
+        Content.functionResponses(functionResponses),
       );
 
       return '${chunk.text ?? ''}${functionContentResponse.text ?? ''}';
