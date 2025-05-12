@@ -27,24 +27,29 @@ class GeminiProvider extends LlmProvider with ChangeNotifier {
   ///
   /// [chatGenerationConfig] is an optional configuration for controlling the
   /// model's generation behavior.
+  ///
+  /// [onFunctionCall] is an optional function that will be called when the LLM
+  /// needs to call a function.
   GeminiProvider({
     required GenerativeModel model,
-    this.onFunctionCalls,
     Iterable<ChatMessage>? history,
     List<SafetySetting>? chatSafetySettings,
     GenerationConfig? chatGenerationConfig,
+    Future<Map<String, Object?>?> Function(FunctionCall)? onFunctionCall,
   }) : _model = model,
        _history = history?.toList() ?? [],
        _chatSafetySettings = chatSafetySettings,
-       _chatGenerationConfig = chatGenerationConfig {
+       _chatGenerationConfig = chatGenerationConfig,
+       _onFunctionCall = onFunctionCall {
     _chat = _startChat(history);
   }
-  final void Function(Iterable<FunctionCall>)? onFunctionCalls;
+
   final GenerativeModel _model;
   final List<SafetySetting>? _chatSafetySettings;
   final GenerationConfig? _chatGenerationConfig;
   final List<ChatMessage> _history;
   ChatSession? _chat;
+  final Future<Map<String, Object?>?> Function(FunctionCall)? _onFunctionCall;
 
   @override
   Stream<String> generateStream(
@@ -54,7 +59,6 @@ class GeminiProvider extends LlmProvider with ChangeNotifier {
     prompt: prompt,
     attachments: attachments,
     contentStreamGenerator: (c) => _model.generateContentStream([c]),
-    onFunctionCalls: onFunctionCalls,
   );
 
   @override
@@ -70,7 +74,6 @@ class GeminiProvider extends LlmProvider with ChangeNotifier {
       prompt: prompt,
       attachments: attachments,
       contentStreamGenerator: _chat!.sendMessageStream,
-      onFunctionCalls: onFunctionCalls,
     );
 
     // don't write this code if you're targeting the web until this is fixed:
@@ -93,30 +96,49 @@ class GeminiProvider extends LlmProvider with ChangeNotifier {
     required Iterable<Attachment> attachments,
     required Stream<GenerateContentResponse> Function(Content)
     contentStreamGenerator,
-    required void Function(Iterable<FunctionCall>)? onFunctionCalls,
   }) async* {
     final content = Content('user', [
       TextPart(prompt),
       ...attachments.map(_partFrom),
     ]);
 
-    final response = contentStreamGenerator(content);
+    final contentResponse = contentStreamGenerator(content);
+
     // don't write this code if you're targeting the web until this is fixed:
     // https://github.com/dart-lang/sdk/issues/47764
     // await for (final chunk in response) {
     //   final text = chunk.text;
     //   if (text != null) yield text;
     // }
-    yield* response
-        .map((chunk) {
-          if (chunk.candidates.any((e) => e.finishReason != null) &&
-              chunk.functionCalls.isNotEmpty) {
-            onFunctionCalls?.call(chunk.functionCalls);
-          }
-          return chunk.text;
-        })
-        .where((text) => text != null)
-        .cast<String>();
+    yield* contentResponse.map((chunk) async {
+      if (chunk.functionCalls.isEmpty) return chunk.text ?? '';
+
+      final functionResponses = <FunctionResponse>[];
+      for (final functionCall in chunk.functionCalls) {
+        try {
+          functionResponses.add(
+            FunctionResponse(
+              functionCall.name,
+              await _onFunctionCall?.call(functionCall),
+            ),
+          );
+        } catch (ex) {
+          functionResponses.add(
+            FunctionResponse(functionCall.name, {'error': ex.toString()}),
+          );
+        }
+      }
+
+      final functionContentResponse = await _model.startChat().sendMessage(
+        Content.multi([
+          // TODO: Gemini requires a text part (Vertex doesn't?)
+          TextPart(''),
+          ...functionResponses,
+        ]),
+      );
+
+      return '${chunk.text ?? ''}${functionContentResponse.text ?? ''}';
+    });
   }
 
   @override

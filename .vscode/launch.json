@@ -79,6 +79,13 @@
       "program": "lib/logging/logging.dart",
     },
     {
+      "name": "function calls",
+      "cwd": "example",
+      "request": "launch",
+      "type": "dart",
+      "program": "lib/function_calls/function_calls.dart",
+    },
+    {
       "name": "recipes",
       "cwd": "example",
       "request": "launch",
