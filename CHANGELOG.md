@@ -1,3 +1,9 @@
+## 0.8.1
+* added support for tool calls to the Gemini and Vertex providers. Check out the
+  new `function_calls` example to see it in action. Thanks to @toshiossada for
+  [the inspiration](https://github.com/flutter/ai/pull/99). Fixes
+  [#98](https://github.com/flutter/ai/issues/98): How Can I get functionCalls?
+
 ## 0.8.0
 * fixed [#90](https://github.com/flutter/ai/issues/90): Input box
   shrinks unexpectedly when clicking file attachment button – customization not
