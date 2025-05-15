@@ -2,6 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+import 'dart:math';
+
 import 'package:flutter/cupertino.dart' show BuildContext, CupertinoApp;
 import 'package:flutter/services.dart';
 import 'package:universal_platform/universal_platform.dart';
@@ -75,3 +77,32 @@ Color? invertColor(Color? color) =>
           blue: 1 - color.b,
         )
         : null;
+
+/// Generates a random UUID (Universally Unique Identifier) version 4.
+/// 
+/// This function creates a random UUID using secure random bytes.
+/// The UUID is formatted as a string in the standard 8-4-4-4-12 format.
+/// 
+/// Returns: A [String] representing the generated UUID version 4.
+String generateUuidV4() {
+  final random = Random.secure();
+  final bytes = Uint8List(16);
+
+  for (int i = 0; i < 16; i++) {
+    bytes[i] = random.nextInt(256);
+  }
+
+  // Set version to 4 ---- 0100xxxx
+  bytes[6] = (bytes[6] & 0x0f) | 0x40;
+
+  // Set variant to DCE 1.1 ---- 10xxxxxx
+  bytes[8] = (bytes[8] & 0x3f) | 0x80;
+
+  StringBuffer buffer = StringBuffer();
+  for (int i = 0; i < bytes.length; i++) {
+    buffer.write(bytes[i].toRadixString(16).padLeft(2, '0'));
+    if ([3, 5, 7, 9].contains(i)) buffer.write('-');
+  }
+
+  return buffer.toString();
+}

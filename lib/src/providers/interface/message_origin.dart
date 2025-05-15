@@ -15,4 +15,16 @@ enum MessageOrigin {
 
   /// Checks if the message origin is from the LLM.
   bool get isLlm => this == MessageOrigin.llm;
+
+  /// Gets the MessageOrigin from a string.
+  static MessageOrigin fromString(String origin) {
+    switch (origin.toLowerCase()) {
+      case 'user':
+        return MessageOrigin.user;
+      case 'llm':
+        return MessageOrigin.llm;
+      default:
+        throw ArgumentError('Invalid message origin: $origin');
+    }
+  }
 }
