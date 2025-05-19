@@ -21,7 +21,7 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_context_menu: ^0.2.0
-  flutter_markdown: ^0.7.4+3
+  flutter_markdown_plus: ^1.0.3
   flutter_picture_taker: ^0.2.0
   google_fonts: ^6.2.1
   google_generative_ai: ^0.4.3

@@ -21,7 +21,7 @@ dependencies:
   uuid: ^4.5.1
   path: ^1.9.0
   path_provider: ^2.1.4
-  flutter_markdown: ^0.7.4+1
+  flutter_markdown_plus: ^1.0.3
   google_fonts: ^6.2.1
   future_builder_ex: ^5.0.0
   split_view: ^3.2.1
