@@ -4,6 +4,9 @@
   [the inspiration](https://github.com/flutter/ai/pull/99). Fixes
   [#98](https://github.com/flutter/ai/issues/98): How Can I get functionCalls?
 
+* fixed [#95](https://github.com/flutter/ai/issues/95): Image Attachment
+  Disappears After Audio Recording
+
 ## 0.8.0
 * fixed [#90](https://github.com/flutter/ai/issues/90): Input box
   shrinks unexpectedly when clicking file attachment button – customization not

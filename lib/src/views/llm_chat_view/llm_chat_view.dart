@@ -277,7 +277,10 @@ class _LlmChatViewState extends State<LlmChatView>
     });
   }
 
-  Future<void> _onTranslateStt(XFile file) async {
+  Future<void> _onTranslateStt(
+    XFile file,
+    Iterable<Attachment> currentAttachments,
+  ) async {
     assert(widget.enableVoiceNotes);
     _initialMessage = null;
     _associatedResponse = null;
@@ -297,7 +300,9 @@ class _LlmChatViewState extends State<LlmChatView>
         attachments: attachments,
       ),
       onUpdate: (text) => response += text,
-      onDone: (error) async => _onSttDone(error, response, file),
+      onDone:
+          (error) async =>
+              _onSttDone(error, response, file, currentAttachments),
     );
 
     setState(() {});
@@ -307,10 +312,12 @@ class _LlmChatViewState extends State<LlmChatView>
     LlmException? error,
     String response,
     XFile file,
+    Iterable<Attachment> attachments,
   ) async {
     assert(_pendingSttResponse != null);
     setState(() {
-      _initialMessage = ChatMessage.user(response, []);
+      // Preserve any existing attachments from the current input
+      _initialMessage = ChatMessage.user(response, attachments);
       _pendingSttResponse = null;
     });
 

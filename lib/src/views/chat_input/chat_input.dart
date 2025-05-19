@@ -57,8 +57,10 @@ class ChatInput extends StatefulWidget {
 
   /// Callback function triggered when speech-to-text translation is requested.
   ///
-  /// Takes an [XFile] representing the audio file to be translated.
-  final void Function(XFile file) onTranslateStt;
+  /// Takes an [XFile] representing the audio file to be translated and the
+  /// current attachments.
+  final void Function(XFile file, Iterable<Attachment> attachments)
+  onTranslateStt;
 
   /// The initial message to populate the input field, if any.
   final ChatMessage? initialMessage;
@@ -249,8 +251,8 @@ class _ChatInputState extends State<ChatInput> {
       return;
     }
 
-    // will come back as initialMessage
-    widget.onTranslateStt(file);
+    // Pass current attachments to onTranslateStt
+    widget.onTranslateStt(file, List.from(_attachments));
   }
 
   void onAttachments(Iterable<Attachment> attachments) {
