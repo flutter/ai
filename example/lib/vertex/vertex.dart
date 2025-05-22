@@ -3,9 +3,9 @@
 // found in the LICENSE file.
 
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_vertexai/firebase_vertexai.dart';
+// import 'package:firebase_vertexai/firebase_vertexai.dart'; // Will be replaced by firebase_ai
 import 'package:flutter/material.dart';
-import 'package:flutter_ai_toolkit/flutter_ai_toolkit.dart';
+// import 'package:flutter_ai_toolkit/flutter_ai_toolkit.dart'; // Will be replaced by firebase_ai
 
 // from `flutterfire config`: https://firebase.google.com/docs/flutter/setup
 import '../firebase_options.dart';
@@ -31,12 +31,14 @@ class ChatPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Scaffold(
     appBar: AppBar(title: const Text(App.title)),
-    body: LlmChatView(
-      provider: VertexProvider(
-        model: FirebaseVertexAI.instance.generativeModel(
-          model: 'gemini-2.0-flash',
-        ),
-      ),
-    ),
+    // body: LlmChatView(
+    //   provider: VertexProvider(
+    //     model: FirebaseVertexAI.instance.generativeModel(
+    //       model: 'gemini-2.0-flash',
+    //     ),
+    //   ),
+    // ),
+    // TODO: Instantiate LlmChatView with the new firebase_ai provider
+    body: const Center(child: Text('Vertex AI provider will be implemented here.')),
   );
 }

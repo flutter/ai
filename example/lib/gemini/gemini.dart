@@ -3,8 +3,8 @@
 // found in the LICENSE file.
 
 import 'package:flutter/material.dart';
-import 'package:flutter_ai_toolkit/flutter_ai_toolkit.dart';
-import 'package:google_generative_ai/google_generative_ai.dart';
+// import 'package:flutter_ai_toolkit/flutter_ai_toolkit.dart'; // Will be replaced by firebase_ai
+// import 'package:google_generative_ai/google_generative_ai.dart'; // Will be replaced by firebase_ai
 
 import '../gemini_api_key.dart';
 
@@ -26,10 +26,12 @@ class ChatPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Scaffold(
     appBar: AppBar(title: const Text(App.title)),
-    body: LlmChatView(
-      provider: GeminiProvider(
-        model: GenerativeModel(model: 'gemini-2.0-flash', apiKey: geminiApiKey),
-      ),
-    ),
+    // body: LlmChatView(
+    //   provider: GeminiProvider(
+    //     model: GenerativeModel(model: 'gemini-2.0-flash', apiKey: geminiApiKey),
+    //   ),
+    // ),
+    // TODO: Instantiate LlmChatView with the new firebase_ai provider
+    body: const Center(child: Text('Gemini provider will be implemented here.')),
   );
 }
