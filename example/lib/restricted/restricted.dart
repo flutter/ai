@@ -32,22 +32,14 @@ class ChatPage extends StatelessWidget {
   const ChatPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    // Create a Gemini model instance
-    final model = FirebaseAI.googleAI().generativeModel(
-      model: 'gemini-2.0-flash',
-    );
-
-    // Create a FirebaseProvider with the model
-    final provider = FirebaseProvider(model: model);
-
-    return Scaffold(
-      appBar: AppBar(title: const Text('Restricted Chat')),
-      body: LlmChatView(
-        provider: provider,
-        enableAttachments: false,
-        enableVoiceNotes: false,
+  Widget build(BuildContext context) => Scaffold(
+    appBar: AppBar(title: const Text('Restricted Chat')),
+    body: LlmChatView(
+      provider: FirebaseProvider(
+        model: FirebaseAI.googleAI().generativeModel(model: 'gemini-2.0-flash'),
       ),
-    );
-  }
+      enableAttachments: false,
+      enableVoiceNotes: false,
+    ),
+  );
 }

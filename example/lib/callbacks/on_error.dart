@@ -17,7 +17,7 @@ void main() async {
 }
 
 class App extends StatelessWidget {
-  static const title = 'Example: Welcome Message';
+  static const title = 'Example: On Error';
 
   const App({super.key});
 
