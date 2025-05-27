@@ -14,7 +14,6 @@ dependencies:
   flutter_ai_toolkit:
     path: ..
   cupertino_icons: ^1.0.8
-  google_generative_ai: ^0.4.3
   shared_preferences: ^2.3.2
   url_launcher: ^6.3.0
   go_router: ^14.2.8
@@ -26,7 +25,7 @@ dependencies:
   future_builder_ex: ^5.0.0
   split_view: ^3.2.1
   firebase_core: ^3.13.0
-  firebase_vertexai: ^1.5.0
+  firebase_ai: ^2.0.0
 
 dev_dependencies:
   flutter_test:

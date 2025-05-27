@@ -1,4 +1,4 @@
-## 0.8.1
+## 0.9.0
 * added support for tool calls to the Gemini and Vertex providers. Check out the
   new `function_calls` example to see it in action. Thanks to @toshiossada for
   [the inspiration](https://github.com/flutter/ai/pull/99). Fixes
@@ -9,6 +9,12 @@
 
 * fixed [#102](https://github.com/flutter/ai/issues/102): migration from
   flutter_markdown to flutter_markdown_plus
+
+* fixed [#109]([TODO](https://github.com/flutter/ai/issues/109)): [task] migrate
+  to firebase_ai. This is a breaking change, since it removes both
+  `GeminiProvider` and `VertexProvider` and replaces it with `FirebaseProvider`.
+
+* removed online demo -- no longer able to bring-your-own-API-key
 
 ## 0.8.0
 * fixed [#90](https://github.com/flutter/ai/issues/90): Input box

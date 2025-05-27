@@ -3,7 +3,7 @@
 import 'package:firebase_core/firebase_core.dart' show FirebaseOptions;
 
 class DefaultFirebaseOptions {
-  // TODO: Run `flutterfire configure` to re-generate this file
+  // TODO: Remove this file and run `flutterfire config` for Firebase options
   static FirebaseOptions get currentPlatform {
     throw UnimplementedError(
       'Generate this file by running `flutterfire configure`. '

@@ -2,12 +2,11 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+import 'package:firebase_ai/firebase_ai.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_ai_toolkit/flutter_ai_toolkit.dart';
-import 'package:google_generative_ai/google_generative_ai.dart';
 
 import '../dark_style.dart';
-import '../gemini_api_key.dart';
 
 void main() => runApp(const App());
 
@@ -40,8 +39,8 @@ class ChatPage extends StatefulWidget {
 }
 
 class _ChatPageState extends State<ChatPage> {
-  final _provider = GeminiProvider(
-    model: GenerativeModel(model: 'gemini-2.0-flash', apiKey: geminiApiKey),
+  final _provider = FirebaseProvider(
+    model: FirebaseAI.googleAI().generativeModel(model: 'gemini-2.0-flash'),
   );
 
   final _lightStyle = LlmChatViewStyle.defaultStyle();

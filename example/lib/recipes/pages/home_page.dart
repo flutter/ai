@@ -1,9 +1,8 @@
+import 'package:firebase_ai/firebase_ai.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_ai_toolkit/flutter_ai_toolkit.dart';
 import 'package:go_router/go_router.dart';
-import 'package:google_generative_ai/google_generative_ai.dart';
 
-import '../../gemini_api_key.dart';
 import '../data/recipe_repository.dart';
 import '../data/settings.dart';
 import '../views/recipe_list_view.dart';
@@ -25,11 +24,10 @@ class _HomePageState extends State<HomePage> {
   late LlmProvider _provider = _createProvider();
 
   // create a new provider with the given history and the current settings
-  LlmProvider _createProvider([List<ChatMessage>? history]) => GeminiProvider(
+  LlmProvider _createProvider([List<ChatMessage>? history]) => FirebaseProvider(
     history: history,
-    model: GenerativeModel(
+    model: FirebaseAI.googleAI().generativeModel(
       model: 'gemini-2.0-flash',
-      apiKey: geminiApiKey,
       generationConfig: GenerationConfig(
         responseMimeType: 'application/json',
         responseSchema: Schema(
@@ -55,20 +53,12 @@ class _HomePageState extends State<HomePage> {
                         items: Schema(SchemaType.string),
                       ),
                     },
-                    requiredProperties: [
-                      'title',
-                      'description',
-                      'ingredients',
-                      'instructions',
-                    ],
                   ),
                 },
-                requiredProperties: ['recipe'],
               ),
             ),
             'text': Schema(SchemaType.string),
           },
-          requiredProperties: ['recipes'],
         ),
       ),
       systemInstruction: Content.system('''

@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+import 'package:firebase_ai/firebase_ai.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_vertexai/firebase_vertexai.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_ai_toolkit/flutter_ai_toolkit.dart';
 
@@ -32,10 +32,8 @@ class ChatPage extends StatelessWidget {
   Widget build(BuildContext context) => Scaffold(
     appBar: AppBar(title: const Text(App.title)),
     body: LlmChatView(
-      provider: VertexProvider(
-        model: FirebaseVertexAI.instance.generativeModel(
-          model: 'gemini-2.0-flash',
-        ),
+      provider: FirebaseProvider(
+        model: FirebaseAI.vertexAI().generativeModel(model: 'gemini-2.0-flash'),
       ),
     ),
   );

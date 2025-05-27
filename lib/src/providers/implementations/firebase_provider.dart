@@ -2,19 +2,19 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+import 'package:firebase_ai/firebase_ai.dart';
 import 'package:flutter/foundation.dart';
-import 'package:google_generative_ai/google_generative_ai.dart';
 
 import '../interface/attachments.dart';
 import '../interface/chat_message.dart';
 import '../interface/llm_provider.dart';
 
-/// A provider class for interacting with Google's Gemini AI language model.
+/// A provider class for interacting with Firebase Vertex AI's language model.
 ///
 /// This class extends [LlmProvider] and implements the necessary methods to
-/// generate text using the Gemini AI model.
-class GeminiProvider extends LlmProvider with ChangeNotifier {
-  /// Creates a new instance of [GeminiProvider].
+/// generate text using Firebase Vertex AI's generative model.
+class FirebaseProvider extends LlmProvider with ChangeNotifier {
+  /// Creates a new instance of [FirebaseProvider].
   ///
   /// [model] is an optional [GenerativeModel] instance for text generation. If
   /// provided, it will be used for chat-based interactions and text generation.
@@ -27,11 +27,9 @@ class GeminiProvider extends LlmProvider with ChangeNotifier {
   ///
   /// [chatGenerationConfig] is an optional configuration for controlling the
   /// model's generation behavior.
-  ///
-  /// [onFunctionCall] is an optional function that will be called when the LLM
-  /// needs to call a function.
-  GeminiProvider({
+  FirebaseProvider({
     required GenerativeModel model,
+    this.onFunctionCalls,
     Iterable<ChatMessage>? history,
     List<SafetySetting>? chatSafetySettings,
     GenerationConfig? chatGenerationConfig,
@@ -43,13 +41,13 @@ class GeminiProvider extends LlmProvider with ChangeNotifier {
        _onFunctionCall = onFunctionCall {
     _chat = _startChat(history);
   }
-
+  final void Function(Iterable<FunctionCall>)? onFunctionCalls;
   final GenerativeModel _model;
   final List<SafetySetting>? _chatSafetySettings;
   final GenerationConfig? _chatGenerationConfig;
   final List<ChatMessage> _history;
-  ChatSession? _chat;
   final Future<Map<String, Object?>?> Function(FunctionCall)? _onFunctionCall;
+  ChatSession? _chat;
 
   @override
   Stream<String> generateStream(
@@ -155,8 +153,8 @@ class GeminiProvider extends LlmProvider with ChangeNotifier {
   );
 
   static Part _partFrom(Attachment attachment) => switch (attachment) {
-    (final FileAttachment a) => DataPart(a.mimeType, a.bytes),
-    (final LinkAttachment a) => FilePart(a.url),
+    (final FileAttachment a) => InlineDataPart(a.mimeType, a.bytes),
+    (final LinkAttachment a) => FileData(a.mimeType, a.url.toString()),
   };
 
   static Content _contentFrom(ChatMessage message) => Content(

@@ -4,13 +4,12 @@
 
 import 'dart:convert';
 
+import 'package:firebase_ai/firebase_ai.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_ai_toolkit/flutter_ai_toolkit.dart';
 import 'package:go_router/go_router.dart';
-import 'package:google_generative_ai/google_generative_ai.dart';
 import 'package:uuid/uuid.dart';
 
-import '../../gemini_api_key.dart';
 import '../data/recipe_data.dart';
 import '../data/recipe_repository.dart';
 import '../data/settings.dart';
@@ -31,10 +30,9 @@ class _EditRecipePageState extends State<EditRecipePage> {
   late final TextEditingController _ingredientsController;
   late final TextEditingController _instructionsController;
 
-  final _provider = GeminiProvider(
-    model: GenerativeModel(
-      model: "gemini-1.5-flash",
-      apiKey: geminiApiKey,
+  final _provider = FirebaseProvider(
+    model: FirebaseAI.googleAI().generativeModel(
+      model: "gemini-2.0-flash",
       generationConfig: GenerationConfig(
         responseMimeType: 'application/json',
         responseSchema: Schema(
