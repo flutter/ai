@@ -56,14 +56,12 @@ class ChatPage extends StatelessWidget {
     ),
   );
 
+  // note: we're not actually calling any external APIs in this example
   Future<Map<String, Object?>?> _onFunctionCall(
     FunctionCall functionCall,
-  ) async {
-    // note: we're not actually calling any external APIs in this example
-    return switch (functionCall.name) {
-      'get_temperature' => {'temperature': 60, 'unit': 'F'},
-      'get_time' => {'time': DateTime(1970, 1, 1).toIso8601String()},
-      _ => throw Exception('Unknown function call: ${functionCall.name}'),
-    };
-  }
+  ) async => switch (functionCall.name) {
+    'get_temperature' => {'temperature': 60, 'unit': 'F'},
+    'get_time' => {'time': DateTime(1970, 1, 1).toIso8601String()},
+    _ => throw Exception('Unknown function call: ${functionCall.name}'),
+  };
 }
