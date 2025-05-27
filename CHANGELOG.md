@@ -13,6 +13,7 @@
 * fixed [#109]([TODO](https://github.com/flutter/ai/issues/109)): [task] migrate
   to firebase_ai. This is a breaking change, since it removes both
   `GeminiProvider` and `VertexProvider` and replaces it with `FirebaseProvider`.
+  See README.md for migration details.
 
 * removed online demo -- no longer able to bring-your-own-API-key
 
