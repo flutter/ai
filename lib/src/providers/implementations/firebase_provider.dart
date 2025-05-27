@@ -29,7 +29,7 @@ class FirebaseProvider extends LlmProvider with ChangeNotifier {
   /// model's generation behavior.
   FirebaseProvider({
     required GenerativeModel model,
-    this.onFunctionCalls,
+    void Function(Iterable<FunctionCall>)? onFunctionCalls,
     Iterable<ChatMessage>? history,
     List<SafetySetting>? chatSafetySettings,
     GenerationConfig? chatGenerationConfig,
@@ -41,7 +41,7 @@ class FirebaseProvider extends LlmProvider with ChangeNotifier {
        _onFunctionCall = onFunctionCall {
     _chat = _startChat(history);
   }
-  final void Function(Iterable<FunctionCall>)? onFunctionCalls;
+
   final GenerativeModel _model;
   final List<SafetySetting>? _chatSafetySettings;
   final GenerationConfig? _chatGenerationConfig;
