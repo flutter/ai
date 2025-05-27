@@ -3,12 +3,20 @@
 // found in the LICENSE file.
 
 import 'package:firebase_ai/firebase_ai.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_ai_toolkit/flutter_ai_toolkit.dart';
 
+// from `flutterfire config`: https://firebase.google.com/docs/flutter/setup
+import '../firebase_options.dart';
+
 /// An example demonstrating how to create a restricted chat interface
 /// where attachments and voice notes are disabled.
-void main() => runApp(const App());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  runApp(const App());
+}
 
 /// A Flutter application that demonstrates a restricted chat interface.
 class App extends StatelessWidget {

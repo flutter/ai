@@ -3,28 +3,27 @@
 // found in the LICENSE file.
 
 import 'package:firebase_ai/firebase_ai.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_ai_toolkit/flutter_ai_toolkit.dart';
 import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../dark_style.dart';
-
-late final SharedPreferences prefs;
+// from `flutterfire config`: https://firebase.google.com/docs/flutter/setup
+import '../firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  final prefs = await SharedPreferences.getInstance();
-  runApp(App(prefs: prefs));
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  runApp(const App());
 }
 
 class App extends StatefulWidget {
   static const title = 'Demo: Flutter AI Toolkit';
   static final themeMode = ValueNotifier(ThemeMode.light);
 
-  const App({super.key, required this.prefs});
-  final SharedPreferences prefs;
+  const App({super.key});
 
   @override
   State<App> createState() => _AppState();

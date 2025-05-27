@@ -79,11 +79,32 @@
       "program": "lib/logging/logging.dart",
     },
     {
+      "name": "on cancel",
+      "cwd": "example",
+      "request": "launch",
+      "type": "dart",
+      "program": "lib/callbacks/on_cancel.dart",
+    },
+    {
+      "name": "on error",
+      "cwd": "example",
+      "request": "launch",
+      "type": "dart",
+      "program": "lib/callbacks/on_error.dart",
+    },
+    {
       "name": "function calls",
       "cwd": "example",
       "request": "launch",
       "type": "dart",
       "program": "lib/function_calls/function_calls.dart",
+    },
+    {
+      "name": "restricted",
+      "cwd": "example",
+      "request": "launch",
+      "type": "dart",
+      "program": "lib/restricted/restricted.dart",
     },
     {
       "name": "recipes",
