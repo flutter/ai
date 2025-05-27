@@ -12,16 +12,16 @@ PODS:
     - FirebaseAuth (~> 11.10.0)
   - Firebase/CoreOnly (11.10.0):
     - FirebaseCore (~> 11.10.0)
-  - firebase_app_check (0.3.2-5):
+  - firebase_app_check (0.3.2-6):
     - Firebase/CoreOnly (~> 11.10.0)
     - firebase_core
     - FirebaseAppCheck (~> 11.10.0)
     - Flutter
-  - firebase_auth (5.5.3):
+  - firebase_auth (5.5.4):
     - Firebase/Auth (= 11.10.0)
     - firebase_core
     - Flutter
-  - firebase_core (3.13.0):
+  - firebase_core (3.13.1):
     - Firebase/CoreOnly (= 11.10.0)
     - Flutter
   - FirebaseAppCheck (11.10.0):
@@ -148,9 +148,9 @@ SPEC CHECKSUMS:
   camera_avfoundation: adb0207d868b2d873e895371d88448399ab78d87
   file_selector_ios: f0670c1064a8c8450e38145d8043160105d0b97c
   Firebase: 1fe1c0a7d9aaea32efe01fbea5f0ebd8d70e53a2
-  firebase_app_check: f24ffe14416429535e3ba82c181e2a04be2430e0
-  firebase_auth: 3f532201cbdc7cd6dfc3bfa89affc0c294111e20
-  firebase_core: 432718558359a8c08762151b5f49bb0f093eb6e0
+  firebase_app_check: a3fad167381a08d4e9534da64429c9b648e51f24
+  firebase_auth: 519455ee22dea9cb8b4e05d7821f93f77db88882
+  firebase_core: 3c2f323cae65c97a636a05a23b17730ef93df2cf
   FirebaseAppCheck: 9687ebd909702469bc09d2d58008697b83f4ac27
   FirebaseAppCheckInterop: 73b173e5ec45192e2d522ad43f526a82ad10b852
   FirebaseAuth: c4146bdfdc87329f9962babd24dae89373f49a32
