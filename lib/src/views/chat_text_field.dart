@@ -101,6 +101,7 @@ class ChatTextField extends StatelessWidget {
               hintText: hintText,
               hintStyle: hintStyle,
               contentPadding: hintPadding,
+              isDense: false,
             ),
           );
 }

@@ -1,3 +1,6 @@
+## 0.9.1
+* fix [#96](https://github.com/flutter/ai/issues/96): nput field overlap issue
+
 ## 0.9.0
 * added support for tool calls to the Gemini and Vertex providers. Check out the
   new `function_calls` example to see it in action. Thanks to @toshiossada for
