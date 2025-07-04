@@ -89,6 +89,7 @@ class LlmChatView extends StatefulWidget {
     this.errorMessage = 'ERROR',
     this.enableAttachments = true,
     this.enableVoiceNotes = true,
+    this.autofocus,
     super.key,
   }) : viewModel = ChatViewModel(
          provider: provider,
@@ -141,6 +142,13 @@ class LlmChatView extends StatefulWidget {
   /// Defaults to 'ERROR'.
   final String errorMessage;
 
+  /// Whether to autofocus the chat input field when the view is displayed.
+  ///
+  /// Defaults to `null`, which means it will be determined based on the
+  /// presence of suggestions. If there are no suggestions, the input field
+  /// will be focused automatically.
+  final bool? autofocus;
+
   @override
   State<LlmChatView> createState() => _LlmChatViewState();
 }
@@ -174,53 +182,54 @@ class _LlmChatViewState extends State<LlmChatView>
     final chatStyle = LlmChatViewStyle.resolve(widget.viewModel.style);
     return ListenableBuilder(
       listenable: widget.viewModel.provider,
-      builder:
-          (context, child) => ChatViewModelProvider(
-            viewModel: widget.viewModel,
-            child: GestureDetector(
-              onTap: () {
-                // Dismiss keyboard when tapping anywhere in the view
-                FocusScope.of(context).unfocus();
-              },
-              child: Container(
-                color: chatStyle.backgroundColor,
-                child: Column(
-                  children: [
-                    Expanded(
-                      child: Stack(
-                        children: [
-                          ChatHistoryView(
-                            // can only edit if we're not waiting on the LLM or if
-                            // we're not already editing an LLM response
-                            onEditMessage:
-                                _pendingPromptResponse == null &&
-                                        _associatedResponse == null
-                                    ? _onEditMessage
-                                    : null,
-                            onSelectSuggestion: _onSelectSuggestion,
-                          ),
-                        ],
+      builder: (context, child) => ChatViewModelProvider(
+        viewModel: widget.viewModel,
+        child: GestureDetector(
+          onTap: () {
+            // Dismiss keyboard when tapping anywhere in the view
+            FocusScope.of(context).unfocus();
+          },
+          child: Container(
+            color: chatStyle.backgroundColor,
+            child: Column(
+              children: [
+                Expanded(
+                  child: Stack(
+                    children: [
+                      ChatHistoryView(
+                        // can only edit if we're not waiting on the LLM or if
+                        // we're not already editing an LLM response
+                        onEditMessage:
+                            _pendingPromptResponse == null &&
+                                _associatedResponse == null
+                            ? _onEditMessage
+                            : null,
+                        onSelectSuggestion: _onSelectSuggestion,
                       ),
-                    ),
-                    ChatInput(
-                      initialMessage: _initialMessage,
-                      autofocus: widget.viewModel.suggestions.isEmpty,
-                      onCancelEdit:
-                          _associatedResponse != null ? _onCancelEdit : null,
-                      onSendMessage: _onSendMessage,
-                      onCancelMessage:
-                          _pendingPromptResponse == null
-                              ? null
-                              : _onCancelMessage,
-                      onTranslateStt: _onTranslateStt,
-                      onCancelStt:
-                          _pendingSttResponse == null ? null : _onCancelStt,
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
+                ChatInput(
+                  initialMessage: _initialMessage,
+                  autofocus:
+                      widget.autofocus ?? widget.viewModel.suggestions.isEmpty,
+                  onCancelEdit: _associatedResponse != null
+                      ? _onCancelEdit
+                      : null,
+                  onSendMessage: _onSendMessage,
+                  onCancelMessage: _pendingPromptResponse == null
+                      ? null
+                      : _onCancelMessage,
+                  onTranslateStt: _onTranslateStt,
+                  onCancelStt: _pendingSttResponse == null
+                      ? null
+                      : _onCancelStt,
+                ),
+              ],
             ),
           ),
+        ),
+      ),
     );
   }
 
@@ -300,9 +309,8 @@ class _LlmChatViewState extends State<LlmChatView>
         attachments: attachments,
       ),
       onUpdate: (text) => response += text,
-      onDone:
-          (error) async =>
-              _onSttDone(error, response, file, currentAttachments),
+      onDone: (error) async =>
+          _onSttDone(error, response, file, currentAttachments),
     );
 
     setState(() {});
