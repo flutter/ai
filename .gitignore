@@ -37,3 +37,4 @@ example/lib/echo.dart
 .flutter-plugins
 .flutter-plugins-dependencies
 .vscode/settings.json
+AGENT.md
