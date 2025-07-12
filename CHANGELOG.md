@@ -1,3 +1,8 @@
+## 0.9.2
+
+- fix [#137](https://github.com/flutter/ai/issues/137): Link Attachments are not
+  supported 
+
 ## 0.9.1
 * fix [#96](https://github.com/flutter/ai/issues/96): input field overlap issue
 

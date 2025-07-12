@@ -107,6 +107,13 @@
       "program": "lib/restricted/restricted.dart",
     },
     {
+      "name": "image upload (simulated)",
+      "cwd": "example",
+      "request": "launch",
+      "type": "dart",
+      "program": "lib/image_upload/image_upload.dart",
+    },
+    {
       "name": "recipes",
       "cwd": "example",
       "request": "launch",

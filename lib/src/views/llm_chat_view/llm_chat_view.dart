@@ -250,6 +250,12 @@ class _LlmChatViewState extends State<LlmChatView>
   void _onPromptDone(LlmException? error) {
     setState(() => _pendingPromptResponse = null);
     unawaited(_showLlmException(error));
+
+    // dump the history to the console
+    debugPrint(
+      '## History\n'
+      '${widget.viewModel.provider.history.map((m) => m.toString()).join('\n')}',
+    );
   }
 
   void _onCancelMessage() => _pendingPromptResponse?.cancel();

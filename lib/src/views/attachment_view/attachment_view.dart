@@ -29,6 +29,9 @@ class AttachmentView extends StatelessWidget {
   Widget build(BuildContext context) => switch (attachment) {
     (final ImageFileAttachment a) => ImageAttachmentView(a),
     (final FileAttachment a) => FileAttachmentView(a),
-    (LinkAttachment _) => throw Exception('Link attachments not supported'),
+    (final LinkAttachment a) =>
+      a.mimeType.toLowerCase().startsWith('image/')
+          ? ImageAttachmentView(a)
+          : FileAttachmentView(a),
   };
 }
