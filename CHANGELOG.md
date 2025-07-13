@@ -1,17 +1,30 @@
 ## 0.9.2
 
 - fix [#137](https://github.com/flutter/ai/issues/137): Link Attachments are not
-  supported
+  supported. This prevented the use of a `messageSender` function to upload
+  files on the fly when making requests to certain providers (I'm looking at
+  you, Firebase) that require larger (ok, really just not tiny) files to be
+  uploaded before they can be processed. Check out simulated upload in the new
+  file update example.
 
 - fix [#112](https://github.com/flutter/ai/issues/112): attachments pop-up menu
   appears behind soft keyboard on mobile
 
 - fix [#133](https://github.com/flutter/ai/issues/133): Avoiding autofocus
 
-- fix [#127](https://github.com/flutter/ai/issues/127): tts should strip
+- fix [#127](https://github.com/flutter/ai/issues/127): stt should strip
   newlines
 
+- fix [#100]([#127](https://github.com/flutter/ai/issues/100): audio
+  transcription returns mixed AI response or no text (iOS & Android). We fix
+  this by allowing you to provide your own speech-to-text implementation. Take a
+  look at the new custom stt example.
 
+- fix [#135](https://github.com/flutter/ai/issues/135): fix function calling to
+  handle multiple tool calls. check out the updated function calls example! This
+  gives the `FirebaseProvider` the inner loop to keep calling functions
+  requested by Gemini until it gets all the info it needs to provide its
+  response. That's the beating heart of an AI agent.
 
 ## 0.9.1
 * fix [#96](https://github.com/flutter/ai/issues/96): input field overlap issue

@@ -48,11 +48,45 @@ class ChatPage extends StatelessWidget {
                 'Get the current local time',
                 parameters: {},
               ),
+              FunctionDeclaration(
+                'c_to_f',
+                'Convert a temperature from Celsius to Fahrenheit',
+                parameters: {
+                  'temperature': Schema.number(
+                    description: 'The temperature in Celsius',
+                  ),
+                },
+              ),
             ]),
           ],
         ),
         onFunctionCall: _onFunctionCall,
       ),
+      suggestions: [
+        'can you get the current time?',
+        'can you get the current time and temp?',
+        'can you get the current temp in Fahrenheit?',
+      ],
+      welcomeMessage: '''
+Welcome to the function calls example!
+This example includes three tools:
+- current time: always returns 1970-01-01T00:00:00Z
+- current temperature: always returns 0°C
+- convert from Celsius to Fahrenheit
+
+The hardcoded values are for demonstration purposes. Not only can you ask Gemini
+to use these tools one at time, like:
+
+_can you get the current time?_
+
+but you can ask them in combination, like:
+
+_can you get the current time and temp?_
+
+you can even ask it to use the results of one function call in another, like:
+
+_can you get the current temp in Fahrenheit?_
+''',
     ),
   );
 
@@ -60,8 +94,12 @@ class ChatPage extends StatelessWidget {
   Future<Map<String, Object?>?> _onFunctionCall(
     FunctionCall functionCall,
   ) async => switch (functionCall.name) {
-    'get_temperature' => {'temperature': 60, 'unit': 'F'},
+    'get_temperature' => {'temperature': 0, 'unit': 'C'},
     'get_time' => {'time': DateTime(1970, 1, 1).toIso8601String()},
+    'c_to_f' => {
+      'temperature':
+          (functionCall.args['temperature'] as num).toDouble() * 1.8 + 32,
+    },
     _ => throw Exception('Unknown function call: ${functionCall.name}'),
   };
 }

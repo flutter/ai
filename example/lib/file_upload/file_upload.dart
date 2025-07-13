@@ -16,7 +16,7 @@ void main() async {
 }
 
 class App extends StatelessWidget {
-  static const title = 'Example: Simulated Image Upload';
+  static const title = 'Example: Simulated File Upload';
 
   const App({super.key});
 
