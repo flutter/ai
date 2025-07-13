@@ -114,6 +114,13 @@
       "program": "lib/image_upload/image_upload.dart",
     },
     {
+      "name": "custom stt",
+      "cwd": "example",
+      "request": "launch",
+      "type": "dart",
+      "program": "lib/custom_stt/custom_stt.dart",
+    },
+    {
       "name": "recipes",
       "cwd": "example",
       "request": "launch",

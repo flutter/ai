@@ -32,6 +32,7 @@ class ChatViewModel {
     required this.welcomeMessage,
     required this.responseBuilder,
     required this.messageSender,
+    required this.speechToText,
     required this.enableAttachments,
     required this.enableVoiceNotes,
   });
@@ -72,6 +73,12 @@ class ChatViewModel {
   /// This optional generator is used to send messages to the LLM, allowing for
   /// asynchronous communication and response handling.
   final LlmStreamGenerator? messageSender;
+
+  /// The speech to text converter for the chat interface.
+  ///
+  /// This converter is used to convert speech to text, allowing for
+  /// asynchronous communication and response handling.
+  final SpeechToTextConverter? speechToText;
 
   /// Whether file and image attachments are enabled in the chat input.
   ///

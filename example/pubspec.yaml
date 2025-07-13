@@ -26,6 +26,7 @@ dependencies:
   split_view: ^3.2.1
   firebase_core: ^3.13.0
   firebase_ai: ^2.0.0
+  cross_file: ^0.3.4+2
 
 dev_dependencies:
   flutter_test:

@@ -8,6 +8,11 @@
 
 - fix [#133](https://github.com/flutter/ai/issues/133): Avoiding autofocus
 
+- fix [#127](https://github.com/flutter/ai/issues/127): tts should strip
+  newlines
+
+
+
 ## 0.9.1
 * fix [#96](https://github.com/flutter/ai/issues/96): input field overlap issue
 

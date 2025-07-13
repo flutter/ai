@@ -81,6 +81,7 @@ class LlmChatView extends StatefulWidget {
     LlmChatViewStyle? style,
     ResponseBuilder? responseBuilder,
     LlmStreamGenerator? messageSender,
+    SpeechToTextConverter? speechToText,
     List<String> suggestions = const [],
     String? welcomeMessage,
     this.onCancelCallback,
@@ -95,6 +96,7 @@ class LlmChatView extends StatefulWidget {
          provider: provider,
          responseBuilder: responseBuilder,
          messageSender: messageSender,
+         speechToText: speechToText,
          style: style,
          suggestions: suggestions,
          welcomeMessage: welcomeMessage,
@@ -295,6 +297,25 @@ class _LlmChatViewState extends State<LlmChatView>
     _initialMessage = null;
     _associatedResponse = null;
 
+    final response = StringBuffer();
+    _pendingSttResponse = LlmResponse(
+      stream:
+          widget.viewModel.speechToText?.call(file) ??
+          _convertSpeechToText(file),
+      onUpdate: (text) => response.write(text),
+      onDone:
+          (error) async => _onSttDone(
+            error,
+            response.toString().trim(),
+            file,
+            currentAttachments,
+          ),
+    );
+
+    setState(() {});
+  }
+
+  Stream<String> _convertSpeechToText(XFile file) async* {
     // use the LLM to translate the attached audio to text
     const prompt =
         'translate the attached audio to text; provide the result of that '
@@ -303,19 +324,10 @@ class _LlmChatViewState extends State<LlmChatView>
         'provide the result of translating the foreground audio.';
     final attachments = [await FileAttachment.fromFile(file)];
 
-    var response = '';
-    _pendingSttResponse = LlmResponse(
-      stream: widget.viewModel.provider.generateStream(
-        prompt,
-        attachments: attachments,
-      ),
-      onUpdate: (text) => response += text,
-      onDone:
-          (error) async =>
-              _onSttDone(error, response.trim(), file, currentAttachments),
+    yield* widget.viewModel.provider.generateStream(
+      prompt,
+      attachments: attachments,
     );
-
-    setState(() {});
   }
 
   Future<void> _onSttDone(
