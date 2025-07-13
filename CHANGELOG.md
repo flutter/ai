@@ -26,6 +26,10 @@
   requested by Gemini until it gets all the info it needs to provide its
   response. That's the beating heart of an AI agent.
 
+- fix [#111]((https://github.com/flutter/ai/issues/111): canceling the editing
+  of a prompt should reset the attachments and prompt
+
+
 ## 0.9.1
 * fix [#96](https://github.com/flutter/ai/issues/96): input field overlap issue
 

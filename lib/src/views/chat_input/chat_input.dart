@@ -130,9 +130,20 @@ class _ChatInputState extends State<ChatInput> {
   void didUpdateWidget(ChatInput oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (widget.initialMessage != null) {
+      // Load the initial message's text and attachments when:
+      // 1. Starting an edit operation (user clicked edit on a previous message)
+      // 2. Receiving transcribed text from speech-to-text (preserves existing
+      //    attachments)
+      // 3. Selecting a suggestion from the chat interface
       _textController.text = widget.initialMessage!.text ?? '';
       _attachments.clear();
       _attachments.addAll(widget.initialMessage!.attachments);
+    } else if (oldWidget.initialMessage != null) {
+      // Clear both text and attachments when initialMessage becomes null
+      // This happens when the user cancels an edit operation, ensuring
+      // the input field returns to a clean state
+      _textController.clear();
+      _attachments.clear();
     }
   }
 
