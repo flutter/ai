@@ -156,8 +156,9 @@ final class LinkAttachment extends Attachment {
   ///
   /// [name] is the name of the link attachment.
   /// [url] is the URI of the link.
-  LinkAttachment({required super.name, required this.url})
-    : mimeType = lookupMimeType(url.path) ?? 'application/octet-stream';
+  LinkAttachment({required super.name, required this.url, String? mimeType})
+    : mimeType =
+          mimeType ?? lookupMimeType(url.path) ?? 'application/octet-stream';
 
   /// The URL of the link attachment.
   final Uri url;

@@ -73,7 +73,7 @@ class LlmMessageView extends StatelessWidget {
                         child:
                             text == null
                                 ? SizedBox(
-                                  width: 24,
+                                  width: 32,
                                   child: JumpingDotsProgressIndicator(
                                     fontSize: 24,
                                     color: chatStyle.progressIndicatorColor!,

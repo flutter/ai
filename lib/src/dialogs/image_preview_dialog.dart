@@ -14,11 +14,22 @@ class ImagePreviewDialog extends StatelessWidget {
   const ImagePreviewDialog(this.attachment, {super.key});
 
   /// The image file attachment to be previewed in the dialog.
-  final ImageFileAttachment attachment;
+  final Attachment attachment;
+
+  static const _fit = BoxFit.contain;
 
   @override
   Widget build(BuildContext context) => Padding(
     padding: const EdgeInsets.all(8),
-    child: Center(child: Image.memory(attachment.bytes, fit: BoxFit.contain)),
+    child: Center(
+      child: switch (attachment) {
+        (final ImageFileAttachment a) => Image.memory(a.bytes, fit: _fit),
+        (FileAttachment _) =>
+          throw AssertionError(
+            'File attachments not supported in image preview dialog',
+          ),
+        (final LinkAttachment a) => Image.network(a.url.toString(), fit: _fit),
+      },
+    ),
   );
 }

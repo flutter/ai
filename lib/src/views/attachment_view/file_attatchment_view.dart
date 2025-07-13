@@ -21,7 +21,7 @@ class FileAttachmentView extends StatelessWidget {
   const FileAttachmentView(this.attachment, {super.key});
 
   /// The file attachment to be displayed.
-  final FileAttachment attachment;
+  final Attachment attachment;
 
   @override
   Widget build(BuildContext context) => ChatViewModelClient(
@@ -59,7 +59,11 @@ class FileAttachmentView extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                   ),
                   Text(
-                    attachment.mimeType,
+                    switch (attachment) {
+                      (final ImageFileAttachment a) => a.mimeType,
+                      (final FileAttachment a) => a.mimeType,
+                      (final LinkAttachment a) => a.mimeType,
+                    },
                     style: attachmentStyle.filetypeStyle,
                     overflow: TextOverflow.ellipsis,
                   ),

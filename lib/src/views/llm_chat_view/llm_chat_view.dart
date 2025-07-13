@@ -89,6 +89,7 @@ class LlmChatView extends StatefulWidget {
     this.errorMessage = 'ERROR',
     this.enableAttachments = true,
     this.enableVoiceNotes = true,
+    this.autofocus,
     super.key,
   }) : viewModel = ChatViewModel(
          provider: provider,
@@ -140,6 +141,13 @@ class LlmChatView extends StatefulWidget {
   ///
   /// Defaults to 'ERROR'.
   final String errorMessage;
+
+  /// Whether to autofocus the chat input field when the view is displayed.
+  ///
+  /// Defaults to `null`, which means it will be determined based on the
+  /// presence of suggestions. If there are no suggestions, the input field
+  /// will be focused automatically.
+  final bool? autofocus;
 
   @override
   State<LlmChatView> createState() => _LlmChatViewState();
@@ -204,7 +212,9 @@ class _LlmChatViewState extends State<LlmChatView>
                     ),
                     ChatInput(
                       initialMessage: _initialMessage,
-                      autofocus: widget.viewModel.suggestions.isEmpty,
+                      autofocus:
+                          widget.autofocus ??
+                          widget.viewModel.suggestions.isEmpty,
                       onCancelEdit:
                           _associatedResponse != null ? _onCancelEdit : null,
                       onSendMessage: _onSendMessage,

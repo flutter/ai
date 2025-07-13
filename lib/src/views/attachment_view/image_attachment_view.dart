@@ -23,14 +23,21 @@ class ImageAttachmentView extends StatelessWidget {
   const ImageAttachmentView(this.attachment, {super.key});
 
   /// The image file attachment to be displayed.
-  final ImageFileAttachment attachment;
+  final Attachment attachment;
 
   @override
   Widget build(BuildContext context) => Align(
     alignment: Alignment.centerRight,
     child: GestureDetector(
       onTap: () => unawaited(_showPreviewDialog(context)),
-      child: Image.memory(attachment.bytes),
+      child: switch (attachment) {
+        (final ImageFileAttachment a) => Image.memory(a.bytes),
+        (FileAttachment _) =>
+          throw AssertionError(
+            'File attachments not supported in image attachment view',
+          ),
+        (final LinkAttachment a) => Image.network(a.url.toString()),
+      },
     ),
   );
 

@@ -6,7 +6,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   group('Suggestions - Welcome message overlap tests', () {
-    Widget materialApp(int suggestionsCount) => MaterialApp(
+    Widget materialApp(int suggestionsCount, {bool? autofocus}) => MaterialApp(
       home: Scaffold(
         appBar: AppBar(title: const Text('Title')),
         body: LlmChatView(
@@ -17,6 +17,7 @@ void main() {
             (index) => 'Suggestion sample ${index + 1}',
           ),
           provider: EchoProvider(),
+          autofocus: autofocus,
         ),
       ),
     );
@@ -67,6 +68,32 @@ void main() {
       expect(suggestionsView, findsOne);
 
       // TextField must be focused now
+      expect((tester.widget<TextField>(textField)).focusNode?.hasFocus, true);
+    });
+    testWidgets('force autofocus false even if no suggestions provided', (
+      tester,
+    ) async {
+      // No suggestions provided, but autofocus is set to false
+      await tester.pumpWidget(materialApp(0, autofocus: false));
+
+      // ChatTextField must be autofocus false and TextField must not be focused
+      // because parameter is set to false
+      final chatTextField = find.byType(ChatTextField);
+      final textField = find.byType(TextField);
+      expect((tester.widget<ChatTextField>(chatTextField)).autofocus, false);
+      expect((tester.widget<TextField>(textField)).focusNode?.hasFocus, false);
+    });
+    testWidgets('force autofocus true even if suggestions provided', (
+      tester,
+    ) async {
+      // Suggestions provided, but autofocus is set to true
+      await tester.pumpWidget(materialApp(40, autofocus: true));
+
+      // ChatTextField must be autofocus true and TextField must be focused
+      // because parameter is set to true
+      final chatTextField = find.byType(ChatTextField);
+      final textField = find.byType(TextField);
+      expect((tester.widget<ChatTextField>(chatTextField)).autofocus, true);
       expect((tester.widget<TextField>(textField)).focusNode?.hasFocus, true);
     });
     testWidgets('Welcome message with a lot of suggestions allowing scroll', (
