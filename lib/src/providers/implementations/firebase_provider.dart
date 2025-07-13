@@ -53,10 +53,13 @@ class FirebaseProvider extends LlmProvider with ChangeNotifier {
   Stream<String> generateStream(
     String prompt, {
     Iterable<Attachment> attachments = const [],
-  }) => _generateStream(
+  }) => _sendMessageStream(
     prompt: prompt,
     attachments: attachments,
-    contentStreamGenerator: (c) => _model.generateContentStream([c]),
+    // we need a chat session to handle multiple turns with function calls, but
+    // we don't want it to affect the main history that this provider is
+    // managing. so we create a new chat session for this single request.
+    chat: _startChat(null)!,
   );
 
   @override
@@ -68,10 +71,10 @@ class FirebaseProvider extends LlmProvider with ChangeNotifier {
     final llmMessage = ChatMessage.llm();
     _history.addAll([userMessage, llmMessage]);
 
-    final response = _generateStream(
+    final response = _sendMessageStream(
       prompt: prompt,
       attachments: attachments,
-      contentStreamGenerator: _chat!.sendMessageStream,
+      chat: _chat!,
     );
 
     // don't write this code if you're targeting the web until this is fixed:
@@ -89,30 +92,43 @@ class FirebaseProvider extends LlmProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Stream<String> _generateStream({
+  Stream<String> _sendMessageStream({
     required String prompt,
     required Iterable<Attachment> attachments,
-    required Stream<GenerateContentResponse> Function(Content)
-    contentStreamGenerator,
+    required ChatSession chat,
   }) async* {
     final content = Content('user', [
       TextPart(prompt),
       ...attachments.map(_partFrom),
     ]);
 
-    final contentResponse = contentStreamGenerator(content);
+    // Get initial response stream
+    var responseStream = chat.sendMessageStream(content);
 
-    // don't write this code if you're targeting the web until this is fixed:
-    // https://github.com/dart-lang/sdk/issues/47764
-    // await for (final chunk in response) {
-    //   final text = chunk.text;
-    //   if (text != null) yield text;
-    // }
-    yield* contentResponse.asyncMap((chunk) async {
-      if (chunk.functionCalls.isEmpty) return chunk.text ?? '';
+    while (true) {
+      final functionCalls = <FunctionCall>[];
 
+      // Stream out all text and collect function calls
+      await for (final chunk in responseStream) {
+        if (chunk.text != null) {
+          yield chunk.text!;
+        }
+        if (chunk.functionCalls.isNotEmpty) {
+          functionCalls.addAll(chunk.functionCalls);
+        }
+      }
+
+      // If no function calls were collected, we're done
+      if (functionCalls.isEmpty) {
+        break;
+      }
+
+      // Add newline between responses
+      yield '\n';
+
+      // Execute all function calls
       final functionResponses = <FunctionResponse>[];
-      for (final functionCall in chunk.functionCalls) {
+      for (final functionCall in functionCalls) {
         try {
           functionResponses.add(
             FunctionResponse(
@@ -127,12 +143,11 @@ class FirebaseProvider extends LlmProvider with ChangeNotifier {
         }
       }
 
-      final functionContentResponse = await _chat!.sendMessage(
+      // Get the next response stream with function results
+      responseStream = chat.sendMessageStream(
         Content.functionResponses(functionResponses),
       );
-
-      return '${chunk.text ?? ''}${functionContentResponse.text ?? ''}';
-    });
+    }
   }
 
   @override
