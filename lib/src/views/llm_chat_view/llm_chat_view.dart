@@ -312,7 +312,7 @@ class _LlmChatViewState extends State<LlmChatView>
       onUpdate: (text) => response += text,
       onDone:
           (error) async =>
-              _onSttDone(error, response, file, currentAttachments),
+              _onSttDone(error, response.trim(), file, currentAttachments),
     );
 
     setState(() {});

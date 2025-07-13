@@ -1,7 +1,12 @@
 ## 0.9.2
 
 - fix [#137](https://github.com/flutter/ai/issues/137): Link Attachments are not
-  supported 
+  supported
+
+- fix [#112](https://github.com/flutter/ai/issues/112): attachments pop-up menu
+  appears behind soft keyboard on mobile
+
+- fix [#133](https://github.com/flutter/ai/issues/133): Avoiding autofocus
 
 ## 0.9.1
 * fix [#96](https://github.com/flutter/ai/issues/96): input field overlap issue
