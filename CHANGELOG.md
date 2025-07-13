@@ -10,6 +10,7 @@
 
 ## 0.9.1
 * fix [#96](https://github.com/flutter/ai/issues/96): input field overlap issue
+
 * fix [#121](https://github.com/flutter/ai/issues/121): [bug] waiting response
   indicator JumpingDotsProgressIndicator overflow
 
