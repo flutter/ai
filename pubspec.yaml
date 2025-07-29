@@ -17,7 +17,7 @@ environment:
 dependencies:
   cross_file: ^0.3.4+2
   file_selector: ^1.0.3
-  firebase_ai: ^2.0.0
+  firebase_ai: ^3.0.0
   flutter:
     sdk: flutter
   flutter_context_menu: ^0.2.0
