@@ -184,7 +184,7 @@ void main() async {
 
     ```dart
     import 'package:firebase_core/firebase_core.dart';
-    import 'package:firebase_ai/firebase_ai.dart';
+    import 'package:firebase_vertexai/firebase_ai.dart';
     import 'package:flutter_ai_toolkit/flutter_ai_toolkit.dart';
 
     // Other app imports...
