@@ -42,36 +42,35 @@ from the `google_generative_ai` and `firebase_vertexai` packages to the new
 `firebase_ai` package.
 
 One change is that there is now a single `FirebaseProvider` that works for both
-Gemini and Vertex. Both of these providers served up the same models in the
-past, e.g. `gemini-2.0-flash`, but did so via different mechanisms; one was via
-an API key and the other was via a Firebase project. The other real difference
-was the billing model. When using the `firebase_ai` package, API key support has
-been dropped in favor of always requiring a Firebase project. The only remaining
-difference is the billing model, which [you can read about in the Firebase
-docs](https://firebase.google.com/docs/ai-logic/get-started?platform=flutter&api=dev#set-up-firebase).
+Gemini and Vertex. Both of these providers served the same models in the past,
+e.g. `gemini-2.0-flash`, but did so via different mechanisms: one used an API
+key and the other used a Firebase project. Another difference is the billing
+model. When using the `firebase_ai` package, API key support has been dropped in
+favor of always requiring a Firebase project. You can read about billing in the
+Firebase docs: https://firebase.google.com/docs/ai-logic/get-started?platform=flutter&api=dev#set-up-firebase
 
-To migrate, the following code using the `GeminiProvider`:
+To migrate, the following code that uses the `GeminiProvider`:
 
 ```dart
-    class ChatPage extends StatelessWidget {
-      const ChatPage({super.key, required this.title});
-      final String title;
+class ChatPage extends StatelessWidget {
+  const ChatPage({super.key, required this.title});
+  final String title;
 
-      @override
-      Widget build(BuildContext context) {
-        return Scaffold(
-          appBar: AppBar(title: Text(title)),
-          body: LlmChatView(
-            provider: GeminiProvider( // this changes
-              model: GenerativeModel( // and this changes
-                model: 'gemini-2.0-flash',
-                apiKey: 'GEMINI-API-KEY', // and this changes
-              ),
-            ),
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text(title)),
+      body: LlmChatView(
+        provider: GeminiProvider( // this changes
+          model: GenerativeModel( // and this changes
+            model: 'gemini-2.0-flash',
+            apiKey: 'GEMINI-API-KEY', // and this changes
           ),
-        );
-      }
-    }
+        ),
+      ),
+    );
+  }
+}
 ```
 
 now becomes code that uses `googleAI()`:
@@ -92,7 +91,7 @@ class ChatPage extends StatelessWidget {
 }
 ```
 
-And the following code using the `VertexProvider`:
+And the following code that uses the `VertexProvider`:
 
 ```dart
 class ChatPage extends StatelessWidget {
@@ -100,17 +99,18 @@ class ChatPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(title: const Text(App.title)),
-        body: LlmChatView(
-          provider: VertexProvider( // this changes
-            chatModel: FirebaseVertexAI.instance.generativeModel( // and this
-              model: 'gemini-2.0-flash',
-            ),
-          ),
+    appBar: AppBar(title: const Text(App.title)),
+    body: LlmChatView(
+      provider: VertexProvider( // this changes
+        chatModel: FirebaseVertexAI.instance.generativeModel( // and this
+          model: 'gemini-2.0-flash',
         ),
-      );
+      ),
+    ),
+  );
 }
 ```
+
 becomes code that uses `vertexAI()`:
 
 ```dart
@@ -177,15 +177,14 @@ void main() async {
  2. **Configuration**
 
     To use Firebase AI in your project, follow the steps described in [Get
-    started with the Gemini API using the Firebase AI Logic SDKs
-    ](https://firebase.google.com/docs/ai-logic/get-started?api=dev).
+    started with the Gemini API using the Firebase AI Logic SDKs](https://firebase.google.com/docs/ai-logic/get-started?api=dev).
 
     After following these instructions, you're ready to use Firebase AI in your
     Flutter app. Start by initializing Firebase:
 
     ```dart
     import 'package:firebase_core/firebase_core.dart';
-    import 'package:firebase_vertexai/firebase_ai.dart';
+    import 'package:firebase_ai/firebase_ai.dart';
     import 'package:flutter_ai_toolkit/flutter_ai_toolkit.dart';
 
     // Other app imports...
@@ -210,15 +209,15 @@ void main() async {
 
       @override
       Widget build(BuildContext context) => Scaffold(
-            appBar: AppBar(title: const Text(App.title)),
-            body: LlmChatView(
-              provider: FirebaseProvider(
-                model: FirebaseAI.vertexAI().generativeModel(
-                  model: 'gemini-2.0-flash'
-                ),
-              ),
+        appBar: AppBar(title: const Text(App.title)),
+        body: LlmChatView(
+          provider: FirebaseProvider(
+            model: FirebaseAI.vertexAI().generativeModel(
+              model: 'gemini-2.0-flash'
             ),
-          );
+          ),
+        ),
+      );
     }
     ```
 
@@ -265,8 +264,8 @@ To enable network access on Android, ensure that your `AndroidManifest.xml` file
 - **File selection:**
   To enable users to select and attach files,
   follow the [usage instructions][file-setup] for `package:file_selector`.
-- **Image selection:**
 
+- **Image selection:**
   To enable users to take or select a picture from their device, refer to
   the [installation instructions][image-setup] for `package:image_picker`.
 
@@ -280,7 +279,7 @@ To enable network access on Android, ensure that your `AndroidManifest.xml` file
 ## Samples
 
 To run the [example apps][] in the `example/lib` directory, first replace the
- `example/lib/firebase_options.dart` file by running `flutterfire config` (you
+`example/lib/firebase_options.dart` file by running `flutterfire config` (you
 may need to manually delete this file first). The provided
 `firebase_options.dart` file is a placeholder for configuration needed by the
 examples.
