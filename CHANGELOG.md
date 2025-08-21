@@ -1,6 +1,6 @@
 ## 0.10.0
 
-- Support `firebase_ai: ^3.0.0` and `firebase_core: ^4.0.0`
+- Support `firebase_ai: ^3.0.0` and `firebase_core: ^4.0.0` (https://github.com/flutter/ai/pull/145)
 
 ## 0.9.2
 
