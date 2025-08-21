@@ -1,3 +1,7 @@
+## 0.10.0
+
+- Support `firebase_ai: ^3.0.0` and `firebase_core: ^4.0.0`
+
 ## 0.9.2
 
 - fix [#137](https://github.com/flutter/ai/issues/137): Link Attachments are not
