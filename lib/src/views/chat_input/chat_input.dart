@@ -194,6 +194,7 @@ class _ChatInputState extends State<ChatInput> {
                             autofocus: widget.autofocus,
                             inputState: _inputState,
                             cancelButtonStyle: _chatStyle!.cancelButtonStyle!,
+                            voiceNoteRecorderStyle: _chatStyle!.voiceNoteRecorderStyle!,
                           ),
                         ),
                         Padding(
