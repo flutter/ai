@@ -88,7 +88,8 @@ class TextOrAudioInput extends StatelessWidget {
                       controller: _waveController,
                       height: _voiceNoteRecorderStyle.height!,
                       waveColor: _voiceNoteRecorderStyle.waveColor!,
-                      durationTextStyle: _voiceNoteRecorderStyle.durationTextStyle!,
+                      durationTextStyle:
+                          _voiceNoteRecorderStyle.durationTextStyle!,
                       onRecordingStopped: _onRecordingStopped,
                     )
                     : ChatTextField(

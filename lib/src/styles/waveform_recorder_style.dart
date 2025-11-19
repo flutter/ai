@@ -4,7 +4,11 @@ import 'package:flutter/material.dart';
 @immutable
 class VoiceNoteRecorderStyle {
   /// Creates a style object for the waveform recorder.
-  const VoiceNoteRecorderStyle({this.height, this.waveColor, this.durationTextStyle});
+  const VoiceNoteRecorderStyle({
+    this.height,
+    this.waveColor,
+    this.durationTextStyle,
+  });
 
   /// Resolves the provided [style] with the [defaultStyle].
   ///
@@ -15,12 +19,16 @@ class VoiceNoteRecorderStyle {
   /// - [style]: The style to resolve. If null, the [defaultStyle] will be used.
   /// - [defaultStyle]: The default style to use for any properties not provided
   ///   by the [style].
-  factory VoiceNoteRecorderStyle.resolve(VoiceNoteRecorderStyle? style, {VoiceNoteRecorderStyle? defaultStyle}) {
+  factory VoiceNoteRecorderStyle.resolve(
+    VoiceNoteRecorderStyle? style, {
+    VoiceNoteRecorderStyle? defaultStyle,
+  }) {
     defaultStyle ??= VoiceNoteRecorderStyle.defaultStyle();
     return VoiceNoteRecorderStyle(
       height: style?.height ?? defaultStyle.height,
       waveColor: style?.waveColor ?? defaultStyle.waveColor,
-      durationTextStyle: style?.durationTextStyle ?? defaultStyle.durationTextStyle,
+      durationTextStyle:
+          style?.durationTextStyle ?? defaultStyle.durationTextStyle,
     );
   }
 
