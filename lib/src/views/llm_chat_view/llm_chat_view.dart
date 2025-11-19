@@ -212,21 +212,23 @@ class _LlmChatViewState extends State<LlmChatView>
                         ],
                       ),
                     ),
-                    ChatInput(
-                      initialMessage: _initialMessage,
-                      autofocus:
-                          widget.autofocus ??
-                          widget.viewModel.suggestions.isEmpty,
-                      onCancelEdit:
-                          _associatedResponse != null ? _onCancelEdit : null,
-                      onSendMessage: _onSendMessage,
-                      onCancelMessage:
-                          _pendingPromptResponse == null
-                              ? null
-                              : _onCancelMessage,
-                      onTranslateStt: _onTranslateStt,
-                      onCancelStt:
-                          _pendingSttResponse == null ? null : _onCancelStt,
+                    SafeArea(
+                      child: ChatInput(
+                        initialMessage: _initialMessage,
+                        autofocus:
+                            widget.autofocus ??
+                            widget.viewModel.suggestions.isEmpty,
+                        onCancelEdit:
+                            _associatedResponse != null ? _onCancelEdit : null,
+                        onSendMessage: _onSendMessage,
+                        onCancelMessage:
+                            _pendingPromptResponse == null
+                                ? null
+                                : _onCancelMessage,
+                        onTranslateStt: _onTranslateStt,
+                        onCancelStt:
+                            _pendingSttResponse == null ? null : _onCancelStt,
+                      ),
                     ),
                   ],
                 ),
