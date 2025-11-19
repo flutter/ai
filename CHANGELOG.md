@@ -2,8 +2,11 @@
 
 - Merged [Enable customisable styling for WaveformRecorder via
   VoiceNoteRecorderStyle](https://github.com/flutter/ai/pull/161), which addes
-  the missing styles for the voice recorder. Contributed by csongorkeller. Thank
+  the missing styles for the voice recorder. Contributed by @csongorkeller. Thank
   you!
+- Fixed an error that caused the chat text input to overlap Android's 3-button
+  nav buttons when they were enabled. Thanks to @rohitbhoite for [reporting
+  this](https://github.com/flutter/ai/pull/165).
 
 ## 0.10.0
 
