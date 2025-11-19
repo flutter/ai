@@ -12,6 +12,7 @@ import 'llm_message_style.dart';
 import 'suggestion_style.dart';
 import 'toolkit_colors.dart';
 import 'user_message_style.dart';
+import 'waveform_recorder_style.dart';
 
 /// Style for the entire chat widget.
 @immutable
@@ -40,6 +41,7 @@ class LlmChatViewStyle {
     this.actionButtonBarDecoration,
     this.fileAttachmentStyle,
     this.suggestionStyle,
+    this.voiceNoteRecorderStyle,
   });
 
   /// Resolves the provided [style] with the [defaultStyle].
@@ -136,6 +138,10 @@ class LlmChatViewStyle {
         style?.suggestionStyle,
         defaultStyle: defaultStyle.suggestionStyle,
       ),
+      voiceNoteRecorderStyle: VoiceNoteRecorderStyle.resolve(
+        style?.voiceNoteRecorderStyle,
+        defaultStyle: defaultStyle.voiceNoteRecorderStyle,
+      ),
     );
   }
 
@@ -174,6 +180,7 @@ class LlmChatViewStyle {
     ),
     fileAttachmentStyle: FileAttachmentStyle.defaultStyle(),
     suggestionStyle: SuggestionStyle.defaultStyle(),
+    voiceNoteRecorderStyle: VoiceNoteRecorderStyle.defaultStyle(),
   );
 
   /// Background color of the entire chat widget.
@@ -241,4 +248,7 @@ class LlmChatViewStyle {
 
   /// Style for suggestions.
   final SuggestionStyle? suggestionStyle;
+
+  /// Style for the waveform recorder.
+  final VoiceNoteRecorderStyle? voiceNoteRecorderStyle;
 }

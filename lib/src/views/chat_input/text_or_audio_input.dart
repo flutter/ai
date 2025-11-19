@@ -25,6 +25,7 @@ class TextOrAudioInput extends StatelessWidget {
   /// - [autofocus]: Determines if the text field should be focused on build.
   /// - [inputState]: Represents the current state of the input.
   /// - [cancelButtonStyle]: Defines the styling for the cancel button.
+  /// - [voiceNoteRecorderStyle]: Defines the styling for the waveform recorder.
   const TextOrAudioInput({
     super.key,
     required ChatInputStyle inputStyle,
@@ -37,6 +38,7 @@ class TextOrAudioInput extends StatelessWidget {
     required bool autofocus,
     required InputState inputState,
     required ActionButtonStyle cancelButtonStyle,
+    required VoiceNoteRecorderStyle voiceNoteRecorderStyle,
   }) : _cancelButtonStyle = cancelButtonStyle,
        _inputState = inputState,
        _autofocus = autofocus,
@@ -46,7 +48,8 @@ class TextOrAudioInput extends StatelessWidget {
        _onRecordingStopped = onRecordingStopped,
        _onCancelEdit = onCancelEdit,
        _waveController = waveController,
-       _inputStyle = inputStyle;
+       _inputStyle = inputStyle,
+       _voiceNoteRecorderStyle = voiceNoteRecorderStyle;
 
   final ChatInputStyle _inputStyle;
   final WaveformRecorderController _waveController;
@@ -58,6 +61,7 @@ class TextOrAudioInput extends StatelessWidget {
   final bool _autofocus;
   final InputState _inputState;
   final ActionButtonStyle _cancelButtonStyle;
+  final VoiceNoteRecorderStyle _voiceNoteRecorderStyle;
   static const _minInputHeight = 48.0;
   static const _maxInputHeight = 144.0;
 
@@ -82,7 +86,10 @@ class TextOrAudioInput extends StatelessWidget {
                 _waveController.isRecording
                     ? WaveformRecorder(
                       controller: _waveController,
-                      height: _minInputHeight,
+                      height: _voiceNoteRecorderStyle.height!,
+                      waveColor: _voiceNoteRecorderStyle.waveColor!,
+                      durationTextStyle:
+                          _voiceNoteRecorderStyle.durationTextStyle!,
                       onRecordingStopped: _onRecordingStopped,
                     )
                     : ChatTextField(

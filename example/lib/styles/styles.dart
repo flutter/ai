@@ -233,6 +233,14 @@ class _ChatPageState extends State<ChatPage>
                         fontSize: 18,
                       ),
                     ),
+                    voiceNoteRecorderStyle: VoiceNoteRecorderStyle(
+                      height: 60.0,
+                      waveColor: Colors.orange,
+                      durationTextStyle: halloweenTextStyle.copyWith(
+                        color: Colors.black,
+                        fontSize: 16,
+                      ),
+                    ),
                   ),
                 ),
               ],

@@ -1,6 +1,14 @@
+## x.y.z
+
+- Merged [Enable customisable styling for WaveformRecorder via
+  VoiceNoteRecorderStyle](https://github.com/flutter/ai/pull/161), which addes
+  the missing styles for the voice recorder. Contributed by csongorkeller. Thank
+  you!
+
 ## 0.10.0
 
-- Support `firebase_ai: ^3.0.0` and `firebase_core: ^4.0.0` (https://github.com/flutter/ai/pull/145)
+- Support `firebase_ai: ^3.0.0` and `firebase_core: ^4.0.0`
+  (https://github.com/flutter/ai/pull/145)
 
 ## 0.9.2
 
@@ -52,20 +60,20 @@
 * fixed [#102](https://github.com/flutter/ai/issues/102): migration from
   flutter_markdown to flutter_markdown_plus
 
-* fixed [#109](https://github.com/flutter/ai/issues/109): [task] migrate
-  to firebase_ai. This is a breaking change, since it removes both
-  `GeminiProvider` and `VertexProvider` and replaces it with `FirebaseProvider`.
-  See README.md for migration details.
+* fixed [#109](https://github.com/flutter/ai/issues/109): [task] migrate to
+  firebase_ai. This is a breaking change, since it removes both `GeminiProvider`
+  and `VertexProvider` and replaces it with `FirebaseProvider`. See README.md
+  for migration details.
 
 * removed online demo -- no longer able to bring-your-own-API-key
 
 ## 0.8.0
-* fixed [#90](https://github.com/flutter/ai/issues/90): Input box
-  shrinks unexpectedly when clicking file attachment button – customization not
+* fixed [#90](https://github.com/flutter/ai/issues/90): Input box shrinks
+  unexpectedly when clicking file attachment button – customization not
   supported by Flutter AI Toolkit. Moved from a menu that moves the text input
-  to a pop-up menu. Added a `menuColor` setting to `LlmChatViewStyle`. Moved
-  the `tooltip` related styles to `text` related styles, as some action buttons
-  have icons (with tooltips) and some are menu items (with icon + text).
+  to a pop-up menu. Added a `menuColor` setting to `LlmChatViewStyle`. Moved the
+  `tooltip` related styles to `text` related styles, as some action buttons have
+  icons (with tooltips) and some are menu items (with icon + text).
 
 * fixed [#92](https://github.com/flutter/ai/issues/92): Cupertino render doesn't
   center text input inside text input area 
@@ -80,8 +88,8 @@
 
 ## 0.7.0
 
-* fixed [#55](https://github.com/flutter/ai/issues/55): The input field does
-  not unfocus on iPhone simulator
+* fixed [#55](https://github.com/flutter/ai/issues/55): The input field does not
+  unfocus on iPhone simulator
 
 * fixed [#52](https://github.com/flutter/ai/issues/52): Make Chat Input
   Configurable to Disable Attachments and Voice Notes
@@ -93,8 +101,8 @@
 
 * fixed [#61](https://github.com/flutter/ai/issues/61): [test] add a smoke test
 
-* fixed [#75](https://github.com/flutter/ai/issues/75): "No MaterialLocalizations
-  found" error in SelectionArea widget
+* fixed [#75](https://github.com/flutter/ai/issues/75): "No
+  MaterialLocalizations found" error in SelectionArea widget
 
 ## 0.6.8
 
@@ -115,17 +123,21 @@
 
 * implemented #12: would like some hover icons for copy+edit on web and desktop
 
-* implemented #9: need to be able to cancel a prompt edit and get back the last response unharmed
+* implemented #9: need to be able to cancel a prompt edit and get back the last
+  response unharmed
 
 ## 0.6.4
 
-* fixed #62: bug: getting an image back from the LLM that doesn't exist throws an exception
+* fixed #62: bug: getting an image back from the LLM that doesn't exist throws
+  an exception
 
-* expanded the `messageSender` docs on `LlmChatView` to make it clear what it's for and when it's used
+* expanded the `messageSender` docs on `LlmChatView` to make it clear what it's
+  for and when it's used
 
 * renamed FatXxx to ToolkitXxx e.g. FatColors => ToolkitColors
 
-* fixed #77: move dark theming to the samples and out of the toolkit, since it has no designer input
+* fixed #77: move dark theming to the samples and out of the toolkit, since it
+  has no designer input
 
 ## 0.6.3
 
@@ -141,7 +153,8 @@
 
 ## 0.6.1
 
-* implemented #16: feature: ensure pressing the camera button on desktop web brings up the camera
+* implemented #16: feature: ensure pressing the camera button on desktop web
+  brings up the camera
 
 ## 0.6.0
 
@@ -155,11 +168,13 @@
 
 * implemented #72: feature: move welcome message to the LlmChatView
 
-* updated recipes sample to use required properties in the JSON schema, which improved LLM responses a great deal
+* updated recipes sample to use required properties in the JSON schema, which
+  improved LLM responses a great deal
 
 * implemented #74: remove controllers as an unnecessary abstraction
 
-* fixed an issue where canceling an operation w/ no response yet will continue showing the progress indicator.
+* fixed an issue where canceling an operation w/ no response yet will continue
+  showing the progress indicator.
 
 
 ## 0.4.2
@@ -182,19 +197,23 @@
 
 * fixed #63: bug: broke multi-line text input
 
-* fixed #60: bug: if an LLM request fails with no text in the response, the progress indicator never stops
+* fixed #60: bug: if an LLM request fails with no text in the response, the
+  progress indicator never stops
 
-* implemented #31: feature: provide a list of initial suggested prompts to display in an empty chat session
+* implemented #31: feature: provide a list of initial suggested prompts to
+  display in an empty chat session
 
 * implemented #25: better mobile long-press action menu for chat messages
 
-* fixed #47: bug: Long pressing a message and then clicking outside of the toolbar should make the toolbar disappear
+* fixed #47: bug: Long pressing a message and then clicking outside of the
+  toolbar should make the toolbar disappear
 
 ## 0.3.0
 
 * implemented #32: feature: dev-configured LLM message icon
 
-* fixed #19: prompt attachments are incorrectly merging when editing after adding attachments to a new prompt
+* fixed #19: prompt attachments are incorrectly merging when editing after
+  adding attachments to a new prompt
 
 * implemented #27: feature: styling of colors and fonts
 
@@ -202,15 +221,25 @@
 
 * fixing the user message edit menu
 
-* show errors and cancelations as separate from message output; this is necessary so that you can tell the difference between an LLM message response with a successful result that, for example, can be parsed as JSON, or an error
+* show errors and cancelations as separate from message output; this is
+  necessary so that you can tell the difference between an LLM message response
+  with a successful result that, for example, can be parsed as JSON, or an error
 
 ## 0.2.0
 
 * implemented #33: feature: chat microphone only prompt input
 
-* added a `generateStream` method to `LlmProvider` to support talking to the underlying generative model w/o adding to the chat history; moved `chatModel` properties in the Gemini and Vertex providers to use a more generic `generativeModel` to make it clear which model is being used for both `sendMessageStream` and `generateStream`.
+* added a `generateStream` method to `LlmProvider` to support talking to the
+  underlying generative model w/o adding to the chat history; moved `chatModel`
+  properties in the Gemini and Vertex providers to use a more generic
+  `generativeModel` to make it clear which model is being used for both
+  `sendMessageStream` and `generateStream`.
 
-* moved from [flutter_markdown_selectionarea](https://pub.dev/packages/flutter_markdown_selectionarea) to plain ol' [flutter_markdown](https://pub.dev/packages/flutter_markdown) which does now support selection if you ask it nicely. I still have some work to do on selection, however, as described in [issue #1212).
+* moved from
+  [flutter_markdown_selectionarea](https://pub.dev/packages/flutter_markdown_selectionarea)
+  to plain ol' [flutter_markdown](https://pub.dev/packages/flutter_markdown)
+  which does now support selection if you ask it nicely. I still have some work
+  to do on selection, however, as described in [issue #1212).
 
 * implemented #27: styling support, including a sample
 
@@ -218,7 +247,8 @@
 
 * implemented #2: feature: enable full functionality inside a Cupertino app
 
-* fixed #45: bug: X icon button is also pushing up against the top and left edges without any padding
+* fixed #45: bug: X icon button is also pushing up against the top and left
+  edges without any padding
 
 * fixed #59: bug: Android Studio LadyBug Upgrade Issues
 
@@ -226,9 +256,11 @@
 
 ## 0.1.6
 
-* added optional `welcomeMessage` to `LlmChatView` and a welcome sample. thanks, @berkaykurkcu!
+* added optional `welcomeMessage` to `LlmChatView` and a welcome sample. thanks,
+  @berkaykurkcu!
 
-* updated VertexProvider to take a separate chat and embedding model like GeminiProvider
+* updated VertexProvider to take a separate chat and embedding model like
+  GeminiProvider
 
 * fixed #51 : Click on an image to get a preview. thanks,  @Shashwat-111!
 
@@ -256,9 +288,11 @@
 
 * pre-processing prompts to add prompt engineering via `messageSender`
 
-* pre-processing requests to enrich the output, e.g. host Flutter widgets (see recipes sample)
+* pre-processing requests to enrich the output, e.g. host Flutter widgets (see
+  recipes sample)
 
-* swappable support for LLM providers; oob support for Gemini and Vertex (see gemma example)
+* swappable support for LLM providers; oob support for Gemini and Vertex (see
+  gemma example)
 
 * fixed trim and over-eager message editing issues -- thanks, @Shashwat-111!
 
