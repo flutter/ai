@@ -42,4 +42,7 @@ enum ActionButtonType {
 
   /// Disabled button.
   disabled,
+
+  /// Button to attach a URL to the chat.
+  url,
 }

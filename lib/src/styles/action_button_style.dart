@@ -47,11 +47,11 @@ class ActionButtonStyle {
 
   /// Provides default light style for icon buttons.
   factory ActionButtonStyle._lightStyle(ActionButtonType type) {
-    IconData icon;
+    IconData? icon;
     var color = ToolkitColors.darkIcon;
     var bgColor = ToolkitColors.lightButtonBackground;
-    String text;
-    TextStyle textStyle = ToolkitTextStyles.tooltip;
+    String text = '';
+    TextStyle? textStyle = ToolkitTextStyles.tooltip;
 
     switch (type) {
       case ActionButtonType.add:
@@ -116,6 +116,12 @@ class ActionButtonStyle {
         color = ToolkitColors.whiteIcon;
         bgColor = ToolkitColors.greyBackground;
         text = 'Close Menu';
+      case ActionButtonType.url:
+        icon = null; // Placeholder for URL icon
+        color = ToolkitColors.darkIcon;
+        bgColor = ToolkitColors.transparent;
+        text = 'Attach Link';
+        textStyle = ToolkitTextStyles.body2;
     }
 
     return ActionButtonStyle(

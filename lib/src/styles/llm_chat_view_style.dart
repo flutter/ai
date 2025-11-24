@@ -42,6 +42,7 @@ class LlmChatViewStyle {
     this.fileAttachmentStyle,
     this.suggestionStyle,
     this.voiceNoteRecorderStyle,
+    this.urlButtonStyle,
   });
 
   /// Resolves the provided [style] with the [defaultStyle].
@@ -142,6 +143,10 @@ class LlmChatViewStyle {
         style?.voiceNoteRecorderStyle,
         defaultStyle: defaultStyle.voiceNoteRecorderStyle,
       ),
+      urlButtonStyle: ActionButtonStyle.resolve(
+        style?.urlButtonStyle,
+        defaultStyle: ActionButtonStyle.defaultStyle(ActionButtonType.url),
+      ),
     );
   }
 
@@ -181,6 +186,7 @@ class LlmChatViewStyle {
     fileAttachmentStyle: FileAttachmentStyle.defaultStyle(),
     suggestionStyle: SuggestionStyle.defaultStyle(),
     voiceNoteRecorderStyle: VoiceNoteRecorderStyle.defaultStyle(),
+    urlButtonStyle: ActionButtonStyle.defaultStyle(ActionButtonType.url),
   );
 
   /// Background color of the entire chat widget.
@@ -251,4 +257,7 @@ class LlmChatViewStyle {
 
   /// Style for the waveform recorder.
   final VoiceNoteRecorderStyle? voiceNoteRecorderStyle;
+
+  /// Style for the URL button.
+  final ActionButtonStyle? urlButtonStyle;
 }

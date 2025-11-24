@@ -6,8 +6,9 @@ import 'dart:async';
 
 import 'package:file_selector/file_selector.dart';
 import 'package:flutter/material.dart'
-    show MenuAnchor, MenuItemButton, MenuStyle;
+    show Icons, MenuAnchor, MenuItemButton, MenuStyle;
 import 'package:flutter/widgets.dart';
+import 'package:flutter_ai_toolkit/src/dialogs/url_input_dialog.dart';
 import 'package:flutter_ai_toolkit/src/utility.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -84,6 +85,17 @@ class _AttachmentActionBarState extends State<AttachmentActionBar> {
             style: chatStyle.attachFileButtonStyle!.textStyle,
           ),
         ),
+        MenuItemButton(
+          leadingIcon: Icon(
+            Icons.link,
+            color: chatStyle.urlButtonStyle!.iconColor,
+          ),
+          onPressed: () => _onUrl(),
+          child: Text(
+            chatStyle.urlButtonStyle!.text!,
+            style: chatStyle.urlButtonStyle!.textStyle,
+          ),
+        )
       ];
 
       return MenuAnchor(
@@ -168,6 +180,20 @@ class _AttachmentActionBarState extends State<AttachmentActionBar> {
         // I just checked this! ^^^
         // ignore: use_build_context_synchronously
         AdaptiveSnackBar.show(context, 'Unable to pick a file: $ex');
+      }
+    }
+  }
+
+  Future<void> _onUrl() async {
+    try {
+      final url = await showUrlInputDialog(context);
+      if (url == null) return;
+      widget.onAttachments([LinkAttachment(name: url.name, url: url.url)]);
+    } on Exception catch (ex) {
+      if (context.mounted) {
+        // I just checked this! ^^^
+        // ignore: use_build_context_synchronously
+        AdaptiveSnackBar.show(context, 'Unable to pick a URL: $ex');
       }
     }
   }
