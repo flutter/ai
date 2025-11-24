@@ -20,7 +20,7 @@ dependencies:
   firebase_ai: ^3.0.0
   flutter:
     sdk: flutter
-  flutter_context_menu: ^0.3.0
+  flutter_context_menu: ^0.4.0
   flutter_markdown_plus: ^1.0.3
   flutter_picture_taker: ^0.2.0
   google_fonts: ^6.2.1
