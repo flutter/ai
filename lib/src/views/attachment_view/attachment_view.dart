@@ -3,6 +3,7 @@
 // found in the LICENSE file.
 
 import 'package:flutter/widgets.dart';
+import 'package:flutter_ai_toolkit/src/views/attachment_view/link_attachment_view.dart';
 
 import '../../providers/interface/attachments.dart';
 import 'file_attatchment_view.dart';
@@ -29,9 +30,6 @@ class AttachmentView extends StatelessWidget {
   Widget build(BuildContext context) => switch (attachment) {
     (final ImageFileAttachment a) => ImageAttachmentView(a),
     (final FileAttachment a) => FileAttachmentView(a),
-    (final LinkAttachment a) =>
-      a.mimeType.toLowerCase().startsWith('image/')
-          ? ImageAttachmentView(a)
-          : FileAttachmentView(a),
+    (final LinkAttachment a) => LinkAttachmentView(a),
   };
 }
