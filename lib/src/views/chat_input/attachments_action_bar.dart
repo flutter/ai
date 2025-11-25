@@ -95,7 +95,7 @@ class _AttachmentActionBarState extends State<AttachmentActionBar> {
             chatStyle.urlButtonStyle!.text!,
             style: chatStyle.urlButtonStyle!.textStyle,
           ),
-        )
+        ),
       ];
 
       return MenuAnchor(

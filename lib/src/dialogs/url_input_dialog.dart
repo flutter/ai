@@ -37,105 +37,107 @@ Future<LinkAttachment?> showUrlInputDialog(BuildContext context) async {
         builder: (context, setState) {
           return Theme.of(context).platform == TargetPlatform.iOS
               ? CupertinoAlertDialog(
-                  title: const Text('Attach URL'),
-                  content: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      const SizedBox(height: 8),
-                      CupertinoTextField(
-                        controller: controller,
-                        placeholder: 'https://flutter.dev',
-                        keyboardType: TextInputType.url,
-                        autofocus: true,
-                        onChanged: (value) {
-                          if (errorText != null) {
-                            setState(() => errorText = null);
-                          }
-                        },
-                      ),
-                      if (errorText != null)
-                        Padding(
-                          padding: const EdgeInsets.only(top: 8),
-                          child: Text(
-                            errorText!,
-                            style: const TextStyle(
-                              color: CupertinoColors.systemRed,
-                              fontSize: 13,
-                            ),
+                title: const Text('Attach URL'),
+                content: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const SizedBox(height: 8),
+                    CupertinoTextField(
+                      controller: controller,
+                      placeholder: 'https://flutter.dev',
+                      keyboardType: TextInputType.url,
+                      autofocus: true,
+                      onChanged: (value) {
+                        if (errorText != null) {
+                          setState(() => errorText = null);
+                        }
+                      },
+                    ),
+                    if (errorText != null)
+                      Padding(
+                        padding: const EdgeInsets.only(top: 8),
+                        child: Text(
+                          errorText!,
+                          style: const TextStyle(
+                            color: CupertinoColors.systemRed,
+                            fontSize: 13,
                           ),
                         ),
-                    ],
-                  ),
-                  actions: [
-                    CupertinoDialogAction(
-                      onPressed: () => Navigator.of(context).pop(null),
-                      child: const Text('Cancel'),
-                    ),
-                    CupertinoDialogAction(
-                      isDefaultAction: true,
-                      onPressed: () {
-                        final attachment = _validateAndCreateAttachment(
-                          controller.text,
-                        );
-                        if (attachment != null) {
-                          Navigator.of(context).pop(attachment);
-                        } else {
-                          setState(() => errorText = 'Please enter a valid URL');
-                        }
-                      },
-                      child: const Text('Add'),
-                    ),
-                  ],
-                )
-              : AlertDialog(
-                  title: const Text('Attach URL'),
-                  content: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      TextField(
-                        controller: controller,
-                        decoration: InputDecoration(
-                          hintText: 'https://flutter.dev',
-                          errorText: errorText,
-                        ),
-                        keyboardType: TextInputType.url,
-                        autofocus: true,
-                        onChanged: (value) {
-                          if (errorText != null) {
-                            setState(() => errorText = null);
-                          }
-                        },
-                        onSubmitted: (value) {
-                          final attachment = _validateAndCreateAttachment(value);
-                          if (attachment != null) {
-                            Navigator.of(context).pop(attachment);
-                          } else {
-                            setState(() => errorText = 'Please enter a valid URL');
-                          }
-                        },
                       ),
-                    ],
+                  ],
+                ),
+                actions: [
+                  CupertinoDialogAction(
+                    onPressed: () => Navigator.of(context).pop(null),
+                    child: const Text('Cancel'),
                   ),
-                  actions: [
-                    TextButton(
-                      onPressed: () => Navigator.of(context).pop(null),
-                      child: const Text('Cancel'),
-                    ),
-                    TextButton(
-                      onPressed: () {
-                        final attachment = _validateAndCreateAttachment(
-                          controller.text,
-                        );
+                  CupertinoDialogAction(
+                    isDefaultAction: true,
+                    onPressed: () {
+                      final attachment = _validateAndCreateAttachment(
+                        controller.text,
+                      );
+                      if (attachment != null) {
+                        Navigator.of(context).pop(attachment);
+                      } else {
+                        setState(() => errorText = 'Please enter a valid URL');
+                      }
+                    },
+                    child: const Text('Add'),
+                  ),
+                ],
+              )
+              : AlertDialog(
+                title: const Text('Attach URL'),
+                content: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    TextField(
+                      controller: controller,
+                      decoration: InputDecoration(
+                        hintText: 'https://flutter.dev',
+                        errorText: errorText,
+                      ),
+                      keyboardType: TextInputType.url,
+                      autofocus: true,
+                      onChanged: (value) {
+                        if (errorText != null) {
+                          setState(() => errorText = null);
+                        }
+                      },
+                      onSubmitted: (value) {
+                        final attachment = _validateAndCreateAttachment(value);
                         if (attachment != null) {
                           Navigator.of(context).pop(attachment);
                         } else {
-                          setState(() => errorText = 'Please enter a valid URL');
+                          setState(
+                            () => errorText = 'Please enter a valid URL',
+                          );
                         }
                       },
-                      child: const Text('Add'),
                     ),
                   ],
-                );
+                ),
+                actions: [
+                  TextButton(
+                    onPressed: () => Navigator.of(context).pop(null),
+                    child: const Text('Cancel'),
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      final attachment = _validateAndCreateAttachment(
+                        controller.text,
+                      );
+                      if (attachment != null) {
+                        Navigator.of(context).pop(attachment);
+                      } else {
+                        setState(() => errorText = 'Please enter a valid URL');
+                      }
+                    },
+                    child: const Text('Add'),
+                  ),
+                ],
+              );
         },
       );
     },
