@@ -7,7 +7,7 @@ class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     throw UnimplementedError(
       'Generate this file by running `flutterfire configure`. '
-          'See README.md for details.',
+      'See README.md for details.',
     );
   }
 }
