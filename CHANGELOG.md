@@ -19,7 +19,9 @@
 - Automatically submit a suggestion when it's tapped instead of just filling in
   the text input, fixing [#142](https://github.com/flutter/ai/issues/142).
 
-
+- Allow LLM-generated links to be clicked and to launch a browser on that page,
+  fixing [#150](https://github.com/flutter/ai/issues/150). Updated examples that
+  use custom or dark styles to show how to override link styles.
 
 ## 0.10.0
 
