@@ -13,7 +13,13 @@
   Thanks to @DeTuksa for [a nearly flawless
   PR](https://github.com/flutter/ai/pull/169).
 
-- Added support for Shift+Enter on the web (as well as desktop).
+- Added support for Shift+Enter on the web (as well as desktop), fixing
+  [#136](https://github.com/flutter/ai/issues/136).
+
+- Automatically submit a suggestion when it's tapped instead of just filling in
+  the text input, fixing [#142](https://github.com/flutter/ai/issues/142).
+
+
 
 ## 0.10.0
 
