@@ -23,6 +23,8 @@
   fixing [#150](https://github.com/flutter/ai/issues/150). Updated examples that
   use custom or dark styles to show how to override link styles.
 
+- Upgraded flutter_context_menu to v0.4.0.
+
 ## 0.10.0
 
 - Support `firebase_ai: ^3.0.0` and `firebase_core: ^4.0.0`
