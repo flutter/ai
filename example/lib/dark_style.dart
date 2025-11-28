@@ -159,7 +159,11 @@ TextStyle _invertTextStyle(TextStyle? style) =>
 
 MarkdownStyleSheet? _invertMarkdownStyle(MarkdownStyleSheet? markdownStyle) =>
     markdownStyle?.copyWith(
-      a: _invertTextStyle(markdownStyle.a),
+      a: markdownStyle.a?.copyWith(
+        color: Colors.yellow,
+        decoration: TextDecoration.underline,
+        decorationColor: Colors.yellow,
+      ),
       blockquote: _invertTextStyle(markdownStyle.blockquote),
       checkbox: _invertTextStyle(markdownStyle.checkbox),
       code: _invertTextStyle(markdownStyle.code),

@@ -99,4 +99,15 @@ abstract final class ToolkitTextStyles {
     fontSize: 12,
     fontWeight: FontWeight.w400,
   );
+
+  /// Primary body text style.
+  ///
+  /// Used for the main content text in the application.
+  static final TextStyle link = GoogleFonts.roboto(
+    color: ToolkitColors.link,
+    fontSize: 16,
+    fontWeight: FontWeight.w400,
+    decoration: TextDecoration.underline,
+    decorationColor: ToolkitColors.link,
+  );
 }

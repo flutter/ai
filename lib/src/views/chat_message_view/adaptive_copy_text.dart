@@ -48,18 +48,18 @@ class AdaptiveCopyText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final contextMenu = ContextMenu(
+    final contextMenu = ContextMenu<dynamic>(
       entries: [
         if (onEdit != null)
-          MenuItem(
-            label: 'Edit',
-            icon: chatStyle.editButtonStyle!.icon,
-            onSelected: onEdit,
+          MenuItem<dynamic>(
+            label: const Text('Edit'),
+            icon: Icon(chatStyle.editButtonStyle!.icon),
+            onSelected: (_) => onEdit?.call(),
           ),
-        MenuItem(
-          label: 'Copy',
-          icon: chatStyle.copyButtonStyle!.icon,
-          onSelected: () => unawaited(copyToClipboard(context, clipboardText)),
+        MenuItem<dynamic>(
+          label: const Text('Copy'),
+          icon: Icon(chatStyle.copyButtonStyle!.icon),
+          onSelected: (_) => unawaited(copyToClipboard(context, clipboardText)),
         ),
       ],
     );

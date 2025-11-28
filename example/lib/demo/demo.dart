@@ -284,6 +284,11 @@ class _ChatPageState extends State<ChatPage>
         markdownStyle: MarkdownStyleSheet(
           p: halloweenTextStyle,
           listBullet: halloweenTextStyle,
+          a: halloweenTextStyle.copyWith(
+            color: Colors.yellow,
+            decoration: TextDecoration.underline,
+            decorationColor: Colors.yellow,
+          ),
         ),
       ),
       recordButtonStyle: halloweenActionButtonStyle,

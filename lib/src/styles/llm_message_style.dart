@@ -62,7 +62,7 @@ class LlmMessageStyle {
       shape: BoxShape.circle,
     ),
     markdownStyle: MarkdownStyleSheet(
-      a: ToolkitTextStyles.body1,
+      a: ToolkitTextStyles.link,
       blockquote: ToolkitTextStyles.body1,
       checkbox: ToolkitTextStyles.body1,
       code: ToolkitTextStyles.code,

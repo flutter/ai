@@ -98,4 +98,7 @@ abstract final class ToolkitColors {
 
   /// Very dark gray color used for enabled text.
   static const Color enabledText = Color(0xFF2F2F2F);
+
+  /// Blue color used for links.
+  static const Color link = Color(0xFF1E88E5);
 }

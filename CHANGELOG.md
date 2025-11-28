@@ -4,9 +4,26 @@
   VoiceNoteRecorderStyle](https://github.com/flutter/ai/pull/161), which addes
   the missing styles for the voice recorder. Contributed by @csongorkeller. Thank
   you!
+
 - Fixed an error that caused the chat text input to overlap Android's 3-button
   nav buttons when they were enabled. Thanks to @rohitbhoite for [reporting
   this](https://github.com/flutter/ai/pull/165).
+
+- Added the ability to attach a link as well as a photo, an image and a file.
+  Thanks to @DeTuksa for [a nearly flawless
+  PR](https://github.com/flutter/ai/pull/169).
+
+- Added support for Shift+Enter on the web (as well as desktop), fixing
+  [#136](https://github.com/flutter/ai/issues/136).
+
+- Automatically submit a suggestion when it's tapped instead of just filling in
+  the text input, fixing [#142](https://github.com/flutter/ai/issues/142).
+
+- Allow LLM-generated links to be clicked and to launch a browser on that page,
+  fixing [#150](https://github.com/flutter/ai/issues/150). Updated examples that
+  use custom or dark styles to show how to override link styles.
+
+- Upgraded flutter_context_menu to v0.4.0.
 
 ## 0.10.0
 
