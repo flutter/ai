@@ -18,7 +18,7 @@ jobs:
       matrix:
         flutter_version: [stable, beta]
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - name: Set up Flutter
         uses: subosito/flutter-action@e938fdf56512cc96ef2f93601a5a40bde3801046
         with:
