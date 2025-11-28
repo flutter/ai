@@ -120,6 +120,9 @@ class _ChatPageState extends State<ChatPage>
                 LlmChatView(
                   provider: _provider!,
                   style: LlmChatViewStyle(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    margin: const EdgeInsets.only(bottom: 8.0),
+                    messageSpacing: 12.0,
                     backgroundColor: Colors.transparent,
                     progressIndicatorColor: Colors.purple,
                     chatInputStyle: ChatInputStyle(
@@ -164,6 +167,11 @@ class _ChatPageState extends State<ChatPage>
                       ),
                     ),
                     llmMessageStyle: LlmMessageStyle(
+                      maxWidth: 800.0,
+                      minWidth: 300.0,
+                      flex: 8,
+                      padding: const EdgeInsets.all(16.0),
+                      margin: const EdgeInsets.symmetric(vertical: 8.0),
                       icon: Icons.sentiment_very_satisfied,
                       iconColor: Colors.black,
                       iconDecoration: BoxDecoration(
