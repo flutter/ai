@@ -228,12 +228,14 @@ class LlmChatViewStyle {
     return LlmChatViewStyle(
       backgroundColor: backgroundColor ?? this.backgroundColor,
       menuColor: menuColor ?? this.menuColor,
-      progressIndicatorColor: progressIndicatorColor ?? this.progressIndicatorColor,
+      progressIndicatorColor:
+          progressIndicatorColor ?? this.progressIndicatorColor,
       userMessageStyle: userMessageStyle ?? this.userMessageStyle,
       llmMessageStyle: llmMessageStyle ?? this.llmMessageStyle,
       chatInputStyle: chatInputStyle ?? this.chatInputStyle,
       addButtonStyle: addButtonStyle ?? this.addButtonStyle,
-      attachFileButtonStyle: attachFileButtonStyle ?? this.attachFileButtonStyle,
+      attachFileButtonStyle:
+          attachFileButtonStyle ?? this.attachFileButtonStyle,
       cameraButtonStyle: cameraButtonStyle ?? this.cameraButtonStyle,
       stopButtonStyle: stopButtonStyle ?? this.stopButtonStyle,
       closeButtonStyle: closeButtonStyle ?? this.closeButtonStyle,
@@ -245,10 +247,12 @@ class LlmChatViewStyle {
       submitButtonStyle: submitButtonStyle ?? this.submitButtonStyle,
       disabledButtonStyle: disabledButtonStyle ?? this.disabledButtonStyle,
       closeMenuButtonStyle: closeMenuButtonStyle ?? this.closeMenuButtonStyle,
-      actionButtonBarDecoration: actionButtonBarDecoration ?? this.actionButtonBarDecoration,
+      actionButtonBarDecoration:
+          actionButtonBarDecoration ?? this.actionButtonBarDecoration,
       fileAttachmentStyle: fileAttachmentStyle ?? this.fileAttachmentStyle,
       suggestionStyle: suggestionStyle ?? this.suggestionStyle,
-      voiceNoteRecorderStyle: voiceNoteRecorderStyle ?? this.voiceNoteRecorderStyle,
+      voiceNoteRecorderStyle:
+          voiceNoteRecorderStyle ?? this.voiceNoteRecorderStyle,
       urlButtonStyle: urlButtonStyle ?? this.urlButtonStyle,
       padding: padding ?? this.padding,
       margin: margin ?? this.margin,
