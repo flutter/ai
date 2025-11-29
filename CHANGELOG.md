@@ -25,6 +25,9 @@
 
 - Upgraded flutter_context_menu to v0.4.0.
 
+- Updated styles to allow for greater control of margins, padding and sizes.
+  Thanks to @DeTuksa for [the PR](https://github.com/flutter/ai/pull/172).
+
 ## 0.10.0
 
 - Support `firebase_ai: ^3.0.0` and `firebase_core: ^4.0.0`

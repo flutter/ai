@@ -4,11 +4,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_ai_toolkit/flutter_ai_toolkit.dart';
 import 'package:flutter_ai_toolkit/src/views/chat_input/chat_suggestion_view.dart';
 
 import '../chat_view_model/chat_view_model_client.dart';
-import '../providers/interface/chat_message.dart';
-import '../providers/interface/message_origin.dart';
 import 'chat_message_view/llm_message_view.dart';
 import 'chat_message_view/user_message_view.dart';
 
@@ -47,25 +46,31 @@ class ChatHistoryView extends StatefulWidget {
 
 class _ChatHistoryViewState extends State<ChatHistoryView> {
   @override
-  Widget build(BuildContext context) => Padding(
-    padding: const EdgeInsets.only(top: 16, left: 16, right: 16),
-    child: ChatViewModelClient(
-      builder: (context, viewModel, child) {
-        final showWelcomeMessage = viewModel.welcomeMessage != null;
-        final showSuggestions =
-            viewModel.suggestions.isNotEmpty &&
-            viewModel.provider.history.isEmpty;
-        final history = [
-          if (showWelcomeMessage)
-            ChatMessage(
-              origin: MessageOrigin.llm,
-              text: viewModel.welcomeMessage,
-              attachments: [],
-            ),
-          ...viewModel.provider.history,
-        ];
+  Widget build(BuildContext context) => ChatViewModelClient(
+    builder: (context, viewModel, child) {
+      final chatStyle = LlmChatViewStyle.resolve(viewModel.style);
+      final padding =
+          chatStyle.padding as EdgeInsets? ??
+          const EdgeInsets.only(top: 16, left: 16, right: 16);
+      final messageSpacing = chatStyle.messageSpacing ?? 6.0;
 
-        return ListView.builder(
+      final showWelcomeMessage = viewModel.welcomeMessage != null;
+      final showSuggestions =
+          viewModel.suggestions.isNotEmpty &&
+          viewModel.provider.history.isEmpty;
+      final history = [
+        if (showWelcomeMessage)
+          ChatMessage(
+            origin: MessageOrigin.llm,
+            text: viewModel.welcomeMessage,
+            attachments: [],
+          ),
+        ...viewModel.provider.history,
+      ];
+
+      return Padding(
+        padding: padding,
+        child: ListView.builder(
           reverse: true,
           itemCount: history.length + (showSuggestions ? 1 : 0),
           itemBuilder: (context, index) {
@@ -86,7 +91,7 @@ class _ChatHistoryViewState extends State<ChatHistoryView> {
             final isUser = message.origin.isUser;
 
             return Padding(
-              padding: const EdgeInsets.only(top: 6),
+              padding: EdgeInsets.only(top: messageSpacing),
               child:
                   isUser
                       ? UserMessageView(
@@ -102,8 +107,8 @@ class _ChatHistoryViewState extends State<ChatHistoryView> {
                       ),
             );
           },
-        );
-      },
-    ),
+        ),
+      );
+    },
   );
 }

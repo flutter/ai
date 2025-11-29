@@ -19,6 +19,11 @@ class LlmMessageStyle {
     this.iconDecoration,
     this.decoration,
     this.markdownStyle,
+    this.maxWidth = 600.0,
+    this.minWidth = 300.0,
+    this.flex = 6,
+    this.padding = const EdgeInsets.all(12.0),
+    this.margin = const EdgeInsets.symmetric(vertical: 4.0),
   });
 
   /// Resolves the provided style with the default style.
@@ -47,6 +52,11 @@ class LlmMessageStyle {
       iconDecoration: style?.iconDecoration ?? defaultStyle.iconDecoration,
       markdownStyle: style?.markdownStyle ?? defaultStyle.markdownStyle,
       decoration: style?.decoration ?? defaultStyle.decoration,
+      maxWidth: style?.maxWidth ?? defaultStyle.maxWidth,
+      minWidth: style?.minWidth ?? defaultStyle.minWidth,
+      flex: style?.flex ?? defaultStyle.flex,
+      padding: style?.padding ?? defaultStyle.padding,
+      margin: style?.margin ?? defaultStyle.margin,
     );
   }
 
@@ -93,6 +103,33 @@ class LlmMessageStyle {
     ),
   );
 
+  /// Creates a copy of this style with the given fields replaced by the new values.
+  LlmMessageStyle copyWith({
+    BoxDecoration? decoration,
+    IconData? icon,
+    Color? iconColor,
+    BoxDecoration? iconDecoration,
+    MarkdownStyleSheet? markdownStyle,
+    double? maxWidth,
+    double? minWidth,
+    int? flex,
+    EdgeInsets? padding,
+    EdgeInsets? margin,
+  }) {
+    return LlmMessageStyle(
+      decoration: decoration ?? this.decoration,
+      icon: icon ?? this.icon,
+      iconColor: iconColor ?? this.iconColor,
+      iconDecoration: iconDecoration ?? this.iconDecoration,
+      markdownStyle: markdownStyle ?? this.markdownStyle,
+      maxWidth: maxWidth ?? this.maxWidth,
+      minWidth: minWidth ?? this.minWidth,
+      flex: flex ?? this.flex,
+      padding: padding ?? this.padding,
+      margin: margin ?? this.margin,
+    );
+  }
+
   /// The icon to display for the LLM messages.
   final IconData? icon;
 
@@ -107,4 +144,19 @@ class LlmMessageStyle {
 
   /// The markdown style sheet for LLM messages.
   final MarkdownStyleSheet? markdownStyle;
+
+  /// The maximum width of the message bubble.
+  final double maxWidth;
+
+  /// The minimum width of the message bubble.
+  final double minWidth;
+
+  /// The flex value used in the row layout.
+  final int flex;
+
+  /// The padding inside the message bubble.
+  final EdgeInsets padding;
+
+  /// The margin around the message bubble.
+  final EdgeInsets margin;
 }

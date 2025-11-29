@@ -43,6 +43,9 @@ class LlmChatViewStyle {
     this.suggestionStyle,
     this.voiceNoteRecorderStyle,
     this.urlButtonStyle,
+    this.padding,
+    this.margin,
+    this.messageSpacing,
   });
 
   /// Resolves the provided [style] with the [defaultStyle].
@@ -147,6 +150,9 @@ class LlmChatViewStyle {
         style?.urlButtonStyle,
         defaultStyle: ActionButtonStyle.defaultStyle(ActionButtonType.url),
       ),
+      padding: style?.padding ?? defaultStyle.padding,
+      margin: style?.margin ?? defaultStyle.margin,
+      messageSpacing: style?.messageSpacing ?? defaultStyle.messageSpacing,
     );
   }
 
@@ -188,6 +194,71 @@ class LlmChatViewStyle {
     voiceNoteRecorderStyle: VoiceNoteRecorderStyle.defaultStyle(),
     urlButtonStyle: ActionButtonStyle.defaultStyle(ActionButtonType.url),
   );
+
+  /// Creates a copy of this style with the given fields replaced by the new
+  LlmChatViewStyle copyWith({
+    Color? backgroundColor,
+    Color? menuColor,
+    Color? progressIndicatorColor,
+    UserMessageStyle? userMessageStyle,
+    LlmMessageStyle? llmMessageStyle,
+    ChatInputStyle? chatInputStyle,
+    ActionButtonStyle? addButtonStyle,
+    ActionButtonStyle? attachFileButtonStyle,
+    ActionButtonStyle? cameraButtonStyle,
+    ActionButtonStyle? stopButtonStyle,
+    ActionButtonStyle? closeButtonStyle,
+    ActionButtonStyle? cancelButtonStyle,
+    ActionButtonStyle? copyButtonStyle,
+    ActionButtonStyle? editButtonStyle,
+    ActionButtonStyle? galleryButtonStyle,
+    ActionButtonStyle? recordButtonStyle,
+    ActionButtonStyle? submitButtonStyle,
+    ActionButtonStyle? disabledButtonStyle,
+    ActionButtonStyle? closeMenuButtonStyle,
+    Decoration? actionButtonBarDecoration,
+    FileAttachmentStyle? fileAttachmentStyle,
+    SuggestionStyle? suggestionStyle,
+    VoiceNoteRecorderStyle? voiceNoteRecorderStyle,
+    ActionButtonStyle? urlButtonStyle,
+    EdgeInsetsGeometry? padding,
+    EdgeInsetsGeometry? margin,
+    double? messageSpacing,
+  }) {
+    return LlmChatViewStyle(
+      backgroundColor: backgroundColor ?? this.backgroundColor,
+      menuColor: menuColor ?? this.menuColor,
+      progressIndicatorColor:
+          progressIndicatorColor ?? this.progressIndicatorColor,
+      userMessageStyle: userMessageStyle ?? this.userMessageStyle,
+      llmMessageStyle: llmMessageStyle ?? this.llmMessageStyle,
+      chatInputStyle: chatInputStyle ?? this.chatInputStyle,
+      addButtonStyle: addButtonStyle ?? this.addButtonStyle,
+      attachFileButtonStyle:
+          attachFileButtonStyle ?? this.attachFileButtonStyle,
+      cameraButtonStyle: cameraButtonStyle ?? this.cameraButtonStyle,
+      stopButtonStyle: stopButtonStyle ?? this.stopButtonStyle,
+      closeButtonStyle: closeButtonStyle ?? this.closeButtonStyle,
+      cancelButtonStyle: cancelButtonStyle ?? this.cancelButtonStyle,
+      copyButtonStyle: copyButtonStyle ?? this.copyButtonStyle,
+      editButtonStyle: editButtonStyle ?? this.editButtonStyle,
+      galleryButtonStyle: galleryButtonStyle ?? this.galleryButtonStyle,
+      recordButtonStyle: recordButtonStyle ?? this.recordButtonStyle,
+      submitButtonStyle: submitButtonStyle ?? this.submitButtonStyle,
+      disabledButtonStyle: disabledButtonStyle ?? this.disabledButtonStyle,
+      closeMenuButtonStyle: closeMenuButtonStyle ?? this.closeMenuButtonStyle,
+      actionButtonBarDecoration:
+          actionButtonBarDecoration ?? this.actionButtonBarDecoration,
+      fileAttachmentStyle: fileAttachmentStyle ?? this.fileAttachmentStyle,
+      suggestionStyle: suggestionStyle ?? this.suggestionStyle,
+      voiceNoteRecorderStyle:
+          voiceNoteRecorderStyle ?? this.voiceNoteRecorderStyle,
+      urlButtonStyle: urlButtonStyle ?? this.urlButtonStyle,
+      padding: padding ?? this.padding,
+      margin: margin ?? this.margin,
+      messageSpacing: messageSpacing ?? this.messageSpacing,
+    );
+  }
 
   /// Background color of the entire chat widget.
   final Color? backgroundColor;
@@ -260,4 +331,13 @@ class LlmChatViewStyle {
 
   /// Style for the URL button.
   final ActionButtonStyle? urlButtonStyle;
+
+  /// Default padding around the chat view.
+  final EdgeInsetsGeometry? padding;
+
+  /// Margin around the entire chat view.
+  final EdgeInsetsGeometry? margin;
+
+  /// Spacing between messages.
+  final double? messageSpacing;
 }
