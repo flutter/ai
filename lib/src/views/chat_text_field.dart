@@ -19,9 +19,8 @@ import 'package:flutter/material.dart'
 
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
-import 'package:pasteboard/pasteboard.dart';
+import '../helpers/paste_helper/paste_handler.dart';
 import 'package:universal_platform/universal_platform.dart';
-
 import '../providers/interface/attachments.dart';
 
 import '../styles/toolkit_colors.dart';
@@ -90,150 +89,115 @@ class ChatTextField extends StatelessWidget {
   final void Function(List<Attachment> attachments)? onAttachments;
 
   Future<void> _handlePaste() async {
-    try {
-      final image = await Pasteboard.image;
-      if (image != null && onAttachments != null) {
-        final attachment = ImageFileAttachment(
-          name: 'pasted_image_${DateTime.now().millisecondsSinceEpoch}.png',
-          mimeType: 'image/png',
-          bytes: image.asUnmodifiableView(),
-        );
-        onAttachments!([attachment]);
-        return;
-      }
-    } catch (e, s) {
-      debugPrint('Error pasting image: $e');
-      debugPrintStack(stackTrace: s);
-    }
-
-    final text = await Pasteboard.text;
-    if (text != null && text.isNotEmpty) _insertText(text);
+    return handlePaste(controller: controller, onAttachments: onAttachments);
   }
 
-  void _insertText(String text) {
-    final cursorPosition = controller.selection.base.offset;
-    if (cursorPosition == -1) {
-      controller.text = text;
-    } else {
-      final newText = controller.text.replaceRange(
-        controller.selection.start,
-        controller.selection.end,
-        text,
-      );
-      controller.value = controller.value.copyWith(
-        text: newText,
-        selection: TextSelection.collapsed(
-          offset: controller.selection.start + text.length,
-        ),
-      );
-    }
-  }
-
-    @override
-    Widget build(BuildContext context) {
-      return CallbackShortcuts(
-        bindings: <ShortcutActivator, VoidCallback>{
-          const SingleActivator(LogicalKeyboardKey.enter):
-              () => onSubmitted(controller.text),
-          if (UniversalPlatform.isMacOS ||
-              UniversalPlatform.isLinux ||
-              UniversalPlatform.isWeb ||
-              UniversalPlatform.isWindows)
-            const SingleActivator(LogicalKeyboardKey.keyV, meta: true):
-                _handlePaste,
-          if (UniversalPlatform.isWindows ||
-              UniversalPlatform.isLinux ||
-              UniversalPlatform.isWeb)
-            const SingleActivator(LogicalKeyboardKey.keyV, control: true):
-                _handlePaste,
-        },
-        child:
-            isCupertinoApp(context)
-                ? CupertinoTextField(
-                  minLines: minLines,
-                  maxLines: maxLines,
-                  autofocus: autofocus,
-                  style: style,
-                  textInputAction: textInputAction,
-                  controller: controller,
-                  focusNode: focusNode,
-                  onSubmitted: onSubmitted,
-                  placeholder: hintText,
-                  placeholderStyle: hintStyle,
-                  padding: hintPadding ?? EdgeInsets.zero,
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      width: 0,
-                      color: ToolkitColors.transparent,
-                    ),
+  @override
+  Widget build(BuildContext context) {
+    return CallbackShortcuts(
+      bindings: <ShortcutActivator, VoidCallback>{
+        const SingleActivator(LogicalKeyboardKey.enter):
+            () => onSubmitted(controller.text),
+        if (UniversalPlatform.isMacOS ||
+            UniversalPlatform.isLinux ||
+            UniversalPlatform.isWeb ||
+            UniversalPlatform.isWindows)
+          const SingleActivator(LogicalKeyboardKey.keyV, meta: true):
+              _handlePaste,
+        if (UniversalPlatform.isWindows ||
+            UniversalPlatform.isLinux ||
+            UniversalPlatform.isWeb)
+          const SingleActivator(LogicalKeyboardKey.keyV, control: true):
+              _handlePaste,
+      },
+      child:
+          isCupertinoApp(context)
+              ? CupertinoTextField(
+                minLines: minLines,
+                maxLines: maxLines,
+                autofocus: autofocus,
+                style: style,
+                textInputAction: textInputAction,
+                controller: controller,
+                focusNode: focusNode,
+                onSubmitted: onSubmitted,
+                placeholder: hintText,
+                placeholderStyle: hintStyle,
+                padding: hintPadding ?? EdgeInsets.zero,
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    width: 0,
+                    color: ToolkitColors.transparent,
                   ),
-                  keyboardType: TextInputType.multiline,
-                  contextMenuBuilder: (context, editable) {
-                    final l10n = CupertinoLocalizations.of(context);
-                    final defaultItems = editable.contextMenuButtonItems;
-
-                    final filteredItems = defaultItems.where((item) {
-                      return item.type.name != 'paste';
-                    });
-
-                    final customItems = [
-                      ContextMenuButtonItem(
-                        label: l10n.pasteButtonLabel,
-                        onPressed: () async {
-                          ContextMenuController.removeAny();
-                          await _handlePaste();
-                        },
-                      ),
-                      ...filteredItems,
-                    ];
-
-                    return CupertinoAdaptiveTextSelectionToolbar.buttonItems(
-                      anchors: editable.contextMenuAnchors,
-                      buttonItems: customItems,
-                    );
-                  },
-                )
-                : TextField(
-                  minLines: minLines,
-                  maxLines: maxLines,
-                  autofocus: autofocus,
-                  style: style,
-                  textInputAction: textInputAction,
-                  controller: controller,
-                  focusNode: focusNode,
-                  onSubmitted: onSubmitted,
-                  decoration: InputDecoration(
-                    hintText: hintText,
-                    hintStyle: hintStyle,
-                    border: InputBorder.none,
-                    contentPadding: hintPadding,
-                    isDense: false,
-                  ),
-                  keyboardType: TextInputType.multiline,
-                  contextMenuBuilder: (context, editable) {
-                    final defaultItems = editable.contextMenuButtonItems;
-
-                    final filteredItems = defaultItems.where((item) {
-                      return item.type.name != 'paste';
-                    });
-
-                    final customItems = [
-                      ContextMenuButtonItem(
-                        label:
-                            MaterialLocalizations.of(context).pasteButtonLabel,
-                        onPressed: () async {
-                          ContextMenuController.removeAny();
-                          await _handlePaste();
-                        },
-                      ),
-                      ...filteredItems,
-                    ];
-                    return AdaptiveTextSelectionToolbar.buttonItems(
-                      anchors: editable.contextMenuAnchors,
-                      buttonItems: customItems,
-                    );
-                  },
                 ),
-      );
-    }
+                keyboardType: TextInputType.multiline,
+                contextMenuBuilder: (context, editable) {
+                  final l10n = CupertinoLocalizations.of(context);
+                  final defaultItems = editable.contextMenuButtonItems;
+
+                  final filteredItems = defaultItems.where((item) {
+                    return item.type.name != 'paste';
+                  });
+
+                  final customItems = [
+                    ContextMenuButtonItem(
+                      label: l10n.pasteButtonLabel,
+                      onPressed: () async {
+                        ContextMenuController.removeAny();
+                        await _handlePaste();
+                      },
+                    ),
+                    ...filteredItems,
+                  ];
+
+                  return CupertinoAdaptiveTextSelectionToolbar.buttonItems(
+                    anchors: editable.contextMenuAnchors,
+                    buttonItems: customItems,
+                  );
+                },
+              )
+              : TextField(
+                minLines: minLines,
+                maxLines: maxLines,
+                autofocus: autofocus,
+                style: style,
+                textInputAction: textInputAction,
+                controller: controller,
+                focusNode: focusNode,
+                onSubmitted: onSubmitted,
+                decoration: InputDecoration(
+                  hintText: hintText,
+                  hintStyle: hintStyle,
+                  border: InputBorder.none,
+                  contentPadding: hintPadding,
+                  isDense: false,
+                ),
+                keyboardType: TextInputType.multiline,
+                contextMenuBuilder: (context, editable) {
+                  final defaultItems = editable.contextMenuButtonItems;
+
+                  final filteredItems = defaultItems.where((item) {
+                    return item.type.name != 'paste';
+                  });
+
+                  final customItems = [
+                    ContextMenuButtonItem(
+                      label: MaterialLocalizations.of(context).pasteButtonLabel,
+                      onPressed: () async {
+                        ContextMenuController.removeAny();
+                        WidgetsBinding.instance.addPostFrameCallback((_) async {
+                          await _handlePaste();
+                        });
+                      },
+                    ),
+                    ...filteredItems,
+                  ];
+                  return AdaptiveTextSelectionToolbar.buttonItems(
+                    anchors: editable.contextMenuAnchors,
+                    buttonItems: customItems,
+                  );
+                },
+              ),
+    );
   }
+}
