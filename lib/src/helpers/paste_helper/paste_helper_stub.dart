@@ -21,5 +21,15 @@ import '../../providers/interface/attachments.dart';
 Future<void> handlePasteWeb({
   required TextEditingController controller,
   required void Function(List<Attachment> attachments)? onAttachments,
-  required void Function({required TextEditingController controller, required String text}) insertText,
-}) async { }
+  required void Function({
+    required TextEditingController controller,
+    required String text,
+  })
+  insertText,
+}) async {}
+
+/// A no-op implementation of unregistering the web listener for non-web platforms.
+///
+/// This function is provided for API compatibility with web platforms but does nothing
+/// when called on non-web platforms. On web, this unregister the paste event listener.
+void unregisterPasteListener() {}

@@ -20,6 +20,7 @@ import 'package:flutter/material.dart'
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import '../helpers/paste_helper/paste_handler.dart';
+import '../helpers/paste_helper/paste_helper.dart' as pst;
 import 'package:universal_platform/universal_platform.dart';
 import '../providers/interface/attachments.dart';
 
@@ -31,7 +32,7 @@ import '../utility.dart';
 /// This widget will render either a [CupertinoTextField] or a [TextField]
 /// depending on whether the app is using Cupertino or Material design.
 @immutable
-class ChatTextField extends StatelessWidget {
+class ChatTextField extends StatefulWidget {
   /// Creates an adaptive text field.
   ///
   /// Many of the parameters are required to ensure consistent behavior
@@ -88,8 +89,67 @@ class ChatTextField extends StatelessWidget {
   /// Called when attachments are pasted into the text field.
   final void Function(List<Attachment> attachments)? onAttachments;
 
+  @override
+  State<ChatTextField> createState() => _ChatTextFieldState();
+}
+
+class _ChatTextFieldState extends State<ChatTextField> {
+  /// Inserts text at the current cursor position in the text controller.
+  ///
+  /// If there's a text selection, it will be replaced by the new text.
+  /// If there's no selection, the text will be inserted at the cursor position.
+  ///
+  /// Parameters:
+  ///   - [controller]: The text editing controller to insert text into
+  ///   - [text]: The text to insert
+  void _insertText({
+    required TextEditingController controller,
+    required String text,
+  }) {
+    final cursorPosition = controller.selection.base.offset;
+    if (cursorPosition == -1) {
+      controller.text = text;
+    } else {
+      final newText = controller.text.replaceRange(
+        controller.selection.start,
+        controller.selection.end,
+        text,
+      );
+      controller.value = controller.value.copyWith(
+        text: newText,
+        selection: TextSelection.collapsed(
+          offset: controller.selection.start + text.length,
+        ),
+      );
+    }
+  }
+
+  Future registerListeners() async {
+    return pst.handlePasteWeb(
+      controller: widget.controller,
+      onAttachments: widget.onAttachments,
+      insertText: _insertText,
+    );
+  }
+
   Future<void> _handlePaste() async {
-    return handlePaste(controller: controller, onAttachments: onAttachments);
+    return handlePaste(
+      controller: widget.controller,
+      onAttachments: widget.onAttachments,
+      insertText: _insertText,
+    );
+  }
+
+  @override
+  void initState() {
+    registerListeners();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    pst.unregisterPasteListener();
+    super.dispose();
   }
 
   @override
@@ -97,33 +157,28 @@ class ChatTextField extends StatelessWidget {
     return CallbackShortcuts(
       bindings: <ShortcutActivator, VoidCallback>{
         const SingleActivator(LogicalKeyboardKey.enter):
-            () => onSubmitted(controller.text),
-        if (UniversalPlatform.isMacOS ||
-            UniversalPlatform.isLinux ||
-            UniversalPlatform.isWeb ||
-            UniversalPlatform.isWindows)
+            () => widget.onSubmitted(widget.controller.text),
+        if (UniversalPlatform.isMacOS)
           const SingleActivator(LogicalKeyboardKey.keyV, meta: true):
               _handlePaste,
-        if (UniversalPlatform.isWindows ||
-            UniversalPlatform.isLinux ||
-            UniversalPlatform.isWeb)
+        if (UniversalPlatform.isWindows || UniversalPlatform.isLinux)
           const SingleActivator(LogicalKeyboardKey.keyV, control: true):
               _handlePaste,
       },
       child:
           isCupertinoApp(context)
               ? CupertinoTextField(
-                minLines: minLines,
-                maxLines: maxLines,
-                autofocus: autofocus,
-                style: style,
-                textInputAction: textInputAction,
-                controller: controller,
-                focusNode: focusNode,
-                onSubmitted: onSubmitted,
-                placeholder: hintText,
-                placeholderStyle: hintStyle,
-                padding: hintPadding ?? EdgeInsets.zero,
+                minLines: widget.minLines,
+                maxLines: widget.maxLines,
+                autofocus: widget.autofocus,
+                style: widget.style,
+                textInputAction: widget.textInputAction,
+                controller: widget.controller,
+                focusNode: widget.focusNode,
+                onSubmitted: widget.onSubmitted,
+                placeholder: widget.hintText,
+                placeholderStyle: widget.hintStyle,
+                padding: widget.hintPadding ?? EdgeInsets.zero,
                 decoration: BoxDecoration(
                   border: Border.all(
                     width: 0,
@@ -157,19 +212,19 @@ class ChatTextField extends StatelessWidget {
                 },
               )
               : TextField(
-                minLines: minLines,
-                maxLines: maxLines,
-                autofocus: autofocus,
-                style: style,
-                textInputAction: textInputAction,
-                controller: controller,
-                focusNode: focusNode,
-                onSubmitted: onSubmitted,
+                minLines: widget.minLines,
+                maxLines: widget.maxLines,
+                autofocus: widget.autofocus,
+                style: widget.style,
+                textInputAction: widget.textInputAction,
+                controller: widget.controller,
+                focusNode: widget.focusNode,
+                onSubmitted: widget.onSubmitted,
                 decoration: InputDecoration(
-                  hintText: hintText,
-                  hintStyle: hintStyle,
+                  hintText: widget.hintText,
+                  hintStyle: widget.hintStyle,
                   border: InputBorder.none,
-                  contentPadding: hintPadding,
+                  contentPadding: widget.hintPadding,
                   isDense: false,
                 ),
                 keyboardType: TextInputType.multiline,

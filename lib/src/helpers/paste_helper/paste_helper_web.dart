@@ -2,17 +2,20 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-import 'dart:js_interop';
+import 'package:cross_file/cross_file.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart' show TextEditingController;
 import 'package:mime/mime.dart';
-import 'package:web/web.dart' as web;
+import 'package:super_clipboard/super_clipboard.dart';
 
 import '../../providers/interface/attachments.dart';
 
-/// Handles paste events in a web environment, supporting both text and image pasting.
+bool _isListenerRegistered = false;
+final _events = ClipboardEvents.instance;
+
+/// Handles paste events in a web environment, supporting both text, file, and image pasting.
 ///
-/// This function processes the clipboard contents and either:
+/// This function processes the clipboard contents, registers a paste event listener and either:
 /// - Extracts and handles image data if images are present in the clipboard
 /// - Inserts plain text into the provided text controller
 ///
@@ -27,95 +30,30 @@ Future<void> handlePasteWeb({
   required TextEditingController controller,
   required void Function(List<Attachment> attachments)? onAttachments,
   required void Function({
-  required TextEditingController controller,
-  required String text,
-  }) insertText,
+    required TextEditingController controller,
+    required String text,
+  })
+  insertText,
 }) async {
   try {
-    final clipboard = web.window.navigator.clipboard;
-    final jsItems = await clipboard.read().toDart;
+    if (_isListenerRegistered) return;
 
-    final items = jsItems.toDart;
+    _isListenerRegistered = true;
 
-    for (final item in items) {
-      final types = item.types.toDart;
-      for (final type in types) {
-        final typeString = type.toDart;
+    if (_events == null) return;
 
-        if (typeString.startsWith("image/")) {
-          final blob = await item.getType(typeString).toDart;
-
-          if (blob.isUndefinedOrNull) continue;
-
-          final bytes = await _blobToBytes(blob);
-          if (bytes == null || bytes.isEmpty) continue;
-
-          final extension = _getExtensionFromMime(typeString);
-
-          final attachment = ImageFileAttachment(
-            name:
-            'pasted_image_${DateTime.now().millisecondsSinceEpoch}.$extension',
-            mimeType: typeString,
-            bytes: bytes,
-          );
-
-          onAttachments?.call([attachment]);
-          return;
-        }
-      }
-
-      for (final type in types) {
-        final typeString = type.toDart;
-
-        if (typeString.startsWith("text/") &&
-            typeString != "text/plain") {
-          final blob = await item.getType(typeString).toDart;
-          if (blob.isUndefinedOrNull) continue;
-
-          final text = await blob.text().toDart;
-          final textString = text.toDart;
-
-          if (textString.isNotEmpty) {
-            insertText(controller: controller, text: textString);
-            return;
-          }
-        }
-      }
-
-      if (types.contains('text/plain'.toJS)) {
-        final blob = await item.getType("text/plain").toDart;
-        if (blob.isUndefinedOrNull) continue;
-
-        final text = await blob.text().toDart;
-        final textString = text.toDart;
-
-        if (textString.isNotEmpty) {
-          insertText(controller: controller, text: textString);
-          return;
-        }
-      }
-    }
+    _events!.registerPasteEventListener((event) async {
+      final reader = await event.getClipboardReader();
+      await _pasteOperation(
+        controller: controller,
+        onAttachments: onAttachments,
+        insertText: insertText,
+        reader: reader,
+      );
+    });
   } catch (e, s) {
     debugPrint('Error in handlePasteWeb: $e');
     debugPrintStack(stackTrace: s);
-  }
-}
-
-
-/// Converts a web Blob object to a Uint8List.
-///
-/// Parameters:
-///   - [blob]: The web Blob to convert
-///
-/// Returns:
-///   A [Future] that completes with the binary data as [Uint8List], or null if conversion fails
-Future<Uint8List?> _blobToBytes(web.Blob blob) async {
-  try {
-    final arrayBuffer = await blob.arrayBuffer().toDart;
-    return Uint8List.view(arrayBuffer.toDart);
-  } catch (e) {
-    debugPrint('Error converting blob to bytes: $e');
-    return null;
   }
 }
 
@@ -129,7 +67,8 @@ Future<Uint8List?> _blobToBytes(web.Blob blob) async {
 ///   A string representing the file extension (without the dot), defaults to 'bin' if unknown
 String _getExtensionFromMime(String mimeType, [List<int>? bytes]) {
   String detectedMimeType = mimeType;
-  if (bytes != null && (mimeType.isEmpty || mimeType == 'application/octet-stream')) {
+  if (bytes != null &&
+      (mimeType.isEmpty || mimeType == 'application/octet-stream')) {
     detectedMimeType = lookupMimeType('', headerBytes: bytes) ?? mimeType;
   }
   final extension = extensionFromMime(detectedMimeType);
@@ -137,4 +76,137 @@ String _getExtensionFromMime(String mimeType, [List<int>? bytes]) {
     return detectedMimeType.startsWith('image/') ? 'png' : 'bin';
   }
   return extension.startsWith('.') ? extension.substring(1) : extension;
+}
+
+/// Internal function to handle the actual clipboard reading and data processing.
+///
+/// It checks for various data formats (files, images, plain text, HTML) in a specific order
+/// and executes the appropriate action (calling [onAttachments] or [insertText]).
+///
+/// Parameters:
+///   - [controller]: The text editing controller.
+///   - [onAttachments]: Callback to handle file/image attachments.
+///   - [insertText]: Function to handle text insertion.
+///   - [reader]: The [ClipboardReader] containing the clipboard data.
+Future<void> _pasteOperation({
+  required TextEditingController controller,
+  required void Function(List<Attachment> attachments)? onAttachments,
+  required void Function({
+    required TextEditingController controller,
+    required String text,
+  })
+  insertText,
+  required ClipboardReader reader,
+}) async {
+  if (onAttachments != null) {
+    final imageFormats = [
+      Formats.png,
+      Formats.jpeg,
+      Formats.bmp,
+      Formats.gif,
+      Formats.tiff,
+      Formats.webp,
+    ];
+
+    final fileFormats = [
+      Formats.pdf,
+      Formats.doc,
+      Formats.docx,
+      Formats.xls,
+      Formats.xlsx,
+      Formats.ppt,
+      Formats.pptx,
+      Formats.epub,
+    ];
+
+    for (final format in fileFormats) {
+      if (reader.canProvide(format)) {
+        reader.getFile(format, (file) async {
+          final stream = file.getStream();
+
+          await stream.toList().then((chunks) {
+            final attachmentBytes = Uint8List.fromList(
+              chunks.expand((e) => e).toList(),
+            );
+            final mimeType =
+                lookupMimeType('', headerBytes: attachmentBytes) ??
+                'application/octet-stream';
+            final attachment = FileAttachment.fileOrImage(
+              name:
+                  'pasted_file_${DateTime.now().millisecondsSinceEpoch}.${_getExtensionFromMime(mimeType)}',
+              mimeType: mimeType,
+              bytes: attachmentBytes,
+            );
+            onAttachments([attachment]);
+            return;
+          });
+        });
+        return;
+      }
+    }
+
+    if (reader.canProvide(Formats.fileUri)) {
+      await reader.readValue(Formats.fileUri).then((val) async {
+        if (val != null) {
+          if (val.isScheme('file')) {
+            final path = val.toFilePath();
+            final file = XFile(path);
+            final attachment = await FileAttachment.fromFile(file);
+            onAttachments([attachment]);
+          }
+        }
+      });
+      return;
+    }
+
+    for (final format in imageFormats) {
+      if (reader.canProvide(format)) {
+        reader.getFile(format, (file) async {
+          final stream = file.getStream();
+          await stream.toList().then((chunks) {
+            final attachmentBytes = Uint8List.fromList(
+              chunks.expand((e) => e).toList(),
+            );
+            final mimeType =
+                lookupMimeType('', headerBytes: attachmentBytes) ?? 'image/png';
+            final attachment = ImageFileAttachment(
+              name:
+                  'pasted_image_${DateTime.now().millisecondsSinceEpoch}.${_getExtensionFromMime(mimeType)}',
+              mimeType: mimeType,
+              bytes: attachmentBytes,
+            );
+            onAttachments([attachment]);
+            return;
+          });
+        });
+        return;
+      }
+    }
+
+    if (reader.canProvide(Formats.plainText)) {
+      final text = await reader.readValue(Formats.plainText);
+      if (text != null && text.isNotEmpty) {
+        insertText(controller: controller, text: text);
+        return;
+      }
+    }
+
+    if (reader.canProvide(Formats.htmlText)) {
+      final html = await reader.readValue(Formats.htmlText);
+      if (html != null && html.isNotEmpty) {
+        insertText(controller: controller, text: html);
+        return;
+      }
+    }
+  }
+}
+
+/// Unregisters the paste event listener established in [handlePasteWeb].
+///
+/// This is necessary to stop processing paste events when they are no longer needed
+/// (e.g., when a widget is disposed).
+void unregisterPasteListener() {
+  if (_events != null) {
+    _events!.unregisterPasteEventListener;
+  }
 }

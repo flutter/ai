@@ -2,14 +2,14 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+import 'dart:typed_data';
+
 import 'package:cross_file/cross_file.dart';
 import 'package:flutter/widgets.dart'
-    show TextEditingController, TextSelection, debugPrint, debugPrintStack;
-import 'package:flutter/foundation.dart' show kIsWeb;
+    show TextEditingController, debugPrint, debugPrintStack;
 import 'package:mime/mime.dart';
-import 'package:pasteboard/pasteboard.dart';
+import 'package:super_clipboard/super_clipboard.dart';
 
-import 'paste_helper.dart' as pst;
 import '../../providers/interface/attachments.dart';
 
 /// Handles paste operations, supporting both text and image pasting.
@@ -31,83 +31,123 @@ import '../../providers/interface/attachments.dart';
 Future<void> handlePaste({
   required TextEditingController controller,
   required void Function(List<Attachment> attachments)? onAttachments,
+  required void Function({
+    required TextEditingController controller,
+    required String text,
+  })
+  insertText,
 }) async {
   try {
-    if (kIsWeb) {
-      await pst.handlePasteWeb(
-        controller: controller,
-        onAttachments: onAttachments,
-        insertText: _insertText,
-      );
-      return;
-    }
-    final files = await Pasteboard.files();
-    if (files.isNotEmpty && onAttachments != null) {
-      for (final file in files) {
-        final looksLikeImage = _looksLikeImagePath(file);
-        if (looksLikeImage["isFile"] == true) {
-          final bytes = await XFile(file).readAsBytes();
-          final attachment = ImageFileAttachment(
-            name: 'pasted_image_${DateTime.now().millisecondsSinceEpoch}.${_getExtensionFromMime(looksLikeImage["mimeType"], bytes)}',
-            mimeType: looksLikeImage["mimeType"],
-            bytes: bytes,
-          );
-          onAttachments([attachment]);
+    final clipboard = SystemClipboard.instance;
+    if (clipboard == null) return;
+    final reader = await clipboard.read();
+
+    if (onAttachments != null) {
+      final imageFormats = [
+        Formats.png,
+        Formats.jpeg,
+        Formats.bmp,
+        Formats.gif,
+        Formats.tiff,
+        Formats.webp,
+      ];
+
+      final fileFormats = [
+        Formats.pdf,
+        Formats.doc,
+        Formats.docx,
+        Formats.xls,
+        Formats.xlsx,
+        Formats.ppt,
+        Formats.pptx,
+        Formats.epub,
+      ];
+
+      if (reader.canProvide(Formats.fileUri)) {
+        await reader.readValue(Formats.fileUri).then((val) async {
+          if (val != null) {
+            if (val.isScheme('file')) {
+              final path = val.toFilePath();
+              final file = XFile(path);
+              final attachment = await FileAttachment.fromFile(file);
+              onAttachments([attachment]);
+            }
+          }
+        });
+        return;
+      }
+
+      for (final format in fileFormats) {
+        if (reader.canProvide(format)) {
+          reader.getFile(format, (file) async {
+            final stream = file.getStream();
+
+            await stream.toList().then((chunks) {
+              final attachmentBytes = Uint8List.fromList(
+                chunks.expand((e) => e).toList(),
+              );
+              final mimeType =
+                  lookupMimeType('', headerBytes: attachmentBytes) ??
+                  'application/octet-stream';
+              final attachment = FileAttachment.fileOrImage(
+                name:
+                    'pasted_file_${DateTime.now().millisecondsSinceEpoch}.${_getExtensionFromMime(mimeType)}',
+                mimeType: mimeType,
+                bytes: attachmentBytes,
+              );
+              onAttachments([attachment]);
+              return;
+            });
+          });
+          return;
         }
-      return;
+      }
+
+      for (final format in imageFormats) {
+        if (reader.canProvide(format)) {
+          reader.getFile(format, (file) async {
+            final stream = file.getStream();
+
+            await stream.toList().then((chunks) {
+              final attachmentBytes = Uint8List.fromList(
+                chunks.expand((e) => e).toList(),
+              );
+              final mimeType =
+                  lookupMimeType('', headerBytes: attachmentBytes) ??
+                  'image/png';
+              final attachment = ImageFileAttachment(
+                name:
+                    'pasted_image_${DateTime.now().millisecondsSinceEpoch}.${_getExtensionFromMime(mimeType)}',
+                mimeType: mimeType,
+                bytes: attachmentBytes,
+              );
+              onAttachments([attachment]);
+              return;
+            });
+          });
+          return;
+        }
       }
     }
 
+    if (reader.canProvide(Formats.plainText)) {
+      final text = await reader.readValue(Formats.plainText);
+      if (text != null && text.isNotEmpty) {
+        insertText(controller: controller, text: text);
+        return;
+      }
+    }
 
-    final image = await Pasteboard.image;
-    if (image != null && onAttachments != null) {
-      final mimeType = lookupMimeType('', headerBytes: image) ?? 'image/png';
-      final attachment = ImageFileAttachment(
-        name: 'pasted_image_${DateTime.now().millisecondsSinceEpoch}.${_getExtensionFromMime(mimeType)}',
-        mimeType: mimeType,
-        bytes: image,
-      );
-      onAttachments([attachment]);
-      return;
+    if (reader.canProvide(Formats.htmlText)) {
+      final html = await reader.readValue(Formats.htmlText);
+      if (html != null && html.isNotEmpty) {
+        insertText(controller: controller, text: html);
+        return;
+      }
     }
   } catch (e, s) {
     debugPrint('Error pasting image: $e');
     debugPrintStack(stackTrace: s);
-  }
-
-  final text = await Pasteboard.text;
-  if (text != null && text.isNotEmpty) {
-    _insertText(controller: controller, text: text);
-  }
-}
-
-/// Inserts text at the current cursor position in the text controller.
-///
-/// If there's a text selection, it will be replaced by the new text.
-/// If there's no selection, the text will be inserted at the cursor position.
-///
-/// Parameters:
-///   - [controller]: The text editing controller to insert text into
-///   - [text]: The text to insert
-void _insertText({
-  required TextEditingController controller,
-  required String text,
-}) {
-  final cursorPosition = controller.selection.base.offset;
-  if (cursorPosition == -1) {
-    controller.text = text;
-  } else {
-    final newText = controller.text.replaceRange(
-      controller.selection.start,
-      controller.selection.end,
-      text,
-    );
-    controller.value = controller.value.copyWith(
-      text: newText,
-      selection: TextSelection.collapsed(
-        offset: controller.selection.start + text.length,
-      ),
-    );
   }
 }
 
@@ -120,7 +160,8 @@ void _insertText({
 ///   A string representing the file extension (without the dot), defaults to 'bin' if unknown
 String _getExtensionFromMime(String mimeType, [List<int>? bytes]) {
   String detectedMimeType = mimeType;
-  if (bytes != null && (mimeType.isEmpty || mimeType == 'application/octet-stream')) {
+  if (bytes != null &&
+      (mimeType.isEmpty || mimeType == 'application/octet-stream')) {
     detectedMimeType = lookupMimeType('', headerBytes: bytes) ?? mimeType;
   }
   final extension = extensionFromMime(detectedMimeType);
@@ -128,21 +169,4 @@ String _getExtensionFromMime(String mimeType, [List<int>? bytes]) {
     return detectedMimeType.startsWith('image/') ? 'png' : 'bin';
   }
   return extension.startsWith('.') ? extension.substring(1) : extension;
-}
-
-/// Checks if the given text appears to be an image file path or URL.
-///
-/// Parameters:
-///   - [text]: The text to check
-///
-/// Returns:
-///   true if the text looks like an image path/URL, false otherwise
-Map<String, dynamic> _looksLikeImagePath(String text) {
-  final lower = text.toLowerCase();
-  final uri = Uri.tryParse(lower);
-  if (uri != null && uri.path.isNotEmpty) {
-    final mimeType = lookupMimeType(uri.path) ?? "";
-    return mimeType.startsWith('image/') ? {"isFile": mimeType.startsWith('image/'), "mimeType": mimeType} : {"isFile": false, "mimeType": ""};
-  }
-  return {"isFile": false, "mimeType": ""};
 }
