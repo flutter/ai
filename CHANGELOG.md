@@ -1,4 +1,4 @@
-## x.y.z
+## 1.0.0
 
 - Merged [Enable customisable styling for WaveformRecorder via
   VoiceNoteRecorderStyle](https://github.com/flutter/ai/pull/161), which addes
