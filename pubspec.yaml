@@ -1,7 +1,7 @@
 name: flutter_ai_toolkit
 description: >-
-  A set of AI chat-related widgets for Flutter apps targeting
-  mobile, desktop, and web.
+  AI chat widget for Flutter apps targeting mobile, desktop, and web supporting
+  text, image, and voice input.
 version: 1.0.0
 repository: https://github.com/flutter/ai
 
