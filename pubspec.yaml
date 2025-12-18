@@ -25,6 +25,7 @@ dependencies:
   flutter_picture_taker: ^0.2.0
   google_fonts: ^6.2.1
   image_picker: ^1.1.2
+  mac_menu_bar: ^0.0.1
   mime: ^2.0.0
   super_clipboard: ^0.9.1
   universal_platform: ^1.1.0
