@@ -1,8 +1,8 @@
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_ai_toolkit/flutter_ai_toolkit.dart';
 import 'package:waveform_recorder/waveform_recorder.dart';
 
-import '../../styles/styles.dart';
 import '../../utility.dart';
 import '../chat_text_field.dart';
 import 'editing_indicator.dart';
@@ -17,6 +17,7 @@ class TextOrAudioInput extends StatelessWidget {
   /// The [TextOrAudioInput] widget requires several parameters:
   /// - [inputStyle]: Defines the styling for the input field.
   /// - [waveController]: Controls the waveform recorder.
+  /// - [onAttachments]: Callback for when attachments are pasted into the text field.
   /// - [onCancelEdit]: Callback for when editing is canceled.
   /// - [onRecordingStopped]: Callback for when audio recording is stopped.
   /// - [onSubmitPrompt]: Callback for when the text input is submitted.
@@ -30,6 +31,7 @@ class TextOrAudioInput extends StatelessWidget {
     super.key,
     required ChatInputStyle inputStyle,
     required WaveformRecorderController waveController,
+    required void Function(List<Attachment> attachments)? onAttachments,
     required void Function()? onCancelEdit,
     required void Function() onRecordingStopped,
     required void Function() onSubmitPrompt,
@@ -45,6 +47,7 @@ class TextOrAudioInput extends StatelessWidget {
        _focusNode = focusNode,
        _textController = textController,
        _onSubmitPrompt = onSubmitPrompt,
+       _onAttachments = onAttachments,
        _onRecordingStopped = onRecordingStopped,
        _onCancelEdit = onCancelEdit,
        _waveController = waveController,
@@ -53,6 +56,7 @@ class TextOrAudioInput extends StatelessWidget {
 
   final ChatInputStyle _inputStyle;
   final WaveformRecorderController _waveController;
+  final void Function(List<Attachment> attachments)? _onAttachments;
   final void Function()? _onCancelEdit;
   final void Function() _onRecordingStopped;
   final void Function() _onSubmitPrompt;
@@ -113,6 +117,7 @@ class TextOrAudioInput extends StatelessWidget {
                         horizontal: 12,
                         vertical: 8,
                       ),
+                      onAttachments: _onAttachments,
                     ),
           ),
         ),
