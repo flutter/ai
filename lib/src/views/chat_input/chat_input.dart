@@ -196,7 +196,7 @@ class _ChatInputState extends State<ChatInput> {
                             cancelButtonStyle: _chatStyle!.cancelButtonStyle!,
                             voiceNoteRecorderStyle:
                                 _chatStyle!.voiceNoteRecorderStyle!,
-                                onAttachments: onAttachments,
+                            onAttachments: onAttachments,
                           ),
                         ),
                         Padding(
