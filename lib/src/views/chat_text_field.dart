@@ -20,6 +20,7 @@ import 'package:flutter/material.dart'
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:mac_menu_bar/mac_menu_bar.dart';
+import 'package:super_clipboard/super_clipboard.dart';
 import '../helpers/paste_helper/paste_handler.dart';
 import '../helpers/paste_helper/paste_helper.dart' as pst;
 import 'package:universal_platform/universal_platform.dart';
@@ -126,10 +127,16 @@ class _ChatTextFieldState extends State<ChatTextField> {
   }
 
   Future registerListeners() async {
-    MacMenuBar.onPaste(() async {
-      await _handlePaste();
-      return true;
-    });
+    if (UniversalPlatform.isMacOS) {
+      MacMenuBar.onPaste(() async {
+        await _handlePaste();
+        return true;
+      });
+
+      MacMenuBar.onCopy(_copyToClipboard);
+      MacMenuBar.onCut(_cutToClipboard);
+      MacMenuBar.onSelectAll(_selectAll);
+    }
     return pst.handlePasteWeb(
       controller: widget.controller,
       onAttachments: widget.onAttachments,
@@ -143,6 +150,86 @@ class _ChatTextFieldState extends State<ChatTextField> {
       onAttachments: widget.onAttachments,
       insertText: _insertText,
     );
+  }
+
+  /// Copies the currently selected text to the system clipboard.
+  ///
+  /// If there is a text selection, it will be copied to the clipboard.
+  /// If no text is selected, this method does nothing.
+  ///
+  /// Returns `true` if the operation was successful, `false` otherwise.
+  /// This method is typically called when the user triggers the copy command
+  /// from the mac menu bar.
+  Future<bool> _copyToClipboard() async {
+    final selection = TextSelection(
+      baseOffset: widget.controller.selection.start,
+      extentOffset: widget.controller.selection.end,
+    );
+
+    if (selection.isValid && !selection.isCollapsed) {
+      final selectedText = widget.controller.text.substring(
+        selection.start,
+        selection.end,
+      );
+      final data = DataWriterItem();
+      data.add(Formats.plainText(selectedText));
+      await SystemClipboard.instance?.write([data]);
+    }
+    return true;
+  }
+
+  /// Selects all text in the text field.
+  ///
+  /// This method updates the text selection to include all characters
+  /// in the text field's content. The selection will have its base at the
+  /// start of the text and its extent at the end.
+  ///
+  /// Returns `true` to indicate successful completion.
+  /// This method is typically called when the user triggers the select all command
+  /// (e.g., Cmd+A on macOS or Ctrl+A on other platforms).
+  Future<bool> _selectAll() async {
+    widget.controller.selection = TextSelection(
+      baseOffset: 0,
+      extentOffset: widget.controller.text.length,
+    );
+    return true;
+  }
+
+  /// Cuts the currently selected text to the system clipboard and removes it from the text field.
+  ///
+  /// If there is a text selection, it will be copied to the clipboard and then
+  /// removed from the text field. The cursor will be positioned at the start
+  /// of the original selection after the cut operation.
+  ///
+  /// Returns `true` if the operation was successful, `false` otherwise.
+  /// This method is typically called when the user triggers the cut command
+  /// (e.g., Cmd+X on macOS or Ctrl+X on other platforms).
+  Future<bool> _cutToClipboard() async {
+    final selection = widget.controller.selection;
+    if (selection.isValid && !selection.isCollapsed) {
+      final selectedText = widget.controller.text.substring(
+        selection.start,
+        selection.end,
+      );
+
+      final data = DataWriterItem();
+      data.add(Formats.plainText(selectedText));
+      await SystemClipboard.instance?.write([data]);
+
+      final newValue = widget.controller.value;
+      final newText = newValue.text.replaceRange(
+        selection.start,
+        selection.end,
+        '',
+      );
+
+      widget.controller.value = newValue.copyWith(
+        text: newText,
+        selection: TextSelection.collapsed(offset: selection.start),
+        composing: TextRange.empty,
+      );
+    }
+    return true;
   }
 
   @override
