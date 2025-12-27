@@ -50,7 +50,11 @@ final isMobile = UniversalPlatform.isAndroid || UniversalPlatform.isIOS;
 ///
 /// Returns: A [Future] that completes when the text has been copied to the
 ///   clipboard and the confirmation message has been shown.
-Future<void> copyToClipboard(BuildContext context, String text, String message) async {
+Future<void> copyToClipboard(
+  BuildContext context,
+  String text,
+  String message,
+) async {
   await Clipboard.setData(ClipboardData(text: text));
   if (context.mounted) {
     AdaptiveSnackBar.show(context, message);

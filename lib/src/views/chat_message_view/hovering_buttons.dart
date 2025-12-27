@@ -90,7 +90,7 @@ class HoveringButtons extends StatelessWidget {
                                           copyToClipboard(
                                             context,
                                             clipboardText!,
-                                            clipboardMessage
+                                            clipboardMessage,
                                           ),
                                         ),
                                     child: Icon(

@@ -10,7 +10,6 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_ai_toolkit/flutter_ai_toolkit.dart';
 import 'package:flutter_context_menu/flutter_context_menu.dart';
 
-import '../../styles/llm_chat_view_style.dart';
 import '../../utility.dart';
 
 /// A widget that displays text with adaptive copy functionality.
@@ -66,7 +65,11 @@ class AdaptiveCopyText extends StatelessWidget {
           icon: Icon(chatStyle.copyButtonStyle!.icon),
           onSelected:
               (_) => unawaited(
-                copyToClipboard(context, clipboardText, chatStrings.copyToClipboard),
+                copyToClipboard(
+                  context,
+                  clipboardText,
+                  chatStrings.copyToClipboard,
+                ),
               ),
         ),
       ],

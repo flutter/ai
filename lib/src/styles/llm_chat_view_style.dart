@@ -83,53 +83,87 @@ class LlmChatViewStyle {
       ),
       addButtonStyle: ActionButtonStyle.resolve(
         style?.addButtonStyle,
-        defaultStyle: ActionButtonStyle.defaultStyle(ActionButtonType.add, strings: style?.strings),
+        defaultStyle: ActionButtonStyle.defaultStyle(
+          ActionButtonType.add,
+          strings: style?.strings,
+        ),
       ),
       attachFileButtonStyle: ActionButtonStyle.resolve(
         style?.attachFileButtonStyle,
         defaultStyle: ActionButtonStyle.defaultStyle(
-          ActionButtonType.attachFile, strings: style?.strings,
+          ActionButtonType.attachFile,
+          strings: style?.strings,
         ),
       ),
       cameraButtonStyle: ActionButtonStyle.resolve(
         style?.cameraButtonStyle,
-        defaultStyle: ActionButtonStyle.defaultStyle(ActionButtonType.camera, strings: style?.strings),
+        defaultStyle: ActionButtonStyle.defaultStyle(
+          ActionButtonType.camera,
+          strings: style?.strings,
+        ),
       ),
       stopButtonStyle: ActionButtonStyle.resolve(
         style?.stopButtonStyle,
-        defaultStyle: ActionButtonStyle.defaultStyle(ActionButtonType.stop, strings: style?.strings),
+        defaultStyle: ActionButtonStyle.defaultStyle(
+          ActionButtonType.stop,
+          strings: style?.strings,
+        ),
       ),
       closeButtonStyle: ActionButtonStyle.resolve(
         style?.closeButtonStyle,
-        defaultStyle: ActionButtonStyle.defaultStyle(ActionButtonType.close, strings: style?.strings),
+        defaultStyle: ActionButtonStyle.defaultStyle(
+          ActionButtonType.close,
+          strings: style?.strings,
+        ),
       ),
       cancelButtonStyle: ActionButtonStyle.resolve(
         style?.cancelButtonStyle,
-        defaultStyle: ActionButtonStyle.defaultStyle(ActionButtonType.cancel, strings: style?.strings),
+        defaultStyle: ActionButtonStyle.defaultStyle(
+          ActionButtonType.cancel,
+          strings: style?.strings,
+        ),
       ),
       copyButtonStyle: ActionButtonStyle.resolve(
         style?.copyButtonStyle,
-        defaultStyle: ActionButtonStyle.defaultStyle(ActionButtonType.copy, strings: style?.strings),
+        defaultStyle: ActionButtonStyle.defaultStyle(
+          ActionButtonType.copy,
+          strings: style?.strings,
+        ),
       ),
       editButtonStyle: ActionButtonStyle.resolve(
         style?.editButtonStyle,
-        defaultStyle: ActionButtonStyle.defaultStyle(ActionButtonType.edit, strings: style?.strings),
+        defaultStyle: ActionButtonStyle.defaultStyle(
+          ActionButtonType.edit,
+          strings: style?.strings,
+        ),
       ),
       galleryButtonStyle: ActionButtonStyle.resolve(
         style?.galleryButtonStyle,
-        defaultStyle: ActionButtonStyle.defaultStyle(ActionButtonType.gallery, strings: style?.strings),
+        defaultStyle: ActionButtonStyle.defaultStyle(
+          ActionButtonType.gallery,
+          strings: style?.strings,
+        ),
       ),
       recordButtonStyle: ActionButtonStyle.resolve(
         style?.recordButtonStyle,
-        defaultStyle: ActionButtonStyle.defaultStyle(ActionButtonType.record, strings: style?.strings),
+        defaultStyle: ActionButtonStyle.defaultStyle(
+          ActionButtonType.record,
+          strings: style?.strings,
+        ),
       ),
       submitButtonStyle: ActionButtonStyle.resolve(
         style?.submitButtonStyle,
-        defaultStyle: ActionButtonStyle.defaultStyle(ActionButtonType.submit, strings: style?.strings),
+        defaultStyle: ActionButtonStyle.defaultStyle(
+          ActionButtonType.submit,
+          strings: style?.strings,
+        ),
       ),
       disabledButtonStyle: ActionButtonStyle.resolve(
         style?.disabledButtonStyle,
-        defaultStyle: ActionButtonStyle.defaultStyle(ActionButtonType.disabled, strings: style?.strings),
+        defaultStyle: ActionButtonStyle.defaultStyle(
+          ActionButtonType.disabled,
+          strings: style?.strings,
+        ),
       ),
       closeMenuButtonStyle: ActionButtonStyle.resolve(
         style?.closeMenuButtonStyle,
@@ -151,7 +185,10 @@ class LlmChatViewStyle {
       ),
       urlButtonStyle: ActionButtonStyle.resolve(
         style?.urlButtonStyle,
-        defaultStyle: ActionButtonStyle.defaultStyle(ActionButtonType.url, strings: style?.strings),
+        defaultStyle: ActionButtonStyle.defaultStyle(
+          ActionButtonType.url,
+          strings: style?.strings,
+        ),
       ),
       padding: style?.padding ?? defaultStyle.padding,
       margin: style?.margin ?? defaultStyle.margin,
@@ -170,10 +207,22 @@ class LlmChatViewStyle {
     userMessageStyle: UserMessageStyle.defaultStyle(),
     llmMessageStyle: LlmMessageStyle.defaultStyle(),
     chatInputStyle: ChatInputStyle.defaultStyle(),
-    addButtonStyle: ActionButtonStyle.defaultStyle(ActionButtonType.add, strings: LlmChatViewStrings.defaults),
-    stopButtonStyle: ActionButtonStyle.defaultStyle(ActionButtonType.stop, strings: LlmChatViewStrings.defaults),
-    recordButtonStyle: ActionButtonStyle.defaultStyle(ActionButtonType.record, strings: LlmChatViewStrings.defaults),
-    submitButtonStyle: ActionButtonStyle.defaultStyle(ActionButtonType.submit, strings: LlmChatViewStrings.defaults),
+    addButtonStyle: ActionButtonStyle.defaultStyle(
+      ActionButtonType.add,
+      strings: LlmChatViewStrings.defaults,
+    ),
+    stopButtonStyle: ActionButtonStyle.defaultStyle(
+      ActionButtonType.stop,
+      strings: LlmChatViewStrings.defaults,
+    ),
+    recordButtonStyle: ActionButtonStyle.defaultStyle(
+      ActionButtonType.record,
+      strings: LlmChatViewStrings.defaults,
+    ),
+    submitButtonStyle: ActionButtonStyle.defaultStyle(
+      ActionButtonType.submit,
+      strings: LlmChatViewStrings.defaults,
+    ),
     closeMenuButtonStyle: ActionButtonStyle.defaultStyle(
       ActionButtonType.closeMenu,
       strings: LlmChatViewStrings.defaults,
@@ -185,11 +234,26 @@ class LlmChatViewStyle {
     galleryButtonStyle: ActionButtonStyle.defaultStyle(
       ActionButtonType.gallery,
     ),
-    cameraButtonStyle: ActionButtonStyle.defaultStyle(ActionButtonType.camera, strings: LlmChatViewStrings.defaults),
-    closeButtonStyle: ActionButtonStyle.defaultStyle(ActionButtonType.close, strings: LlmChatViewStrings.defaults),
-    cancelButtonStyle: ActionButtonStyle.defaultStyle(ActionButtonType.cancel, strings: LlmChatViewStrings.defaults),
-    copyButtonStyle: ActionButtonStyle.defaultStyle(ActionButtonType.copy, strings: LlmChatViewStrings.defaults),
-    editButtonStyle: ActionButtonStyle.defaultStyle(ActionButtonType.edit, strings: LlmChatViewStrings.defaults),
+    cameraButtonStyle: ActionButtonStyle.defaultStyle(
+      ActionButtonType.camera,
+      strings: LlmChatViewStrings.defaults,
+    ),
+    closeButtonStyle: ActionButtonStyle.defaultStyle(
+      ActionButtonType.close,
+      strings: LlmChatViewStrings.defaults,
+    ),
+    cancelButtonStyle: ActionButtonStyle.defaultStyle(
+      ActionButtonType.cancel,
+      strings: LlmChatViewStrings.defaults,
+    ),
+    copyButtonStyle: ActionButtonStyle.defaultStyle(
+      ActionButtonType.copy,
+      strings: LlmChatViewStrings.defaults,
+    ),
+    editButtonStyle: ActionButtonStyle.defaultStyle(
+      ActionButtonType.edit,
+      strings: LlmChatViewStrings.defaults,
+    ),
     actionButtonBarDecoration: BoxDecoration(
       color: ToolkitColors.darkButtonBackground,
       borderRadius: BorderRadius.circular(20),
@@ -197,7 +261,10 @@ class LlmChatViewStyle {
     fileAttachmentStyle: FileAttachmentStyle.defaultStyle(),
     suggestionStyle: SuggestionStyle.defaultStyle(),
     voiceNoteRecorderStyle: VoiceNoteRecorderStyle.defaultStyle(),
-    urlButtonStyle: ActionButtonStyle.defaultStyle(ActionButtonType.url, strings: LlmChatViewStrings.defaults),
+    urlButtonStyle: ActionButtonStyle.defaultStyle(
+      ActionButtonType.url,
+      strings: LlmChatViewStrings.defaults,
+    ),
   );
 
   /// Creates a copy of this style with the given fields replaced by the new
@@ -346,5 +413,6 @@ class LlmChatViewStyle {
   /// Spacing between messages.
   final double? messageSpacing;
 
+  /// Custom strings for the chat view.
   final LlmChatViewStrings? strings;
 }

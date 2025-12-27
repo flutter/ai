@@ -141,10 +141,15 @@ class _AttachmentActionBarState extends State<AttachmentActionBar> {
     return Offset(0, -estimatedMenuHeight);
   }
 
-  void _onCamera(LlmChatViewStrings chatStrings) => unawaited(_pickImage(ImageSource.camera, chatStrings));
-  void _onGallery(LlmChatViewStrings chatStrings) => unawaited(_pickImage(ImageSource.gallery, chatStrings));
+  void _onCamera(LlmChatViewStrings chatStrings) =>
+      unawaited(_pickImage(ImageSource.camera, chatStrings));
+  void _onGallery(LlmChatViewStrings chatStrings) =>
+      unawaited(_pickImage(ImageSource.gallery, chatStrings));
 
-  Future<void> _pickImage(ImageSource source, LlmChatViewStrings chatStrings) async {
+  Future<void> _pickImage(
+    ImageSource source,
+    LlmChatViewStrings chatStrings,
+  ) async {
     assert(
       source == ImageSource.camera || source == ImageSource.gallery,
       'Unsupported image source: $source',
@@ -167,7 +172,10 @@ class _AttachmentActionBarState extends State<AttachmentActionBar> {
       if (context.mounted) {
         // I just checked this! ^^^
         // ignore: use_build_context_synchronously
-        AdaptiveSnackBar.show(context, chatStrings.formatUnableToPickImage(ex.toString()));
+        AdaptiveSnackBar.show(
+          context,
+          chatStrings.formatUnableToPickImage(ex.toString()),
+        );
       }
     }
   }
@@ -181,7 +189,10 @@ class _AttachmentActionBarState extends State<AttachmentActionBar> {
       if (context.mounted) {
         // I just checked this! ^^^
         // ignore: use_build_context_synchronously
-        AdaptiveSnackBar.show(context, chatStrings.formatUnableToPickFile(ex.toString()));
+        AdaptiveSnackBar.show(
+          context,
+          chatStrings.formatUnableToPickFile(ex.toString()),
+        );
       }
     }
   }
@@ -195,7 +206,10 @@ class _AttachmentActionBarState extends State<AttachmentActionBar> {
       if (context.mounted) {
         // I just checked this! ^^^
         // ignore: use_build_context_synchronously
-        AdaptiveSnackBar.show(context, chatStrings.formatUnableToPickUrl(ex.toString()));
+        AdaptiveSnackBar.show(
+          context,
+          chatStrings.formatUnableToPickUrl(ex.toString()),
+        );
       }
     }
   }
