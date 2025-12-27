@@ -7,6 +7,7 @@ import 'package:flutter/material.dart'
         SelectionArea,
         DefaultWidgetsLocalizations;
 import 'package:flutter/widgets.dart';
+import 'package:flutter_ai_toolkit/flutter_ai_toolkit.dart';
 import 'package:flutter_context_menu/flutter_context_menu.dart';
 
 import '../../styles/llm_chat_view_style.dart';
@@ -30,6 +31,7 @@ class AdaptiveCopyText extends StatelessWidget {
     required this.clipboardText,
     required this.child,
     required this.chatStyle,
+    required this.chatStrings,
     this.onEdit,
     super.key,
   });
@@ -46,20 +48,26 @@ class AdaptiveCopyText extends StatelessWidget {
   /// The style information for the chat.
   final LlmChatViewStyle chatStyle;
 
+  /// The strings used for text in the chat interface.
+  final LlmChatViewStrings chatStrings;
+
   @override
   Widget build(BuildContext context) {
     final contextMenu = ContextMenu<dynamic>(
       entries: [
         if (onEdit != null)
           MenuItem<dynamic>(
-            label: const Text('Edit'),
+            label: Text(chatStrings.edit),
             icon: Icon(chatStyle.editButtonStyle!.icon),
             onSelected: (_) => onEdit?.call(),
           ),
         MenuItem<dynamic>(
-          label: const Text('Copy'),
+          label: Text(chatStrings.copy),
           icon: Icon(chatStyle.copyButtonStyle!.icon),
-          onSelected: (_) => unawaited(copyToClipboard(context, clipboardText)),
+          onSelected:
+              (_) => unawaited(
+                copyToClipboard(context, clipboardText, chatStrings.copyToClipboard),
+              ),
         ),
       ],
     );

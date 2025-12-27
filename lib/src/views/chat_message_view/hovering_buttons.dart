@@ -20,6 +20,7 @@ class HoveringButtons extends StatelessWidget {
     required this.isUserMessage,
     required this.child,
     this.clipboardText,
+    required this.clipboardMessage,
     this.onEdit,
     super.key,
   });
@@ -32,6 +33,9 @@ class HoveringButtons extends StatelessWidget {
 
   /// The text to be copied to the clipboard.
   final String? clipboardText;
+
+  ///The text to be shown when copying to the clipboard.
+  final String clipboardMessage;
 
   /// The child widget over which the buttons will hover.
   final Widget child;
@@ -86,6 +90,7 @@ class HoveringButtons extends StatelessWidget {
                                           copyToClipboard(
                                             context,
                                             clipboardText!,
+                                            clipboardMessage
                                           ),
                                         ),
                                     child: Icon(

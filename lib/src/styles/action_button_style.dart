@@ -4,6 +4,7 @@
 
 import 'package:flutter/widgets.dart';
 
+import '../strings/llm_chat_view_strings.dart';
 import 'action_button_type.dart';
 import 'tookit_icons.dart';
 import 'toolkit_colors.dart';
@@ -42,11 +43,19 @@ class ActionButtonStyle {
   );
 
   /// Provides default style for icon buttons.
-  factory ActionButtonStyle.defaultStyle(ActionButtonType type) =>
-      ActionButtonStyle._lightStyle(type);
+  factory ActionButtonStyle.defaultStyle(
+    ActionButtonType type, {
+    LlmChatViewStrings? strings,
+  }) {
+    final resolvedStrings = strings ?? LlmChatViewStrings.defaults;
+    return ActionButtonStyle._lightStyle(type, resolvedStrings);
+  }
 
   /// Provides default light style for icon buttons.
-  factory ActionButtonStyle._lightStyle(ActionButtonType type) {
+  factory ActionButtonStyle._lightStyle(
+    ActionButtonType type,
+    LlmChatViewStrings strings,
+  ) {
     IconData? icon;
     var color = ToolkitColors.darkIcon;
     var bgColor = ToolkitColors.lightButtonBackground;
@@ -56,56 +65,56 @@ class ActionButtonStyle {
     switch (type) {
       case ActionButtonType.add:
         icon = ToolkitIcons.add;
-        text = 'Add Attachment';
+        text = strings.addAttachment;
       case ActionButtonType.attachFile:
         icon = ToolkitIcons.attach_file;
         color = ToolkitColors.darkIcon;
         bgColor = ToolkitColors.transparent;
-        text = 'Attach File';
+        text = strings.attachFile;
         textStyle = ToolkitTextStyles.body2;
       case ActionButtonType.camera:
         icon = ToolkitIcons.camera_alt;
         color = ToolkitColors.darkIcon;
         bgColor = ToolkitColors.transparent;
-        text = 'Take Photo';
+        text = strings.takePhoto;
         textStyle = ToolkitTextStyles.body2;
       case ActionButtonType.stop:
         icon = ToolkitIcons.stop;
-        text = 'Stop';
+        text = strings.stop;
       case ActionButtonType.close:
         icon = ToolkitIcons.close;
         color = ToolkitColors.whiteIcon;
         bgColor = ToolkitColors.darkButtonBackground;
-        text = 'Close';
+        text = strings.close;
       case ActionButtonType.cancel:
         icon = ToolkitIcons.close;
         color = ToolkitColors.whiteIcon;
         bgColor = ToolkitColors.darkButtonBackground;
-        text = 'Cancel';
+        text = strings.cancel;
       case ActionButtonType.copy:
         icon = ToolkitIcons.content_copy;
         color = ToolkitColors.whiteIcon;
         bgColor = ToolkitColors.darkButtonBackground;
-        text = 'Copy to Clipboard';
+        text = strings.copyToClipboard;
       case ActionButtonType.edit:
         icon = ToolkitIcons.edit;
         color = ToolkitColors.whiteIcon;
         bgColor = ToolkitColors.darkButtonBackground;
-        text = 'Edit Message';
+        text = strings.editMessage;
       case ActionButtonType.gallery:
         icon = ToolkitIcons.image;
         color = ToolkitColors.darkIcon;
         bgColor = ToolkitColors.transparent;
-        text = 'Attach Image';
+        text = strings.attachImage;
         textStyle = ToolkitTextStyles.body2;
       case ActionButtonType.record:
         icon = ToolkitIcons.mic;
-        text = 'Record Audio';
+        text = strings.recordAudio;
       case ActionButtonType.submit:
         icon = ToolkitIcons.submit_icon;
         color = ToolkitColors.whiteIcon;
         bgColor = ToolkitColors.darkButtonBackground;
-        text = 'Submit Message';
+        text = strings.submitMessage;
       case ActionButtonType.disabled:
         icon = ToolkitIcons.submit_icon;
         color = ToolkitColors.darkIcon;
@@ -115,12 +124,12 @@ class ActionButtonStyle {
         icon = ToolkitIcons.close;
         color = ToolkitColors.whiteIcon;
         bgColor = ToolkitColors.greyBackground;
-        text = 'Close Menu';
+        text = strings.closeMenu;
       case ActionButtonType.url:
         icon = null; // Placeholder for URL icon
         color = ToolkitColors.darkIcon;
         bgColor = ToolkitColors.transparent;
-        text = 'Attach Link';
+        text = strings.attachFile;
         textStyle = ToolkitTextStyles.body2;
     }
 

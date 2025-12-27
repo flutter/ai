@@ -8,7 +8,8 @@ import 'package:file_selector/file_selector.dart';
 import 'package:flutter/material.dart'
     show Icons, MenuAnchor, MenuItemButton, MenuStyle;
 import 'package:flutter/widgets.dart';
-import 'package:flutter_ai_toolkit/src/dialogs/url_input_dialog.dart';
+import '../../dialogs/url_input_dialog.dart';
+import '../../strings/llm_chat_view_strings.dart';
 import 'package:flutter_ai_toolkit/src/utility.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -50,6 +51,7 @@ class _AttachmentActionBarState extends State<AttachmentActionBar> {
   Widget build(BuildContext context) => ChatViewModelClient(
     builder: (context, viewModel, child) {
       final chatStyle = LlmChatViewStyle.resolve(viewModel.style);
+      final chatStrings = viewModel.strings;
       final menuItems = [
         if (_canCamera)
           MenuItemButton(
@@ -57,7 +59,7 @@ class _AttachmentActionBarState extends State<AttachmentActionBar> {
               chatStyle.cameraButtonStyle!.icon!,
               color: chatStyle.cameraButtonStyle!.iconColor,
             ),
-            onPressed: () => _onCamera(),
+            onPressed: () => _onCamera(chatStrings),
             child: Text(
               chatStyle.cameraButtonStyle!.text!,
               style: chatStyle.cameraButtonStyle!.textStyle,
@@ -68,7 +70,7 @@ class _AttachmentActionBarState extends State<AttachmentActionBar> {
             chatStyle.galleryButtonStyle!.icon!,
             color: chatStyle.galleryButtonStyle!.iconColor,
           ),
-          onPressed: () => _onGallery(),
+          onPressed: () => _onGallery(chatStrings),
           child: Text(
             chatStyle.galleryButtonStyle!.text!,
             style: chatStyle.galleryButtonStyle!.textStyle,
@@ -79,7 +81,7 @@ class _AttachmentActionBarState extends State<AttachmentActionBar> {
             chatStyle.attachFileButtonStyle!.icon!,
             color: chatStyle.attachFileButtonStyle!.iconColor,
           ),
-          onPressed: () => _onFile(),
+          onPressed: () => _onFile(chatStrings),
           child: Text(
             chatStyle.attachFileButtonStyle!.text!,
             style: chatStyle.attachFileButtonStyle!.textStyle,
@@ -90,7 +92,7 @@ class _AttachmentActionBarState extends State<AttachmentActionBar> {
             Icons.link,
             color: chatStyle.urlButtonStyle!.iconColor,
           ),
-          onPressed: () => _onUrl(),
+          onPressed: () => _onUrl(chatStrings),
           child: Text(
             chatStyle.urlButtonStyle!.text!,
             style: chatStyle.urlButtonStyle!.textStyle,
@@ -139,10 +141,10 @@ class _AttachmentActionBarState extends State<AttachmentActionBar> {
     return Offset(0, -estimatedMenuHeight);
   }
 
-  void _onCamera() => unawaited(_pickImage(ImageSource.camera));
-  void _onGallery() => unawaited(_pickImage(ImageSource.gallery));
+  void _onCamera(LlmChatViewStrings chatStrings) => unawaited(_pickImage(ImageSource.camera, chatStrings));
+  void _onGallery(LlmChatViewStrings chatStrings) => unawaited(_pickImage(ImageSource.gallery, chatStrings));
 
-  Future<void> _pickImage(ImageSource source) async {
+  Future<void> _pickImage(ImageSource source, LlmChatViewStrings chatStrings) async {
     assert(
       source == ImageSource.camera || source == ImageSource.gallery,
       'Unsupported image source: $source',
@@ -165,12 +167,12 @@ class _AttachmentActionBarState extends State<AttachmentActionBar> {
       if (context.mounted) {
         // I just checked this! ^^^
         // ignore: use_build_context_synchronously
-        AdaptiveSnackBar.show(context, 'Unable to pick an image: $ex');
+        AdaptiveSnackBar.show(context, chatStrings.formatUnableToPickImage(ex.toString()));
       }
     }
   }
 
-  Future<void> _onFile() async {
+  Future<void> _onFile(LlmChatViewStrings chatStrings) async {
     try {
       final files = await openFiles();
       final attachments = await Future.wait(files.map(FileAttachment.fromFile));
@@ -179,12 +181,12 @@ class _AttachmentActionBarState extends State<AttachmentActionBar> {
       if (context.mounted) {
         // I just checked this! ^^^
         // ignore: use_build_context_synchronously
-        AdaptiveSnackBar.show(context, 'Unable to pick a file: $ex');
+        AdaptiveSnackBar.show(context, chatStrings.formatUnableToPickFile(ex.toString()));
       }
     }
   }
 
-  Future<void> _onUrl() async {
+  Future<void> _onUrl(LlmChatViewStrings chatStrings) async {
     try {
       final url = await showUrlInputDialog(context);
       if (url == null) return;
@@ -193,7 +195,7 @@ class _AttachmentActionBarState extends State<AttachmentActionBar> {
       if (context.mounted) {
         // I just checked this! ^^^
         // ignore: use_build_context_synchronously
-        AdaptiveSnackBar.show(context, 'Unable to pick a URL: $ex');
+        AdaptiveSnackBar.show(context, chatStrings.formatUnableToPickUrl(ex.toString()));
       }
     }
   }
