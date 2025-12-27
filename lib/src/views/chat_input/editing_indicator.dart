@@ -20,6 +20,7 @@ class EditingIndicator extends StatelessWidget {
   const EditingIndicator({
     required this.onCancelEdit,
     required this.cancelButtonStyle,
+    required this.editingTitle,
     super.key,
   });
 
@@ -28,6 +29,9 @@ class EditingIndicator extends StatelessWidget {
 
   /// The style to be applied to the cancel button.
   final ActionButtonStyle cancelButtonStyle;
+
+  /// The title to be displayed in the editing indicator.
+  final String editingTitle;
 
   @override
   Widget build(BuildContext context) => Padding(
@@ -38,7 +42,7 @@ class EditingIndicator extends StatelessWidget {
       spacing: 6,
       children: [
         Text(
-          'Editing',
+          editingTitle,
           style: ToolkitTextStyles.label.copyWith(
             color: invertColor(cancelButtonStyle.iconColor),
           ),
