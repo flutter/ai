@@ -3,8 +3,6 @@ PODS:
     - GoogleUtilities/Environment (~> 8.0)
     - GoogleUtilities/UserDefaults (~> 8.0)
     - PromisesObjC (~> 2.4)
-  - device_info_plus (0.0.1):
-    - FlutterMacOS
   - file_selector_macos (0.0.1):
     - FlutterMacOS
   - Firebase/AppCheck (12.4.0):
@@ -79,10 +77,6 @@ PODS:
     - GoogleUtilities/Logger
     - GoogleUtilities/Privacy
   - GTMSessionFetcher/Core (5.0.0)
-  - irondash_engine_context (0.0.1):
-    - FlutterMacOS
-  - mac_menu_bar (0.0.1):
-    - FlutterMacOS
   - path_provider_foundation (0.0.1):
     - Flutter
     - FlutterMacOS
@@ -92,24 +86,18 @@ PODS:
   - shared_preferences_foundation (0.0.1):
     - Flutter
     - FlutterMacOS
-  - super_native_extensions (0.0.1):
-    - FlutterMacOS
   - url_launcher_macos (0.0.1):
     - FlutterMacOS
 
 DEPENDENCIES:
-  - device_info_plus (from `Flutter/ephemeral/.symlinks/plugins/device_info_plus/macos`)
   - file_selector_macos (from `Flutter/ephemeral/.symlinks/plugins/file_selector_macos/macos`)
   - firebase_app_check (from `Flutter/ephemeral/.symlinks/plugins/firebase_app_check/macos`)
   - firebase_auth (from `Flutter/ephemeral/.symlinks/plugins/firebase_auth/macos`)
   - firebase_core (from `Flutter/ephemeral/.symlinks/plugins/firebase_core/macos`)
   - FlutterMacOS (from `Flutter/ephemeral`)
-  - irondash_engine_context (from `Flutter/ephemeral/.symlinks/plugins/irondash_engine_context/macos`)
-  - mac_menu_bar (from `Flutter/ephemeral/.symlinks/plugins/mac_menu_bar/macos`)
   - path_provider_foundation (from `Flutter/ephemeral/.symlinks/plugins/path_provider_foundation/darwin`)
   - record_macos (from `Flutter/ephemeral/.symlinks/plugins/record_macos/macos`)
   - shared_preferences_foundation (from `Flutter/ephemeral/.symlinks/plugins/shared_preferences_foundation/darwin`)
-  - super_native_extensions (from `Flutter/ephemeral/.symlinks/plugins/super_native_extensions/macos`)
   - url_launcher_macos (from `Flutter/ephemeral/.symlinks/plugins/url_launcher_macos/macos`)
 
 SPEC REPOS:
@@ -128,8 +116,6 @@ SPEC REPOS:
     - PromisesObjC
 
 EXTERNAL SOURCES:
-  device_info_plus:
-    :path: Flutter/ephemeral/.symlinks/plugins/device_info_plus/macos
   file_selector_macos:
     :path: Flutter/ephemeral/.symlinks/plugins/file_selector_macos/macos
   firebase_app_check:
@@ -140,24 +126,17 @@ EXTERNAL SOURCES:
     :path: Flutter/ephemeral/.symlinks/plugins/firebase_core/macos
   FlutterMacOS:
     :path: Flutter/ephemeral
-  irondash_engine_context:
-    :path: Flutter/ephemeral/.symlinks/plugins/irondash_engine_context/macos
-  mac_menu_bar:
-    :path: Flutter/ephemeral/.symlinks/plugins/mac_menu_bar/macos
   path_provider_foundation:
     :path: Flutter/ephemeral/.symlinks/plugins/path_provider_foundation/darwin
   record_macos:
     :path: Flutter/ephemeral/.symlinks/plugins/record_macos/macos
   shared_preferences_foundation:
     :path: Flutter/ephemeral/.symlinks/plugins/shared_preferences_foundation/darwin
-  super_native_extensions:
-    :path: Flutter/ephemeral/.symlinks/plugins/super_native_extensions/macos
   url_launcher_macos:
     :path: Flutter/ephemeral/.symlinks/plugins/url_launcher_macos/macos
 
 SPEC CHECKSUMS:
   AppCheckCore: cc8fd0a3a230ddd401f326489c99990b013f0c4f
-  device_info_plus: 1b14eed9bf95428983aed283a8d51cce3d8c4215
   file_selector_macos: 3e56eaea051180007b900eacb006686fd54da150
   Firebase: f07b15ae5a6ec0f93713e30b923d9970d144af3e
   firebase_app_check: 87116ccdfe0f153231af37b0431e96b0d5a76b9c
@@ -173,13 +152,10 @@ SPEC CHECKSUMS:
   FlutterMacOS: d0db08ddef1a9af05a5ec4b724367152bb0500b1
   GoogleUtilities: 00c88b9a86066ef77f0da2fab05f65d7768ed8e1
   GTMSessionFetcher: 02d6e866e90bc236f48a703a041dfe43e6221a29
-  irondash_engine_context: da62996ee25616d2f01bbeb85dc115d813359478
-  mac_menu_bar: 9290444652836c996e840adeaac5bff963673507
   path_provider_foundation: 0b743cbb62d8e47eab856f09262bb8c1ddcfe6ba
   PromisesObjC: f5707f49cb48b9636751c5b2e7d227e43fba9f47
   record_macos: 4440ca269ad3b870ebb1965297a365d558f0c520
   shared_preferences_foundation: 5086985c1d43c5ba4d5e69a4e8083a389e2909e6
-  super_native_extensions: 85efee3a7495b46b04befcfc86ed12069264ebf3
   url_launcher_macos: 175a54c831f4375a6cf895875f716ee5af3888ce
 
 PODFILE CHECKSUM: abc7d4662afc18f3dac224359a4bbdfd943487c9
