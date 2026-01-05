@@ -9,6 +9,7 @@ import 'package:mime/mime.dart';
 import 'package:super_clipboard/super_clipboard.dart';
 
 import '../../providers/interface/attachments.dart';
+import 'paste_extensions.dart';
 
 bool _isListenerRegistered = false;
 final _events = ClipboardEvents.instance;
@@ -44,7 +45,7 @@ Future<void> handlePasteWeb({
 
     _events!.registerPasteEventListener((event) async {
       final reader = await event.getClipboardReader();
-      await _pasteOperation(
+      await pasteOperation(
         controller: controller,
         onAttachments: onAttachments,
         insertText: insertText,
@@ -57,27 +58,6 @@ Future<void> handlePasteWeb({
   }
 }
 
-/// Determines the appropriate file extension for a given MIME type.
-///
-/// Parameters:
-///   - [mimeType]: The MIME type to get the extension for (e.g., 'image/png')
-///   - [bytes]: Optional header bytes to detect the MIME type if the provided type is generic.
-///
-/// Returns:
-///   A string representing the file extension (without the dot), defaults to 'bin' if unknown
-String _getExtensionFromMime(String mimeType, [List<int>? bytes]) {
-  String detectedMimeType = mimeType;
-  if (bytes != null &&
-      (mimeType.isEmpty || mimeType == 'application/octet-stream')) {
-    detectedMimeType = lookupMimeType('', headerBytes: bytes) ?? mimeType;
-  }
-  final extension = extensionFromMime(detectedMimeType);
-  if (extension == null || extension.isEmpty) {
-    return detectedMimeType.startsWith('image/') ? 'png' : 'bin';
-  }
-  return extension.startsWith('.') ? extension.substring(1) : extension;
-}
-
 /// Internal function to handle the actual clipboard reading and data processing.
 ///
 /// It checks for various data formats (files, images, plain text, HTML) in a specific order
@@ -88,7 +68,8 @@ String _getExtensionFromMime(String mimeType, [List<int>? bytes]) {
 ///   - [onAttachments]: Callback to handle file/image attachments.
 ///   - [insertText]: Function to handle text insertion.
 ///   - [reader]: The [ClipboardReader] containing the clipboard data.
-Future<void> _pasteOperation({
+@visibleForTesting
+Future<void> pasteOperation({
   required TextEditingController controller,
   required void Function(List<Attachment> attachments)? onAttachments,
   required void Function({
@@ -133,7 +114,7 @@ Future<void> _pasteOperation({
                 'application/octet-stream';
             final attachment = FileAttachment.fileOrImage(
               name:
-                  'pasted_file_${DateTime.now().millisecondsSinceEpoch}.${_getExtensionFromMime(mimeType)}',
+                  'pasted_file_${DateTime.now().millisecondsSinceEpoch}.${getExtensionFromMime(mimeType)}',
               mimeType: mimeType,
               bytes: attachmentBytes,
             );
@@ -171,7 +152,7 @@ Future<void> _pasteOperation({
                 lookupMimeType('', headerBytes: attachmentBytes) ?? 'image/png';
             final attachment = ImageFileAttachment(
               name:
-                  'pasted_image_${DateTime.now().millisecondsSinceEpoch}.${_getExtensionFromMime(mimeType)}',
+                  'pasted_image_${DateTime.now().millisecondsSinceEpoch}.${getExtensionFromMime(mimeType)}',
               mimeType: mimeType,
               bytes: attachmentBytes,
             );

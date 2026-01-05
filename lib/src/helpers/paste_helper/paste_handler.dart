@@ -11,6 +11,7 @@ import 'package:mime/mime.dart';
 import 'package:super_clipboard/super_clipboard.dart';
 
 import '../../providers/interface/attachments.dart';
+import 'paste_extensions.dart';
 
 /// Handles paste operations, supporting both text and image pasting.
 ///
@@ -91,7 +92,7 @@ Future<void> handlePaste({
                   'application/octet-stream';
               final attachment = FileAttachment.fileOrImage(
                 name:
-                    'pasted_file_${DateTime.now().millisecondsSinceEpoch}.${_getExtensionFromMime(mimeType)}',
+                    'pasted_file_${DateTime.now().millisecondsSinceEpoch}.${getExtensionFromMime(mimeType)}',
                 mimeType: mimeType,
                 bytes: attachmentBytes,
               );
@@ -117,7 +118,7 @@ Future<void> handlePaste({
                   'image/png';
               final attachment = ImageFileAttachment(
                 name:
-                    'pasted_image_${DateTime.now().millisecondsSinceEpoch}.${_getExtensionFromMime(mimeType)}',
+                    'pasted_image_${DateTime.now().millisecondsSinceEpoch}.${getExtensionFromMime(mimeType)}',
                 mimeType: mimeType,
                 bytes: attachmentBytes,
               );
@@ -149,24 +150,4 @@ Future<void> handlePaste({
     debugPrint('Error pasting image: $e');
     debugPrintStack(stackTrace: s);
   }
-}
-
-/// Determines the appropriate file extension for a given MIME type.
-///
-/// Parameters:
-///   - [mimeType]: The MIME type to get the extension for (e.g., 'image/png')
-///
-/// Returns:
-///   A string representing the file extension (without the dot), defaults to 'bin' if unknown
-String _getExtensionFromMime(String mimeType, [List<int>? bytes]) {
-  String detectedMimeType = mimeType;
-  if (bytes != null &&
-      (mimeType.isEmpty || mimeType == 'application/octet-stream')) {
-    detectedMimeType = lookupMimeType('', headerBytes: bytes) ?? mimeType;
-  }
-  final extension = extensionFromMime(detectedMimeType);
-  if (extension == null || extension.isEmpty) {
-    return detectedMimeType.startsWith('image/') ? 'png' : 'bin';
-  }
-  return extension.startsWith('.') ? extension.substring(1) : extension;
 }
