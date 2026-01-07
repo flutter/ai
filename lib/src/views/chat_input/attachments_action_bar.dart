@@ -169,13 +169,11 @@ class _AttachmentActionBarState extends State<AttachmentActionBar> {
         widget.onAttachments([await ImageFileAttachment.fromFile(pic)]);
       }
     } on Exception catch (ex) {
+      final message = chatStrings.formatUnableToPickImage(ex.toString());
       if (context.mounted) {
         // I just checked this! ^^^
         // ignore: use_build_context_synchronously
-        AdaptiveSnackBar.show(
-          context,
-          chatStrings.formatUnableToPickImage(ex.toString()),
-        );
+        AdaptiveSnackBar.show(context, message);
       }
     }
   }
@@ -186,13 +184,11 @@ class _AttachmentActionBarState extends State<AttachmentActionBar> {
       final attachments = await Future.wait(files.map(FileAttachment.fromFile));
       widget.onAttachments(attachments);
     } on Exception catch (ex) {
+      final message = chatStrings.formatUnableToPickFile(ex.toString());
       if (context.mounted) {
         // I just checked this! ^^^
         // ignore: use_build_context_synchronously
-        AdaptiveSnackBar.show(
-          context,
-          chatStrings.formatUnableToPickFile(ex.toString()),
-        );
+        AdaptiveSnackBar.show(context, message);
       }
     }
   }
@@ -203,13 +199,11 @@ class _AttachmentActionBarState extends State<AttachmentActionBar> {
       if (url == null) return;
       widget.onAttachments([LinkAttachment(name: url.name, url: url.url)]);
     } on Exception catch (ex) {
+      final message = chatStrings.formatUnableToPickUrl(ex.toString());
       if (context.mounted) {
         // I just checked this! ^^^
         // ignore: use_build_context_synchronously
-        AdaptiveSnackBar.show(
-          context,
-          chatStrings.formatUnableToPickUrl(ex.toString()),
-        );
+        AdaptiveSnackBar.show(context, message);
       }
     }
   }
