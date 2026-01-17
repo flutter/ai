@@ -5,6 +5,7 @@
 import 'package:flutter/foundation.dart';
 
 import '../providers/interface/llm_provider.dart';
+import '../strings/llm_chat_view_strings.dart';
 import '../styles/llm_chat_view_style.dart';
 import '../views/response_builder.dart';
 
@@ -35,6 +36,7 @@ class ChatViewModel {
     required this.speechToText,
     required this.enableAttachments,
     required this.enableVoiceNotes,
+    this.strings = const LlmChatViewStrings(),
   });
 
   /// The LLM provider for the chat interface.
@@ -92,6 +94,12 @@ class ChatViewModel {
   /// will be disabled.
   final bool enableVoiceNotes;
 
+  /// The strings used throughout the chat interface.
+  ///
+  /// This provides access to all the text strings used in the chat interface,
+  /// allowing for easy customization and internationalization.
+  final LlmChatViewStrings strings;
+
   // The following is needed to support the
   // ChatViewModelProvider.updateShouldNotify implementation
   @override
@@ -104,8 +112,10 @@ class ChatViewModel {
           other.welcomeMessage == welcomeMessage &&
           other.responseBuilder == responseBuilder &&
           other.messageSender == messageSender &&
+          other.speechToText == speechToText &&
           other.enableAttachments == enableAttachments &&
-          other.enableVoiceNotes == enableVoiceNotes);
+          other.enableVoiceNotes == enableVoiceNotes &&
+          other.strings == strings);
 
   // the following is best practices when overriding operator ==
   @override
@@ -116,7 +126,9 @@ class ChatViewModel {
     welcomeMessage,
     responseBuilder,
     messageSender,
+    speechToText,
     enableAttachments,
     enableVoiceNotes,
+    strings,
   );
 }

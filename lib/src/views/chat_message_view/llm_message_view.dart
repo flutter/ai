@@ -42,6 +42,7 @@ class LlmMessageView extends StatelessWidget {
           final text = message.text;
           final chatStyle = LlmChatViewStyle.resolve(viewModel.style);
           final llmStyle = LlmMessageStyle.resolve(chatStyle.llmMessageStyle);
+          final chatString = viewModel.strings;
 
           return Flexible(
             flex: llmStyle.flex,
@@ -70,6 +71,7 @@ class LlmMessageView extends StatelessWidget {
                     isUserMessage: false,
                     chatStyle: chatStyle,
                     clipboardText: text,
+                    clipboardMessage: chatString.copyToClipboard,
                     child: Container(
                       width: double.infinity,
                       decoration: llmStyle.decoration,
@@ -87,6 +89,7 @@ class LlmMessageView extends StatelessWidget {
                               : AdaptiveCopyText(
                                 clipboardText: text,
                                 chatStyle: chatStyle,
+                                chatStrings: chatString,
                                 child:
                                     isWelcomeMessage ||
                                             viewModel.responseBuilder == null

@@ -16,6 +16,7 @@ import '../../platform_helper/platform_helper.dart' as ph;
 import '../../providers/interface/attachments.dart';
 import '../../providers/interface/chat_message.dart';
 import '../../providers/interface/llm_provider.dart';
+import '../../strings/llm_chat_view_strings.dart';
 import '../../styles/llm_chat_view_style.dart';
 import '../chat_history_view.dart';
 import '../chat_input/chat_input.dart';
@@ -76,6 +77,8 @@ class LlmChatView extends StatefulWidget {
   ///   during a chat operation. Defaults to 'ERROR'.
   /// - [enableAttachments]: Optional. Whether to enable file and image attachments in the chat input.
   /// - [enableVoiceNotes]: Optional. Whether to enable voice notes in the chat input.
+  /// - [strings]: Optional. Custom strings for the chat interface. If not provided,
+  ///   the default strings will be used.
   LlmChatView({
     required LlmProvider provider,
     LlmChatViewStyle? style,
@@ -91,6 +94,7 @@ class LlmChatView extends StatefulWidget {
     this.enableAttachments = true,
     this.enableVoiceNotes = true,
     this.autofocus,
+    LlmChatViewStrings? strings,
     super.key,
   }) : viewModel = ChatViewModel(
          provider: provider,
@@ -102,7 +106,14 @@ class LlmChatView extends StatefulWidget {
          welcomeMessage: welcomeMessage,
          enableAttachments: enableAttachments,
          enableVoiceNotes: enableVoiceNotes,
+         strings: strings ?? LlmChatViewStrings.defaults,
        );
+
+  /// The strings used throughout the chat interface.
+  ///
+  /// This provides access to all the text strings used in the chat interface,
+  /// allowing for easy customization and internationalization.
+  LlmChatViewStrings get strings => viewModel.strings;
 
   /// Whether to enable file and image attachments in the chat input.
   ///

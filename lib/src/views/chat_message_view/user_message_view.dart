@@ -55,6 +55,7 @@ class UserMessageView extends StatelessWidget {
           final userStyle = UserMessageStyle.resolve(
             chatStyle.userMessageStyle,
           );
+          final chatStrings = viewModel.strings;
 
           return Align(
             alignment: Alignment.topRight,
@@ -64,6 +65,7 @@ class UserMessageView extends StatelessWidget {
                 isUserMessage: true,
                 chatStyle: chatStyle,
                 clipboardText: text,
+                clipboardMessage: chatStrings.copyToClipboard,
                 onEdit: onEdit,
                 child: DecoratedBox(
                   decoration: userStyle.decoration!,
@@ -77,6 +79,7 @@ class UserMessageView extends StatelessWidget {
                     child: AdaptiveCopyText(
                       chatStyle: chatStyle,
                       clipboardText: text,
+                      chatStrings: chatStrings,
                       onEdit: onEdit,
                       child: Text(text, style: userStyle.textStyle),
                     ),
