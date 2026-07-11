@@ -173,8 +173,10 @@ class _LlmChatViewState extends State<LlmChatView>
 
   @override
   void dispose() {
-    super.dispose();
+    _pendingPromptResponse?.cancel();
+    _pendingSttResponse?.cancel();
     widget.viewModel.provider.removeListener(_onHistoryChanged);
+    super.dispose();
   }
 
   @override
