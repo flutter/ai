@@ -27,6 +27,9 @@ class FirebaseProvider extends LlmProvider with ChangeNotifier {
   ///
   /// [chatGenerationConfig] is an optional configuration for controlling the
   /// model's generation behavior.
+  ///
+  /// [onFunctionCalls] is an optional callback invoked with the function calls
+  /// collected from a single turn of the model's response.
   FirebaseProvider({
     required GenerativeModel model,
     void Function(Iterable<FunctionCall>)? onFunctionCalls,
@@ -35,6 +38,7 @@ class FirebaseProvider extends LlmProvider with ChangeNotifier {
     GenerationConfig? chatGenerationConfig,
     Future<Map<String, Object?>?> Function(FunctionCall)? onFunctionCall,
   }) : _model = model,
+       _onFunctionCalls = onFunctionCalls,
        _history = history?.toList() ?? [],
        _chatSafetySettings = chatSafetySettings,
        _chatGenerationConfig = chatGenerationConfig,
@@ -43,6 +47,7 @@ class FirebaseProvider extends LlmProvider with ChangeNotifier {
   }
 
   final GenerativeModel _model;
+  final void Function(Iterable<FunctionCall>)? _onFunctionCalls;
   final List<SafetySetting>? _chatSafetySettings;
   final GenerationConfig? _chatGenerationConfig;
   final List<ChatMessage> _history;
@@ -122,6 +127,9 @@ class FirebaseProvider extends LlmProvider with ChangeNotifier {
       if (functionCalls.isEmpty) {
         break;
       }
+
+      // Notify the caller of the function calls collected in this turn
+      _onFunctionCalls?.call(functionCalls);
 
       // Add newline between responses
       yield '\n';
