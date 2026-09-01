@@ -21,9 +21,9 @@ void main() {
     app = await Firebase.initializeApp();
   });
 
-  group('FirebaseProvider.onFunctionCalls', () {
+  group('FirebaseProvider.willCallFunctions', () {
     test(
-      'invokes onFunctionCalls with the calls collected in a turn',
+      'invokes willCallFunctions with the calls collected in a turn',
       () async {
         final client =
             _StubApiClient()
@@ -35,7 +35,7 @@ void main() {
         final recordedCalls = <FunctionCall>[];
         final provider = FirebaseProvider(
           model: _createModel(app, client),
-          onFunctionCalls: recordedCalls.addAll,
+          willCallFunctions: recordedCalls.addAll,
           onFunctionCall: (functionCall) async => {'temperature': 60},
         );
 
@@ -50,14 +50,14 @@ void main() {
     );
 
     test(
-      'does not invoke onFunctionCalls when no function calls are made',
+      'does not invoke willCallFunctions when no function calls are made',
       () async {
         final client = _StubApiClient()..streamResponses.add([_textResponse]);
 
         final recordedCalls = <FunctionCall>[];
         final provider = FirebaseProvider(
           model: _createModel(app, client),
-          onFunctionCalls: recordedCalls.addAll,
+          willCallFunctions: recordedCalls.addAll,
         );
 
         await provider.sendMessageStream('Just say something').drain<void>();
