@@ -31,9 +31,13 @@ class ChatInput extends StatefulWidget {
   ///
   /// [onCancelMessage] and [onCancelStt] are optional callbacks for cancelling
   /// message submission or speech-to-text translation respectively.
+  ///
+  /// [onRecordingError] is called when starting or stopping a voice recording
+  /// fails.
   const ChatInput({
     required this.onSendMessage,
     required this.onTranslateStt,
+    required this.onRecordingError,
     this.initialMessage,
     this.onCancelEdit,
     this.onCancelMessage,
@@ -61,6 +65,11 @@ class ChatInput extends StatefulWidget {
   /// current attachments.
   final void Function(XFile file, Iterable<Attachment> attachments)
   onTranslateStt;
+
+  /// Callback function triggered when starting or stopping a voice recording
+  /// fails, e.g. because microphone permission was denied or no microphone is
+  /// available.
+  final void Function(Object error) onRecordingError;
 
   /// The initial message to populate the input field, if any.
   final ChatMessage? initialMessage;
@@ -250,11 +259,19 @@ class _ChatInputState extends State<ChatInput> {
   }
 
   Future<void> onStartRecording() async {
-    await _waveController.startRecording();
+    try {
+      await _waveController.startRecording();
+    } catch (error) {
+      if (mounted) widget.onRecordingError(error);
+    }
   }
 
   Future<void> onStopRecording() async {
-    await _waveController.stopRecording();
+    try {
+      await _waveController.stopRecording();
+    } catch (error) {
+      if (mounted) widget.onRecordingError(error);
+    }
   }
 
   Future<void> onRecordingStopped() async {
