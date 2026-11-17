@@ -28,7 +28,12 @@ class RecipeResponseView extends StatelessWidget {
         // extract the text before the recipe
         final text = recipeWithText['text'] as String?;
         if (text != null && text.isNotEmpty) {
-          children.add(MarkdownBody(data: text));
+          children.add(
+            MarkdownBody(
+              data: text,
+              imageBuilder: (_, _, _) => const SizedBox.shrink(),
+            ),
+          );
         }
 
         // extract the recipe
@@ -69,7 +74,12 @@ class RecipeResponseView extends StatelessWidget {
 
     // add the remaining text
     if (finalText != null && finalText.isNotEmpty) {
-      children.add(MarkdownBody(data: finalText));
+      children.add(
+        MarkdownBody(
+          data: finalText,
+          imageBuilder: (_, _, _) => const SizedBox.shrink(),
+        ),
+      );
     }
 
     return Column(

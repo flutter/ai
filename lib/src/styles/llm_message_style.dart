@@ -11,7 +11,7 @@ import 'toolkit_text_styles.dart';
 
 /// Style for LLM messages.
 @immutable
-class LlmMessageStyle {
+final class LlmMessageStyle {
   /// Creates an LlmMessageStyle.
   const LlmMessageStyle({
     this.icon,
@@ -19,6 +19,7 @@ class LlmMessageStyle {
     this.iconDecoration,
     this.decoration,
     this.markdownStyle,
+    this.imageBuilder,
     this.maxWidth = 600.0,
     this.minWidth = 300.0,
     this.flex = 6,
@@ -51,6 +52,7 @@ class LlmMessageStyle {
       iconColor: style?.iconColor ?? defaultStyle.iconColor,
       iconDecoration: style?.iconDecoration ?? defaultStyle.iconDecoration,
       markdownStyle: style?.markdownStyle ?? defaultStyle.markdownStyle,
+      imageBuilder: style?.imageBuilder ?? defaultStyle.imageBuilder,
       decoration: style?.decoration ?? defaultStyle.decoration,
       maxWidth: style?.maxWidth ?? defaultStyle.maxWidth,
       minWidth: style?.minWidth ?? defaultStyle.minWidth,
@@ -110,6 +112,7 @@ class LlmMessageStyle {
     Color? iconColor,
     BoxDecoration? iconDecoration,
     MarkdownStyleSheet? markdownStyle,
+    MarkdownImageBuilder? imageBuilder,
     double? maxWidth,
     double? minWidth,
     int? flex,
@@ -122,6 +125,7 @@ class LlmMessageStyle {
       iconColor: iconColor ?? this.iconColor,
       iconDecoration: iconDecoration ?? this.iconDecoration,
       markdownStyle: markdownStyle ?? this.markdownStyle,
+      imageBuilder: imageBuilder ?? this.imageBuilder,
       maxWidth: maxWidth ?? this.maxWidth,
       minWidth: minWidth ?? this.minWidth,
       flex: flex ?? this.flex,
@@ -144,6 +148,14 @@ class LlmMessageStyle {
 
   /// The markdown style sheet for LLM messages.
   final MarkdownStyleSheet? markdownStyle;
+
+  /// Builder for rendering Markdown images in LLM messages.
+  ///
+  /// Defaults to `null`, which suppresses Markdown images using
+  /// [SizedBox.shrink] so untrusted model output cannot trigger automatic
+  /// network fetches or local file reads. When providing a custom builder,
+  /// validate URI schemes and allowlist trusted hosts before loading images.
+  final MarkdownImageBuilder? imageBuilder;
 
   /// The maximum width of the message bubble.
   final double maxWidth;
