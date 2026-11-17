@@ -1,3 +1,12 @@
+## 1.2.0
+
+- Migrated `package:flutter/material.dart` and `package:flutter/cupertino.dart`
+  imports to `package:material_ui/material_ui.dart` (`^1.11.1`) and
+  `package:cupertino_ui/cupertino_ui.dart` (`^1.1.7`).
+- Raised minimum SDK constraints to Dart `^3.13.0` and Flutter `>=3.47.0`.
+- Updated the `vertex` example from `FirebaseAI.vertexAI()` to
+  `FirebaseAI.agentPlatform()`.
+
 ## 1.1.0
 
 - **BREAKING CHANGE**: Suppressed Markdown images in `LlmMessageView` by default
