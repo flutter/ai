@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_ai_toolkit/flutter_ai_toolkit.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -172,9 +172,8 @@ void main() {
               enableVoiceNotes: false,
               style: LlmChatViewStyle(
                 llmMessageStyle: LlmMessageStyle(
-                  imageBuilder:
-                      (uri, title, alt) =>
-                          Text('CUSTOM_IMG:${uri.host}:$alt:$title'),
+                  imageBuilder: (uri, title, alt) =>
+                      Text('CUSTOM_IMG:${uri.host}:$alt:$title'),
                 ),
               ),
             ),

@@ -1,6 +1,8 @@
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
+
 import '../../strings/llm_chat_view_strings.dart';
+
 import 'package:waveform_recorder/waveform_recorder.dart';
 
 import '../../styles/styles.dart';
@@ -16,43 +18,32 @@ import 'input_state.dart';
 /// recorder when recording audio.
 class TextOrAudioInput extends StatelessWidget {
   /// The [TextOrAudioInput] widget requires several parameters:
-  /// - [inputStyle]: Defines the styling for the input field.
-  /// - [waveController]: Controls the waveform recorder.
-  /// - [onCancelEdit]: Callback for when editing is canceled.
-  /// - [onRecordingStopped]: Callback for when audio recording is stopped.
-  /// - [onSubmitPrompt]: Callback for when the text input is submitted.
-  /// - [textController]: Controls the text being edited.
-  /// - [focusNode]: Manages the focus of the text field.
-  /// - [autofocus]: Determines if the text field should be focused on build.
-  /// - [inputState]: Represents the current state of the input.
-  /// - [cancelButtonStyle]: Defines the styling for the cancel button.
-  /// - [voiceNoteRecorderStyle]: Defines the styling for the waveform recorder.
+  /// - [_inputStyle]: Defines the styling for the input field.
+  /// - [_waveController]: Controls the waveform recorder.
+  /// - [_onCancelEdit]: Callback for when editing is canceled.
+  /// - [_onRecordingStopped]: Callback for when audio recording is stopped.
+  /// - [_onSubmitPrompt]: Callback for when the text input is submitted.
+  /// - [_textController]: Controls the text being edited.
+  /// - [_focusNode]: Manages the focus of the text field.
+  /// - [_autofocus]: Determines if the text field should be focused on build.
+  /// - [_inputState]: Represents the current state of the input.
+  /// - [_cancelButtonStyle]: Defines the styling for the cancel button.
+  /// - [_voiceNoteRecorderStyle]: Defines the styling for the waveform recorder.
   const TextOrAudioInput({
     super.key,
-    required ChatInputStyle inputStyle,
-    required WaveformRecorderController waveController,
-    required void Function()? onCancelEdit,
-    required void Function() onRecordingStopped,
-    required void Function() onSubmitPrompt,
-    required TextEditingController textController,
-    required FocusNode focusNode,
-    required bool autofocus,
-    required InputState inputState,
-    required ActionButtonStyle cancelButtonStyle,
-    required VoiceNoteRecorderStyle voiceNoteRecorderStyle,
-    required LlmChatViewStrings chatStrings,
-  }) : _cancelButtonStyle = cancelButtonStyle,
-       _inputState = inputState,
-       _autofocus = autofocus,
-       _focusNode = focusNode,
-       _textController = textController,
-       _onSubmitPrompt = onSubmitPrompt,
-       _onRecordingStopped = onRecordingStopped,
-       _onCancelEdit = onCancelEdit,
-       _waveController = waveController,
-       _inputStyle = inputStyle,
-       _voiceNoteRecorderStyle = voiceNoteRecorderStyle,
-       _chatStrings = chatStrings;
+    required this._inputStyle,
+    required this._waveController,
+    required this._onCancelEdit,
+    required this._onRecordingStopped,
+    required this._onSubmitPrompt,
+    required this._textController,
+    required this._focusNode,
+    required this._autofocus,
+    required this._inputState,
+    required this._cancelButtonStyle,
+    required this._voiceNoteRecorderStyle,
+    required this._chatStrings,
+  });
 
   final ChatInputStyle _inputStyle;
   final WaveformRecorderController _waveController;
@@ -86,51 +77,47 @@ class TextOrAudioInput extends StatelessWidget {
               minHeight: _minInputHeight,
               maxHeight: _maxInputHeight,
             ),
-            child:
-                _waveController.isRecording
-                    ? WaveformRecorder(
-                      controller: _waveController,
-                      height: _voiceNoteRecorderStyle.height!,
-                      waveColor: _voiceNoteRecorderStyle.waveColor!,
-                      durationTextStyle:
-                          _voiceNoteRecorderStyle.durationTextStyle!,
-                      onRecordingStopped: _onRecordingStopped,
-                    )
-                    : ChatTextField(
-                      minLines: 1,
-                      maxLines: 1024,
-                      controller: _textController,
-                      autofocus: _autofocus,
-                      focusNode: _focusNode,
-                      textInputAction:
-                          isMobile
-                              ? TextInputAction.newline
-                              : TextInputAction.done,
-                      onSubmitted:
-                          _inputState == InputState.canSubmitPrompt
-                              ? (_) => _onSubmitPrompt()
-                              : (_) => _focusNode.requestFocus(),
-                      style: _inputStyle.textStyle!,
-                      hintText: _inputStyle.hintText!,
-                      hintStyle: _inputStyle.hintStyle!,
-                      hintPadding: const EdgeInsets.symmetric(
-                        horizontal: 12,
-                        vertical: 8,
-                      ),
+            child: _waveController.isRecording
+                ? WaveformRecorder(
+                    controller: _waveController,
+                    height: _voiceNoteRecorderStyle.height!,
+                    waveColor: _voiceNoteRecorderStyle.waveColor!,
+                    durationTextStyle:
+                        _voiceNoteRecorderStyle.durationTextStyle!,
+                    onRecordingStopped: _onRecordingStopped,
+                  )
+                : ChatTextField(
+                    minLines: 1,
+                    maxLines: 1024,
+                    controller: _textController,
+                    autofocus: _autofocus,
+                    focusNode: _focusNode,
+                    textInputAction: isMobile
+                        ? TextInputAction.newline
+                        : TextInputAction.done,
+                    onSubmitted: _inputState == InputState.canSubmitPrompt
+                        ? (_) => _onSubmitPrompt()
+                        : (_) => _focusNode.requestFocus(),
+                    style: _inputStyle.textStyle!,
+                    hintText: _inputStyle.hintText!,
+                    hintStyle: _inputStyle.hintStyle!,
+                    hintPadding: const EdgeInsets.symmetric(
+                      horizontal: 12,
+                      vertical: 8,
                     ),
+                  ),
           ),
         ),
       ),
       Align(
         alignment: Alignment.topRight,
-        child:
-            _onCancelEdit != null
-                ? EditingIndicator(
-                  onCancelEdit: _onCancelEdit,
-                  cancelButtonStyle: _cancelButtonStyle,
-                  editingTitle: _chatStrings.editing,
-                )
-                : const SizedBox(),
+        child: _onCancelEdit != null
+            ? EditingIndicator(
+                onCancelEdit: _onCancelEdit,
+                cancelButtonStyle: _cancelButtonStyle,
+                editingTitle: _chatStrings.editing,
+              )
+            : const SizedBox(),
       ),
     ],
   );

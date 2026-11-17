@@ -77,40 +77,36 @@ class LlmMessageView extends StatelessWidget {
                       decoration: llmStyle.decoration,
                       margin: const EdgeInsets.only(left: 28),
                       padding: llmStyle.padding,
-                      child:
-                          text == null
-                              ? SizedBox(
-                                width: 32,
-                                child: JumpingDotsProgressIndicator(
-                                  fontSize: 24,
-                                  color: chatStyle.progressIndicatorColor!,
-                                ),
-                              )
-                              : AdaptiveCopyText(
-                                clipboardText: text,
-                                chatStyle: chatStyle,
-                                chatStrings: chatString,
-                                child:
-                                    isWelcomeMessage ||
-                                            viewModel.responseBuilder == null
-                                        ? MarkdownBody(
-                                          data: text,
-                                          selectable: false,
-                                          styleSheet: llmStyle.markdownStyle,
-                                          imageBuilder:
-                                              llmStyle.imageBuilder ??
-                                              _emptyImageBuilder,
-                                          onTapLink: (_, href, _) {
-                                            if (href != null) {
-                                              launchUrl(Uri.parse(href));
-                                            }
-                                          },
-                                        )
-                                        : viewModel.responseBuilder!(
-                                          context,
-                                          text,
-                                        ),
+                      child: text == null
+                          ? SizedBox(
+                              width: 32,
+                              child: JumpingDotsProgressIndicator(
+                                fontSize: 24,
+                                color: chatStyle.progressIndicatorColor!,
                               ),
+                            )
+                          : AdaptiveCopyText(
+                              clipboardText: text,
+                              chatStyle: chatStyle,
+                              chatStrings: chatString,
+                              child:
+                                  isWelcomeMessage ||
+                                      viewModel.responseBuilder == null
+                                  ? MarkdownBody(
+                                      data: text,
+                                      selectable: false,
+                                      styleSheet: llmStyle.markdownStyle,
+                                      imageBuilder:
+                                          llmStyle.imageBuilder ??
+                                          _emptyImageBuilder,
+                                      onTapLink: (_, href, _) {
+                                        if (href != null) {
+                                          launchUrl(Uri.parse(href));
+                                        }
+                                      },
+                                    )
+                                  : viewModel.responseBuilder!(context, text),
+                            ),
                     ),
                   ),
                 ],

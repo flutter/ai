@@ -1,5 +1,5 @@
 import 'package:firebase_ai/firebase_ai.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_ai_toolkit/flutter_ai_toolkit.dart';
 import 'package:go_router/go_router.dart';
 
@@ -112,7 +112,10 @@ well as any trailing text commentary you care to provide:
       builder: (context) => SettingsDrawer(onSave: _onSettingsSave),
     ),
     body: SplitOrTabs(
-      tabs: const [Tab(text: 'Recipes'), Tab(text: 'Chat')],
+      tabs: const [
+        Tab(text: 'Recipes'),
+        Tab(text: 'Chat'),
+      ],
       children: [
         Column(
           children: [

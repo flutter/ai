@@ -5,11 +5,13 @@
 import 'dart:async';
 
 import 'package:file_selector/file_selector.dart';
-import 'package:flutter/material.dart'
+import 'package:material_ui/material_ui.dart'
     show Icons, MenuAnchor, MenuItemButton, MenuStyle;
 import 'package:flutter/widgets.dart';
+
 import '../../dialogs/url_input_dialog.dart';
 import '../../strings/llm_chat_view_strings.dart';
+
 import 'package:flutter_ai_toolkit/src/utility.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -114,11 +116,10 @@ class _AttachmentActionBarState extends State<AttachmentActionBar> {
           menuItems.length,
         ),
         consumeOutsideTap: true,
-        builder:
-            (_, controller, _) => ActionButton(
-              onPressed: controller.isOpen ? controller.close : controller.open,
-              style: chatStyle.addButtonStyle!,
-            ),
+        builder: (_, controller, _) => ActionButton(
+          onPressed: controller.isOpen ? controller.close : controller.open,
+          style: chatStyle.addButtonStyle!,
+        ),
         menuChildren: menuItems,
       );
     },

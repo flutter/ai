@@ -7,7 +7,7 @@ import 'dart:io' as io;
 
 import 'package:firebase_ai/firebase_ai.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_ai_toolkit/flutter_ai_toolkit.dart';
 import 'package:path/path.dart' as path;
 import 'package:path_provider/path_provider.dart' as pp;
@@ -138,20 +138,19 @@ class _ChatPageState extends State<ChatPage> {
   void _clearHistory() async {
     final ok = await showDialog<bool>(
       context: context,
-      builder:
-          (context) => AlertDialog(
-            title: const Text('Clear history?'),
-            actions: [
-              ElevatedButton(
-                onPressed: () => Navigator.pop(context, true),
-                child: const Text('Clear'),
-              ),
-              OutlinedButton(
-                onPressed: () => Navigator.pop(context, false),
-                child: const Text('Cancel'),
-              ),
-            ],
+      builder: (context) => AlertDialog(
+        title: const Text('Clear history?'),
+        actions: [
+          ElevatedButton(
+            onPressed: () => Navigator.pop(context, true),
+            child: const Text('Clear'),
           ),
+          OutlinedButton(
+            onPressed: () => Navigator.pop(context, false),
+            child: const Text('Cancel'),
+          ),
+        ],
+      ),
     );
 
     if (ok != true) return;

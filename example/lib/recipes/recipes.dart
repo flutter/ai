@@ -3,7 +3,7 @@
 // found in the LICENSE file.
 
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:go_router/go_router.dart';
 
 // from `flutterfire config`: https://firebase.google.com/docs/flutter/setup

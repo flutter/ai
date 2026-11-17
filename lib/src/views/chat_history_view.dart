@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_ai_toolkit/flutter_ai_toolkit.dart';
 import 'package:flutter_ai_toolkit/src/views/chat_input/chat_suggestion_view.dart';
@@ -92,19 +92,17 @@ class _ChatHistoryViewState extends State<ChatHistoryView> {
 
             return Padding(
               padding: EdgeInsets.only(top: messageSpacing),
-              child:
-                  isUser
-                      ? UserMessageView(
-                        message,
-                        onEdit:
-                            canEdit
-                                ? () => widget.onEditMessage?.call(message)
-                                : null,
-                      )
-                      : LlmMessageView(
-                        message,
-                        isWelcomeMessage: messageIndex == 0,
-                      ),
+              child: isUser
+                  ? UserMessageView(
+                      message,
+                      onEdit: canEdit
+                          ? () => widget.onEditMessage?.call(message)
+                          : null,
+                    )
+                  : LlmMessageView(
+                      message,
+                      isWelcomeMessage: messageIndex == 0,
+                    ),
             );
           },
         ),

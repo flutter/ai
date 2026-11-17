@@ -5,7 +5,7 @@
 import 'package:cross_file/cross_file.dart';
 import 'package:firebase_ai/firebase_ai.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_ai_toolkit/flutter_ai_toolkit.dart';
 
 // from `flutterfire config`: https://firebase.google.com/docs/flutter/setup

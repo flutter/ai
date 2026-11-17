@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-import 'package:flutter/material.dart' show ScaffoldMessenger, SnackBar;
+import 'package:material_ui/material_ui.dart' show ScaffoldMessenger, SnackBar;
 import 'package:flutter/widgets.dart';
 
 import '../../utility.dart';
@@ -27,9 +27,8 @@ class AdaptiveSnackBar {
     if (isCupertinoApp(context)) {
       _showCupertinoSnackBar(context: context, message: message);
     } else {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text(message)));
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(message)));
     }
   }
 
@@ -40,12 +39,11 @@ class AdaptiveSnackBar {
   }) {
     const animationDurationMillis = 200;
     final overlayEntry = OverlayEntry(
-      builder:
-          (context) => CupertinoSnackBar(
-            message: message,
-            animationDurationMillis: animationDurationMillis,
-            waitDurationMillis: durationMillis,
-          ),
+      builder: (context) => CupertinoSnackBar(
+        message: message,
+        animationDurationMillis: animationDurationMillis,
+        waitDurationMillis: durationMillis,
+      ),
     );
     Future.delayed(
       Duration(milliseconds: durationMillis + 2 * animationDurationMillis),

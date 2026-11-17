@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../data/recipe_data.dart';
 
@@ -16,27 +16,25 @@ class RecipeContentView extends StatelessWidget {
   Widget build(BuildContext context) => Padding(
     padding: const EdgeInsets.all(16),
     child: LayoutBuilder(
-      builder:
-          (context, constraints) =>
-              constraints.maxWidth < mobileBreakpoint
-                  ? SingleChildScrollView(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      spacing: 16,
-                      children: [
-                        _RecipeIngredientsView(recipe),
-                        _RecipeInstructionsView(recipe),
-                      ],
-                    ),
-                  )
-                  : Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    spacing: 16,
-                    children: [
-                      Expanded(child: _RecipeIngredientsView(recipe)),
-                      Expanded(child: _RecipeInstructionsView(recipe)),
-                    ],
-                  ),
+      builder: (context, constraints) => constraints.maxWidth < mobileBreakpoint
+          ? SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                spacing: 16,
+                children: [
+                  _RecipeIngredientsView(recipe),
+                  _RecipeInstructionsView(recipe),
+                ],
+              ),
+            )
+          : Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              spacing: 16,
+              children: [
+                Expanded(child: _RecipeIngredientsView(recipe)),
+                Expanded(child: _RecipeInstructionsView(recipe)),
+              ],
+            ),
     ),
   );
 }

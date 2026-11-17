@@ -2,9 +2,10 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-import 'package:flutter/cupertino.dart'
+import 'package:cupertino_ui/cupertino_ui.dart'
     show CupertinoAlertDialog, CupertinoDialogAction, showCupertinoDialog;
-import 'package:flutter/material.dart' show AlertDialog, TextButton, showDialog;
+import 'package:material_ui/material_ui.dart'
+    show AlertDialog, TextButton, showDialog;
 import 'package:flutter/widgets.dart';
 
 import '../utility.dart';
@@ -34,40 +35,37 @@ class AdaptiveAlertDialog {
     required BuildContext context,
     required Widget content,
     bool showOK = false,
-  }) =>
-      isCupertinoApp(context)
-          ? showCupertinoDialog<T>(
-            context: context,
-            barrierDismissible: !showOK,
-            builder:
-                (context) => CupertinoAlertDialog(
-                  content: content,
-                  actions: [
-                    if (showOK)
-                      CupertinoDialogAction(
-                        onPressed: () => Navigator.pop(context),
-                        child: const Text('OK'),
-                      ),
-                  ],
+  }) => isCupertinoApp(context)
+      ? showCupertinoDialog<T>(
+          context: context,
+          barrierDismissible: !showOK,
+          builder: (context) => CupertinoAlertDialog(
+            content: content,
+            actions: [
+              if (showOK)
+                CupertinoDialogAction(
+                  onPressed: () => Navigator.pop(context),
+                  child: const Text('OK'),
                 ),
-          )
-          : showDialog<T>(
-            context: context,
-            barrierDismissible: !showOK,
-            builder:
-                (context) => Builder(
-                  builder: (context) {
-                    return AlertDialog(
-                      content: content,
-                      actions: [
-                        if (showOK)
-                          TextButton(
-                            onPressed: () => Navigator.pop(context),
-                            child: const Text('OK'),
-                          ),
-                      ],
-                    );
-                  },
-                ),
-          );
+            ],
+          ),
+        )
+      : showDialog<T>(
+          context: context,
+          barrierDismissible: !showOK,
+          builder: (context) => Builder(
+            builder: (context) {
+              return AlertDialog(
+                content: content,
+                actions: [
+                  if (showOK)
+                    TextButton(
+                      onPressed: () => Navigator.pop(context),
+                      child: const Text('OK'),
+                    ),
+                ],
+              );
+            },
+          ),
+        );
 }

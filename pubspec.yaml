@@ -11,11 +11,12 @@ topics:
   - gemini
 
 environment:
-  sdk: ^3.7.0
-  flutter: '>=3.27.0'
+  sdk: ^3.13.0
+  flutter: '>=3.47.0'
 
 dependencies:
   cross_file: ^0.3.5+2
+  cupertino_ui: ^1.1.7
   file_selector: ^1.1.0
   firebase_ai: ^3.12.2
   flutter:
@@ -25,6 +26,7 @@ dependencies:
   flutter_picture_taker: ^0.2.0
   google_fonts: ^8.1.0
   image_picker: ^1.2.2
+  material_ui: ^1.11.1
   mime: ^2.0.0
   universal_platform: ^1.1.0
   url_launcher: ^6.3.2

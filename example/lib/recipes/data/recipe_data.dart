@@ -62,7 +62,8 @@ class Recipe {
   }
 
   @override
-  String toString() => '''# $title
+  String toString() =>
+      '''# $title
 $description
 
 ## Ingredients

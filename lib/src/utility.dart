@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-import 'package:flutter/cupertino.dart' show BuildContext, CupertinoApp;
+import 'package:cupertino_ui/cupertino_ui.dart' show BuildContext, CupertinoApp;
 import 'package:flutter/services.dart';
 import 'package:universal_platform/universal_platform.dart';
 
@@ -70,12 +70,11 @@ Future<void> copyToClipboard(
 ///   * [color]: The [Color] to be inverted. This parameter must not be null.
 ///
 /// Returns: A new [Color] object with the inverted RGB values.
-Color? invertColor(Color? color) =>
-    color != null
-        ? Color.from(
-          alpha: color.a,
-          red: 1 - color.r,
-          green: 1 - color.g,
-          blue: 1 - color.b,
-        )
-        : null;
+Color? invertColor(Color? color) => color != null
+    ? Color.from(
+        alpha: color.a,
+        red: 1 - color.r,
+        green: 1 - color.g,
+        blue: 1 - color.b,
+      )
+    : null;

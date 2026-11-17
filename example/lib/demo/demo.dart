@@ -4,7 +4,7 @@
 
 import 'package:firebase_ai/firebase_ai.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_ai_toolkit/flutter_ai_toolkit.dart';
 import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -33,15 +33,14 @@ class _AppState extends State<App> {
   @override
   Widget build(BuildContext context) => ValueListenableBuilder<ThemeMode>(
     valueListenable: App.themeMode,
-    builder:
-        (context, mode, child) => MaterialApp(
-          title: App.title,
-          theme: ThemeData.light(),
-          darkTheme: ThemeData.dark(),
-          themeMode: mode,
-          home: ChatPage(),
-          debugShowCheckedModeBanner: false,
-        ),
+    builder: (context, mode, child) => MaterialApp(
+      title: App.title,
+      theme: ThemeData.light(),
+      darkTheme: ThemeData.dark(),
+      themeMode: mode,
+      home: ChatPage(),
+      debugShowCheckedModeBanner: false,
+    ),
   );
 }
 
@@ -87,70 +86,63 @@ class _ChatPageState extends State<ChatPage>
   @override
   Widget build(BuildContext context) => ValueListenableBuilder<bool>(
     valueListenable: _halloweenMode,
-    builder:
-        (context, halloween, child) => Scaffold(
-          appBar: AppBar(
-            title: const Text(App.title),
-            actions: [
-              IconButton(
-                onPressed: _clearHistory,
-                tooltip: 'Clear History',
-                icon: const Icon(Icons.history),
-              ),
-              IconButton(
-                onPressed:
-                    () =>
-                        App.themeMode.value =
-                            App.themeMode.value == ThemeMode.light
-                                ? ThemeMode.dark
-                                : ThemeMode.light,
-                tooltip:
-                    App.themeMode.value == ThemeMode.light
-                        ? 'Dark Mode'
-                        : 'Light Mode',
-                icon: const Icon(Icons.brightness_4_outlined),
-              ),
-              IconButton(
-                onPressed: () {
-                  _halloweenMode.value = !_halloweenMode.value;
-                  if (_halloweenMode.value) _resetAnimation();
-                },
-                tooltip:
-                    _halloweenMode.value ? 'Normal Mode' : 'Halloween Mode',
-                icon: Text('🎃'),
-              ),
-            ],
+    builder: (context, halloween, child) => Scaffold(
+      appBar: AppBar(
+        title: const Text(App.title),
+        actions: [
+          IconButton(
+            onPressed: _clearHistory,
+            tooltip: 'Clear History',
+            icon: const Icon(Icons.history),
           ),
-          body: AnimatedBuilder(
-            animation: _animationController,
-            builder:
-                (context, child) => Stack(
-                  children: [
-                    SizedBox(
-                      height: double.infinity,
-                      width: double.infinity,
-                      child: Image.asset(
-                        'assets/halloween-bg.png',
-                        fit: BoxFit.cover,
-                        opacity: _animationController,
-                      ),
-                    ),
-                    LlmChatView(
-                      provider: _provider,
-                      style: style,
-                      welcomeMessage:
-                          'Hello and welcome to the Flutter AI Toolkit!',
-                      suggestions: [
-                        'I\'m a Star Wars fan. What should I wear for Halloween?',
-                        'I\'m allergic to peanuts. What candy should I avoid at '
-                            'Halloween?',
-                        'What\'s the difference between a pumpkin and a squash?',
-                      ],
-                    ),
-                  ],
-                ),
+          IconButton(
+            onPressed: () =>
+                App.themeMode.value = App.themeMode.value == ThemeMode.light
+                ? ThemeMode.dark
+                : ThemeMode.light,
+            tooltip: App.themeMode.value == ThemeMode.light
+                ? 'Dark Mode'
+                : 'Light Mode',
+            icon: const Icon(Icons.brightness_4_outlined),
           ),
+          IconButton(
+            onPressed: () {
+              _halloweenMode.value = !_halloweenMode.value;
+              if (_halloweenMode.value) _resetAnimation();
+            },
+            tooltip: _halloweenMode.value ? 'Normal Mode' : 'Halloween Mode',
+            icon: Text('🎃'),
+          ),
+        ],
+      ),
+      body: AnimatedBuilder(
+        animation: _animationController,
+        builder: (context, child) => Stack(
+          children: [
+            SizedBox(
+              height: double.infinity,
+              width: double.infinity,
+              child: Image.asset(
+                'assets/halloween-bg.png',
+                fit: BoxFit.cover,
+                opacity: _animationController,
+              ),
+            ),
+            LlmChatView(
+              provider: _provider,
+              style: style,
+              welcomeMessage: 'Hello and welcome to the Flutter AI Toolkit!',
+              suggestions: [
+                'I\'m a Star Wars fan. What should I wear for Halloween?',
+                'I\'m allergic to peanuts. What candy should I avoid at '
+                    'Halloween?',
+                'What\'s the difference between a pumpkin and a squash?',
+              ],
+            ),
+          ],
         ),
+      ),
+    ),
   );
 
   void _clearHistory() {
@@ -212,10 +204,9 @@ class _ChatPageState extends State<ChatPage>
         ),
       ),
       chatInputStyle: ChatInputStyle(
-        backgroundColor:
-            _animationController.isAnimating
-                ? Colors.transparent
-                : Colors.black,
+        backgroundColor: _animationController.isAnimating
+            ? Colors.transparent
+            : Colors.black,
         decoration: BoxDecoration(
           color: Colors.yellow,
           border: Border.all(color: Colors.orange),

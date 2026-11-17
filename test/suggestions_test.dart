@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_ai_toolkit/flutter_ai_toolkit.dart';
 import 'package:flutter_ai_toolkit/src/views/chat_input/chat_suggestion_view.dart';
 import 'package:flutter_ai_toolkit/src/views/chat_text_field.dart';
@@ -10,8 +10,7 @@ void main() {
       home: Scaffold(
         appBar: AppBar(title: const Text('Title')),
         body: LlmChatView(
-          welcomeMessage:
-              'Hello! This is the Flutter AI Assistant, how can I help you today?',
+          welcomeMessage: 'Hello! This is the Flutter AI Assistant, how can I help you today?',
           suggestions: List.generate(
             suggestionsCount,
             (index) => 'Suggestion sample ${index + 1}',

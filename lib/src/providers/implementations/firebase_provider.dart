@@ -16,29 +16,25 @@ import '../interface/llm_provider.dart';
 class FirebaseProvider extends LlmProvider with ChangeNotifier {
   /// Creates a new instance of [FirebaseProvider].
   ///
-  /// [model] is an optional [GenerativeModel] instance for text generation. If
+  /// [_model] is an optional [GenerativeModel] instance for text generation. If
   /// provided, it will be used for chat-based interactions and text generation.
   ///
   /// [history] is an optional list of previous chat messages to initialize the
   /// chat session with.
   ///
-  /// [chatSafetySettings] is an optional list of safety settings to apply to
+  /// [_chatSafetySettings] is an optional list of safety settings to apply to
   /// the model's responses.
   ///
-  /// [chatGenerationConfig] is an optional configuration for controlling the
+  /// [_chatGenerationConfig] is an optional configuration for controlling the
   /// model's generation behavior.
   FirebaseProvider({
-    required GenerativeModel model,
+    required this._model,
     void Function(Iterable<FunctionCall>)? onFunctionCalls,
     Iterable<ChatMessage>? history,
-    List<SafetySetting>? chatSafetySettings,
-    GenerationConfig? chatGenerationConfig,
-    Future<Map<String, Object?>?> Function(FunctionCall)? onFunctionCall,
-  }) : _model = model,
-       _history = history?.toList() ?? [],
-       _chatSafetySettings = chatSafetySettings,
-       _chatGenerationConfig = chatGenerationConfig,
-       _onFunctionCall = onFunctionCall {
+    this._chatSafetySettings,
+    this._chatGenerationConfig,
+    this._onFunctionCall,
+  }) : _history = history?.toList() ?? [] {
     _chat = _startChat(history);
   }
 
