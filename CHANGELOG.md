@@ -1,8 +1,8 @@
 ## 1.1.0
 
-- Suppressed Markdown images in `LlmMessageView` by default (`SizedBox.shrink()`)
-  to prevent automatic outbound network requests and local file reads from
-  untrusted LLM output.
+- **BREAKING CHANGE**: Suppressed Markdown images in `LlmMessageView` by default
+  (`SizedBox.shrink()`) to prevent automatic outbound network requests and local
+  file reads from untrusted LLM output.
 - Added an optional `imageBuilder` property to `LlmMessageStyle` (defaults to
   `null`) for applications that explicitly opt in to custom Markdown image
   rendering.
