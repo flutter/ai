@@ -60,6 +60,7 @@ LlmMessageStyle _darkLlmMessageStyle() {
       shape: BoxShape.circle,
     ),
     markdownStyle: _invertMarkdownStyle(style.markdownStyle),
+    imageBuilder: style.imageBuilder,
     decoration: _invertDecoration(style.decoration),
   );
 }

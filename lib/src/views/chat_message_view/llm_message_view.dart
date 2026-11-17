@@ -97,6 +97,9 @@ class LlmMessageView extends StatelessWidget {
                                           data: text,
                                           selectable: false,
                                           styleSheet: llmStyle.markdownStyle,
+                                          imageBuilder:
+                                              llmStyle.imageBuilder ??
+                                              _emptyImageBuilder,
                                           onTapLink: (_, href, _) {
                                             if (href != null) {
                                               launchUrl(Uri.parse(href));
@@ -120,3 +123,6 @@ class LlmMessageView extends StatelessWidget {
     ],
   );
 }
+
+Widget _emptyImageBuilder(Uri _, String? _, String? _) =>
+    const SizedBox.shrink();
