@@ -32,6 +32,8 @@ dependencies:
   waveform_recorder: ^1.8.0
 
 dev_dependencies:
+  firebase_core: ^4.13.0
+  firebase_core_platform_interface: ^8.1.0
   flutter_lints: ^6.0.0
   flutter_test:
     sdk: flutter
