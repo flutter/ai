@@ -13,7 +13,7 @@ jobs:
       id-token: write
     steps:
       - uses: actions/checkout@v7
-      - uses: dart-lang/setup-dart@v1
+      - uses: dart-lang/setup-dart@v1.7.2
       - uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2
         with:
           channel: 'stable'
