@@ -23,7 +23,7 @@ dependencies:
   flutter_context_menu: ^0.4.2
   flutter_markdown_plus: ^1.0.7
   flutter_picture_taker: ^0.2.0
-  google_fonts: ^8.1.0
+  google_fonts: ^9.0.0
   image_picker: ^1.2.2
   mime: ^2.0.0
   universal_platform: ^1.1.0
