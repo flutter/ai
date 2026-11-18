@@ -71,6 +71,10 @@ class LlmChatView extends StatefulWidget {
   /// - [onErrorCallback]: Optional. The action to perform when an
   ///   error occurs during a chat operation. By default, an alert dialog is
   ///   displayed with the error message.
+  /// - [onRecordingErrorCallback]: Optional. The action to perform when
+  ///   starting or stopping a voice recording fails, e.g. because microphone
+  ///   permission was denied. By default, a snackbar is displayed with
+  ///   [LlmChatViewStrings.unableToRecordAudio].
   /// - [cancelMessage]: Optional. The message to display when the user cancels
   ///   a chat operation. Defaults to 'CANCEL'.
   /// - [errorMessage]: Optional. The message to display when an error occurs
@@ -89,6 +93,7 @@ class LlmChatView extends StatefulWidget {
     String? welcomeMessage,
     this.onCancelCallback,
     this.onErrorCallback,
+    this.onRecordingErrorCallback,
     this.cancelMessage = 'CANCEL',
     this.errorMessage = 'ERROR',
     this.enableAttachments = true,
@@ -144,6 +149,15 @@ class LlmChatView extends StatefulWidget {
   /// By default, an alert dialog is displayed with the error message.
   final void Function(BuildContext context, LlmException error)?
   onErrorCallback;
+
+  /// The action to perform when starting or stopping a voice recording fails,
+  /// e.g. because microphone permission was denied or no microphone is
+  /// available. The error is the one thrown by the recorder.
+  ///
+  /// By default, a snackbar is displayed with
+  /// [LlmChatViewStrings.unableToRecordAudio].
+  final void Function(BuildContext context, Object error)?
+  onRecordingErrorCallback;
 
   /// The text message to display when the user cancels a chat operation.
   ///
@@ -237,6 +251,7 @@ class _LlmChatViewState extends State<LlmChatView>
                                 ? null
                                 : _onCancelMessage,
                         onTranslateStt: _onTranslateStt,
+                        onRecordingError: _onRecordingError,
                         onCancelStt:
                             _pendingSttResponse == null ? null : _onCancelStt,
                       ),
@@ -364,6 +379,17 @@ class _LlmChatViewState extends State<LlmChatView>
   }
 
   void _onCancelStt() => _pendingSttResponse?.cancel();
+
+  void _onRecordingError(Object error) {
+    if (widget.onRecordingErrorCallback != null) {
+      widget.onRecordingErrorCallback!(context, error);
+    } else {
+      AdaptiveSnackBar.show(
+        context,
+        widget.viewModel.strings.unableToRecordAudio,
+      );
+    }
+  }
 
   Future<void> _showLlmException(LlmException? error) async {
     if (error == null) return;
