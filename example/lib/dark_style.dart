@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_ai_toolkit/flutter_ai_toolkit.dart';
 import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -133,15 +133,14 @@ SuggestionStyle _darkSuggestionStyle() {
 
 const Color _greyBackground = Color(0xFF535353);
 
-Color? _invertColor(Color? color) =>
-    color != null
-        ? Color.from(
-          alpha: color.a,
-          red: 1 - color.r,
-          green: 1 - color.g,
-          blue: 1 - color.b,
-        )
-        : null;
+Color? _invertColor(Color? color) => color != null
+    ? Color.from(
+        alpha: color.a,
+        red: 1 - color.r,
+        green: 1 - color.g,
+        blue: 1 - color.b,
+      )
+    : null;
 
 Decoration _invertDecoration(Decoration? decoration) => switch (decoration!) {
   final BoxDecoration d => d.copyWith(color: _invertColor(d.color)),

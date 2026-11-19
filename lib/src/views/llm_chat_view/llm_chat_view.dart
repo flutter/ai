@@ -195,57 +195,57 @@ class _LlmChatViewState extends State<LlmChatView>
     final chatStyle = LlmChatViewStyle.resolve(widget.viewModel.style);
     return ListenableBuilder(
       listenable: widget.viewModel.provider,
-      builder:
-          (context, child) => ChatViewModelProvider(
-            viewModel: widget.viewModel,
-            child: GestureDetector(
-              onTap: () {
-                // Dismiss keyboard when tapping anywhere in the view
-                FocusScope.of(context).unfocus();
-              },
-              child: Container(
-                color: chatStyle.backgroundColor,
-                child: Column(
-                  children: [
-                    Expanded(
-                      child: Stack(
-                        children: [
-                          ChatHistoryView(
-                            // can only edit if we're not waiting on the LLM or if
-                            // we're not already editing an LLM response
-                            onEditMessage:
-                                _pendingPromptResponse == null &&
-                                        _associatedResponse == null
-                                    ? _onEditMessage
-                                    : null,
-                            onSelectSuggestion: _onSelectSuggestion,
-                          ),
-                        ],
+      builder: (context, child) => ChatViewModelProvider(
+        viewModel: widget.viewModel,
+        child: GestureDetector(
+          onTap: () {
+            // Dismiss keyboard when tapping anywhere in the view
+            FocusScope.of(context).unfocus();
+          },
+          child: Container(
+            color: chatStyle.backgroundColor,
+            child: Column(
+              children: [
+                Expanded(
+                  child: Stack(
+                    children: [
+                      ChatHistoryView(
+                        // can only edit if we're not waiting on the LLM or if
+                        // we're not already editing an LLM response
+                        onEditMessage:
+                            _pendingPromptResponse == null &&
+                                _associatedResponse == null
+                            ? _onEditMessage
+                            : null,
+                        onSelectSuggestion: _onSelectSuggestion,
                       ),
-                    ),
-                    SafeArea(
-                      child: ChatInput(
-                        initialMessage: _initialMessage,
-                        autofocus:
-                            widget.autofocus ??
-                            widget.viewModel.suggestions.isEmpty,
-                        onCancelEdit:
-                            _associatedResponse != null ? _onCancelEdit : null,
-                        onSendMessage: _onSendMessage,
-                        onCancelMessage:
-                            _pendingPromptResponse == null
-                                ? null
-                                : _onCancelMessage,
-                        onTranslateStt: _onTranslateStt,
-                        onCancelStt:
-                            _pendingSttResponse == null ? null : _onCancelStt,
-                      ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
+                SafeArea(
+                  child: ChatInput(
+                    initialMessage: _initialMessage,
+                    autofocus:
+                        widget.autofocus ??
+                        widget.viewModel.suggestions.isEmpty,
+                    onCancelEdit: _associatedResponse != null
+                        ? _onCancelEdit
+                        : null,
+                    onSendMessage: _onSendMessage,
+                    onCancelMessage: _pendingPromptResponse == null
+                        ? null
+                        : _onCancelMessage,
+                    onTranslateStt: _onTranslateStt,
+                    onCancelStt: _pendingSttResponse == null
+                        ? null
+                        : _onCancelStt,
+                  ),
+                ),
+              ],
             ),
           ),
+        ),
+      ),
     );
   }
 
@@ -316,13 +316,12 @@ class _LlmChatViewState extends State<LlmChatView>
           widget.viewModel.speechToText?.call(file) ??
           _convertSpeechToText(file),
       onUpdate: (text) => response.write(text),
-      onDone:
-          (error) async => _onSttDone(
-            error,
-            response.toString().trim(),
-            file,
-            currentAttachments,
-          ),
+      onDone: (error) async => _onSttDone(
+        error,
+        response.toString().trim(),
+        file,
+        currentAttachments,
+      ),
     );
 
     setState(() {});

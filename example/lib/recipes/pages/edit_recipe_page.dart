@@ -5,7 +5,7 @@
 import 'dart:convert';
 
 import 'package:firebase_ai/firebase_ai.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_ai_toolkit/flutter_ai_toolkit.dart';
 import 'package:go_router/go_router.dart';
 import 'package:uuid/uuid.dart';
@@ -112,11 +112,9 @@ When you generate a recipe, you should generate a JSON object.
                 labelText: 'Title',
                 hintText: 'Enter a name for your recipe...',
               ),
-              validator:
-                  (value) =>
-                      (value == null || value.isEmpty)
-                          ? 'Recipe title is requires'
-                          : null,
+              validator: (value) => (value == null || value.isEmpty)
+                  ? 'Recipe title is requires'
+                  : null,
             ),
             TextField(
               controller: _descriptionController,
@@ -192,28 +190,27 @@ When you generate a recipe, you should generate a JSON object.
       final accept = await showDialog<bool>(
         // ignore: use_build_context_synchronously
         context: context,
-        builder:
-            (context) => AlertDialog(
-              title: Text(recipe.title),
-              content: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                spacing: 16,
-                children: [
-                  const Text('Modifications:'),
-                  Text(_wrapText(modifications)),
-                ],
-              ),
-              actions: [
-                TextButton(
-                  onPressed: () => context.pop(true),
-                  child: const Text('Accept'),
-                ),
-                TextButton(
-                  onPressed: () => context.pop(false),
-                  child: const Text('Reject'),
-                ),
-              ],
+        builder: (context) => AlertDialog(
+          title: Text(recipe.title),
+          content: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            spacing: 16,
+            children: [
+              const Text('Modifications:'),
+              Text(_wrapText(modifications)),
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => context.pop(true),
+              child: const Text('Accept'),
             ),
+            TextButton(
+              onPressed: () => context.pop(false),
+              child: const Text('Reject'),
+            ),
+          ],
+        ),
       );
 
       if (accept == true) {
@@ -229,17 +226,16 @@ When you generate a recipe, you should generate a JSON object.
         showDialog(
           // ignore: use_build_context_synchronously
           context: context,
-          builder:
-              (context) => AlertDialog(
-                title: const Text('Error'),
-                content: Text(ex.toString()),
-                actions: [
-                  TextButton(
-                    onPressed: () => context.pop(),
-                    child: const Text('OK'),
-                  ),
-                ],
+          builder: (context) => AlertDialog(
+            title: const Text('Error'),
+            content: Text(ex.toString()),
+            actions: [
+              TextButton(
+                onPressed: () => context.pop(),
+                child: const Text('OK'),
               ),
+            ],
+          ),
         );
       }
     }

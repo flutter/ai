@@ -4,7 +4,7 @@
 
 import 'package:firebase_ai/firebase_ai.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_ai_toolkit/flutter_ai_toolkit.dart';
 import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -86,35 +86,34 @@ class _ChatPageState extends State<ChatPage>
       ),
       body: AnimatedBuilder(
         animation: _animationController,
-        builder:
-            (context, child) => Stack(
-              children: [
-                SizedBox(
-                  height: double.infinity,
-                  width: double.infinity,
-                  child: Image.asset(
-                    'assets/halloween-bg.png',
-                    fit: BoxFit.cover,
-                    opacity: _animationController,
-                  ),
-                ),
-                LlmChatView(
-                  provider: _provider,
-                  welcomeMessage:
-                      'Welcome to the Custom Styles Example! Use the '
-                      'butons on the action bar at the top right of the app to '
-                      'explore light and dark styles in combination with normal '
-                      'and Halloween-themed styles. Enjoy!',
-                  suggestions: [
-                    'I\'m a Star Wars fan. What should I wear for Halloween?',
-                    'I\'m allergic to peanuts. What candy should I avoid at '
-                        'Halloween?',
-                    'What\'s the difference between a pumpkin and a squash?',
-                  ],
-                  style: style,
-                ),
-              ],
+        builder: (context, child) => Stack(
+          children: [
+            SizedBox(
+              height: double.infinity,
+              width: double.infinity,
+              child: Image.asset(
+                'assets/halloween-bg.png',
+                fit: BoxFit.cover,
+                opacity: _animationController,
+              ),
             ),
+            LlmChatView(
+              provider: _provider,
+              welcomeMessage:
+                  'Welcome to the Custom Styles Example! Use the '
+                  'butons on the action bar at the top right of the app to '
+                  'explore light and dark styles in combination with normal '
+                  'and Halloween-themed styles. Enjoy!',
+              suggestions: [
+                'I\'m a Star Wars fan. What should I wear for Halloween?',
+                'I\'m allergic to peanuts. What candy should I avoid at '
+                    'Halloween?',
+                'What\'s the difference between a pumpkin and a squash?',
+              ],
+              style: style,
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -156,10 +155,9 @@ class _ChatPageState extends State<ChatPage>
         ),
       ),
       chatInputStyle: ChatInputStyle(
-        backgroundColor:
-            _animationController.isAnimating
-                ? Colors.transparent
-                : Colors.black,
+        backgroundColor: _animationController.isAnimating
+            ? Colors.transparent
+            : Colors.black,
         decoration: BoxDecoration(
           color: Colors.yellow,
           border: Border.all(color: Colors.orange),

@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../../styles/toolkit_colors.dart';
 import '../../styles/toolkit_text_styles.dart';
@@ -84,27 +84,22 @@ class LinkAttachmentView extends StatelessWidget {
                   _getFaviconUrl(attachment.url),
                   width: 16,
                   height: 16,
-                  errorBuilder:
-                      (context, error, stackTrace) => Icon(
-                        Icons.link,
-                        size: 14,
-                        color: isDark ? Colors.grey[400] : Colors.grey[600],
-                      ),
-                  frameBuilder: (
-                    context,
-                    child,
-                    frame,
-                    wasSynchronouslyLoaded,
-                  ) {
-                    if (frame == null) {
-                      return Icon(
-                        Icons.link,
-                        size: 14,
-                        color: isDark ? Colors.grey[400] : Colors.grey[600],
-                      );
-                    }
-                    return child;
-                  },
+                  errorBuilder: (context, error, stackTrace) => Icon(
+                    Icons.link,
+                    size: 14,
+                    color: isDark ? Colors.grey[400] : Colors.grey[600],
+                  ),
+                  frameBuilder:
+                      (context, child, frame, wasSynchronouslyLoaded) {
+                        if (frame == null) {
+                          return Icon(
+                            Icons.link,
+                            size: 14,
+                            color: isDark ? Colors.grey[400] : Colors.grey[600],
+                          );
+                        }
+                        return child;
+                      },
                 ),
               ),
               Expanded(

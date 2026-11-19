@@ -4,7 +4,7 @@
 
 import 'package:firebase_ai/firebase_ai.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_ai_toolkit/flutter_ai_toolkit.dart';
 import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -105,154 +105,148 @@ class _ChatPageState extends State<ChatPage>
       ),
       body: AnimatedBuilder(
         animation: _controller,
-        builder:
-            (context, child) => Stack(
-              children: [
-                SizedBox(
-                  height: double.infinity,
-                  width: double.infinity,
-                  child: Image.asset(
-                    'assets/halloween-bg.png',
-                    fit: BoxFit.cover,
-                    opacity: _controller,
-                  ),
-                ),
-                LlmChatView(
-                  provider: _provider!,
-                  style: LlmChatViewStyle(
-                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                    margin: const EdgeInsets.only(bottom: 8.0),
-                    messageSpacing: 12.0,
-                    backgroundColor: Colors.transparent,
-                    progressIndicatorColor: Colors.purple,
-                    chatInputStyle: ChatInputStyle(
-                      backgroundColor:
-                          _controller.isAnimating
-                              ? Colors.transparent
-                              : Colors.black,
-                      decoration: BoxDecoration(
-                        color: Colors.yellow,
-                        border: Border.all(color: Colors.orange),
-                      ),
-                      textStyle: halloweenTextStyle.copyWith(
-                        color: Colors.black,
-                      ),
-                      hintText: 'good evening...',
-                      hintStyle: halloweenTextStyle.copyWith(
-                        color: Colors.orange.withAlpha(128),
-                      ),
-                    ),
-                    userMessageStyle: UserMessageStyle(
-                      textStyle: halloweenTextStyle.copyWith(
-                        color: Colors.black,
-                      ),
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                          colors: [
-                            Colors.white,
-                            Colors.grey.shade300,
-                            Colors.grey.shade400,
-                          ],
-                        ),
-                        borderRadius: BorderRadius.circular(20),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withAlpha(128),
-                            blurRadius: 10,
-                            spreadRadius: 2,
-                          ),
-                        ],
-                      ),
-                    ),
-                    llmMessageStyle: LlmMessageStyle(
-                      maxWidth: 800.0,
-                      minWidth: 300.0,
-                      flex: 8,
-                      padding: const EdgeInsets.all(16.0),
-                      margin: const EdgeInsets.symmetric(vertical: 8.0),
-                      icon: Icons.sentiment_very_satisfied,
-                      iconColor: Colors.black,
-                      iconDecoration: BoxDecoration(
-                        color: Colors.orange,
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(8),
-                          bottomLeft: Radius.circular(8),
-                          topRight: Radius.zero,
-                          bottomRight: Radius.circular(8),
-                        ),
-                        border: Border.all(color: Colors.black),
-                      ),
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                          colors: [
-                            Colors.deepOrange.shade900,
-                            Colors.orange.shade800,
-                            Colors.purple.shade900,
-                          ],
-                        ),
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.zero,
-                          bottomLeft: Radius.circular(20),
-                          topRight: Radius.circular(20),
-                          bottomRight: Radius.circular(20),
-                        ),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withAlpha(76),
-                            blurRadius: 8,
-                            offset: Offset(2, 2),
-                          ),
-                        ],
-                      ),
-                      markdownStyle: MarkdownStyleSheet(
-                        p: halloweenTextStyle,
-                        listBullet: halloweenTextStyle,
-                      ),
-                    ),
-                    recordButtonStyle: halloweenActionButtonStyle,
-                    stopButtonStyle: halloweenActionButtonStyle,
-                    submitButtonStyle: halloweenActionButtonStyle,
-                    addButtonStyle: halloweenActionButtonStyle,
-                    attachFileButtonStyle: halloweenMenuButtonStyle,
-                    cameraButtonStyle: halloweenMenuButtonStyle,
-                    closeButtonStyle: halloweenActionButtonStyle,
-                    cancelButtonStyle: halloweenActionButtonStyle,
-                    closeMenuButtonStyle: halloweenActionButtonStyle,
-                    copyButtonStyle: halloweenMenuButtonStyle,
-                    editButtonStyle: halloweenMenuButtonStyle,
-                    galleryButtonStyle: halloweenMenuButtonStyle,
-                    actionButtonBarDecoration: BoxDecoration(
-                      color: Colors.orange,
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    fileAttachmentStyle: FileAttachmentStyle(
-                      decoration: BoxDecoration(color: Colors.black),
-                      iconDecoration: BoxDecoration(
-                        color: Colors.orange,
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      filenameStyle: halloweenTextStyle,
-                      filetypeStyle: halloweenTextStyle.copyWith(
-                        color: Colors.green,
-                        fontSize: 18,
-                      ),
-                    ),
-                    voiceNoteRecorderStyle: VoiceNoteRecorderStyle(
-                      height: 60.0,
-                      waveColor: Colors.orange,
-                      durationTextStyle: halloweenTextStyle.copyWith(
-                        color: Colors.black,
-                        fontSize: 16,
-                      ),
-                    ),
-                  ),
-                ),
-              ],
+        builder: (context, child) => Stack(
+          children: [
+            SizedBox(
+              height: double.infinity,
+              width: double.infinity,
+              child: Image.asset(
+                'assets/halloween-bg.png',
+                fit: BoxFit.cover,
+                opacity: _controller,
+              ),
             ),
+            LlmChatView(
+              provider: _provider!,
+              style: LlmChatViewStyle(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                margin: const EdgeInsets.only(bottom: 8.0),
+                messageSpacing: 12.0,
+                backgroundColor: Colors.transparent,
+                progressIndicatorColor: Colors.purple,
+                chatInputStyle: ChatInputStyle(
+                  backgroundColor: _controller.isAnimating
+                      ? Colors.transparent
+                      : Colors.black,
+                  decoration: BoxDecoration(
+                    color: Colors.yellow,
+                    border: Border.all(color: Colors.orange),
+                  ),
+                  textStyle: halloweenTextStyle.copyWith(color: Colors.black),
+                  hintText: 'good evening...',
+                  hintStyle: halloweenTextStyle.copyWith(
+                    color: Colors.orange.withAlpha(128),
+                  ),
+                ),
+                userMessageStyle: UserMessageStyle(
+                  textStyle: halloweenTextStyle.copyWith(color: Colors.black),
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                      colors: [
+                        Colors.white,
+                        Colors.grey.shade300,
+                        Colors.grey.shade400,
+                      ],
+                    ),
+                    borderRadius: BorderRadius.circular(20),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withAlpha(128),
+                        blurRadius: 10,
+                        spreadRadius: 2,
+                      ),
+                    ],
+                  ),
+                ),
+                llmMessageStyle: LlmMessageStyle(
+                  maxWidth: 800.0,
+                  minWidth: 300.0,
+                  flex: 8,
+                  padding: const EdgeInsets.all(16.0),
+                  margin: const EdgeInsets.symmetric(vertical: 8.0),
+                  icon: Icons.sentiment_very_satisfied,
+                  iconColor: Colors.black,
+                  iconDecoration: BoxDecoration(
+                    color: Colors.orange,
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(8),
+                      bottomLeft: Radius.circular(8),
+                      topRight: Radius.zero,
+                      bottomRight: Radius.circular(8),
+                    ),
+                    border: Border.all(color: Colors.black),
+                  ),
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                      colors: [
+                        Colors.deepOrange.shade900,
+                        Colors.orange.shade800,
+                        Colors.purple.shade900,
+                      ],
+                    ),
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.zero,
+                      bottomLeft: Radius.circular(20),
+                      topRight: Radius.circular(20),
+                      bottomRight: Radius.circular(20),
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withAlpha(76),
+                        blurRadius: 8,
+                        offset: Offset(2, 2),
+                      ),
+                    ],
+                  ),
+                  markdownStyle: MarkdownStyleSheet(
+                    p: halloweenTextStyle,
+                    listBullet: halloweenTextStyle,
+                  ),
+                ),
+                recordButtonStyle: halloweenActionButtonStyle,
+                stopButtonStyle: halloweenActionButtonStyle,
+                submitButtonStyle: halloweenActionButtonStyle,
+                addButtonStyle: halloweenActionButtonStyle,
+                attachFileButtonStyle: halloweenMenuButtonStyle,
+                cameraButtonStyle: halloweenMenuButtonStyle,
+                closeButtonStyle: halloweenActionButtonStyle,
+                cancelButtonStyle: halloweenActionButtonStyle,
+                closeMenuButtonStyle: halloweenActionButtonStyle,
+                copyButtonStyle: halloweenMenuButtonStyle,
+                editButtonStyle: halloweenMenuButtonStyle,
+                galleryButtonStyle: halloweenMenuButtonStyle,
+                actionButtonBarDecoration: BoxDecoration(
+                  color: Colors.orange,
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                fileAttachmentStyle: FileAttachmentStyle(
+                  decoration: BoxDecoration(color: Colors.black),
+                  iconDecoration: BoxDecoration(
+                    color: Colors.orange,
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  filenameStyle: halloweenTextStyle,
+                  filetypeStyle: halloweenTextStyle.copyWith(
+                    color: Colors.green,
+                    fontSize: 18,
+                  ),
+                ),
+                voiceNoteRecorderStyle: VoiceNoteRecorderStyle(
+                  height: 60.0,
+                  waveColor: Colors.orange,
+                  durationTextStyle: halloweenTextStyle.copyWith(
+                    color: Colors.black,
+                    fontSize: 16,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

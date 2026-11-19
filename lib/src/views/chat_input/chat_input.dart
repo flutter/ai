@@ -168,51 +168,46 @@ class _ChatInputState extends State<ChatInput> {
         if (_attachments.isNotEmpty) const SizedBox(height: 6),
         ValueListenableBuilder(
           valueListenable: _textController,
-          builder:
-              (context, value, child) => ListenableBuilder(
-                listenable: _waveController,
-                builder:
-                    (context, child) => Row(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        if (_viewModel!.enableAttachments)
-                          Padding(
-                            padding: const EdgeInsets.only(bottom: 14),
-                            child: AttachmentActionBar(
-                              onAttachments: onAttachments,
-                            ),
-                          ),
-                        Expanded(
-                          child: TextOrAudioInput(
-                            inputStyle: _inputStyle!,
-                            waveController: _waveController,
-                            onCancelEdit: widget.onCancelEdit,
-                            onRecordingStopped: onRecordingStopped,
-                            onSubmitPrompt: onSubmitPrompt,
-                            textController: _textController,
-                            focusNode: _focusNode,
-                            autofocus: widget.autofocus,
-                            inputState: _inputState,
-                            cancelButtonStyle: _chatStyle!.cancelButtonStyle!,
-                            voiceNoteRecorderStyle:
-                                _chatStyle!.voiceNoteRecorderStyle!,
-                            chatStrings: _viewModel!.strings,
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: 14),
-                          child: InputButton(
-                            inputState: _inputState,
-                            chatStyle: _chatStyle!,
-                            onSubmitPrompt: onSubmitPrompt,
-                            onCancelPrompt: onCancelPrompt,
-                            onStartRecording: onStartRecording,
-                            onStopRecording: onStopRecording,
-                          ),
-                        ),
-                      ],
-                    ),
-              ),
+          builder: (context, value, child) => ListenableBuilder(
+            listenable: _waveController,
+            builder: (context, child) => Row(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                if (_viewModel!.enableAttachments)
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 14),
+                    child: AttachmentActionBar(onAttachments: onAttachments),
+                  ),
+                Expanded(
+                  child: TextOrAudioInput(
+                    inputStyle: _inputStyle!,
+                    waveController: _waveController,
+                    onCancelEdit: widget.onCancelEdit,
+                    onRecordingStopped: onRecordingStopped,
+                    onSubmitPrompt: onSubmitPrompt,
+                    textController: _textController,
+                    focusNode: _focusNode,
+                    autofocus: widget.autofocus,
+                    inputState: _inputState,
+                    cancelButtonStyle: _chatStyle!.cancelButtonStyle!,
+                    voiceNoteRecorderStyle: _chatStyle!.voiceNoteRecorderStyle!,
+                    chatStrings: _viewModel!.strings,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 14),
+                  child: InputButton(
+                    inputState: _inputState,
+                    chatStyle: _chatStyle!,
+                    onSubmitPrompt: onSubmitPrompt,
+                    onCancelPrompt: onCancelPrompt,
+                    onStartRecording: onStartRecording,
+                    onStopRecording: onStopRecording,
+                  ),
+                ),
+              ],
+            ),
+          ),
         ),
       ],
     ),

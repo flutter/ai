@@ -1,7 +1,8 @@
 import 'dart:async';
 
-import 'package:flutter/cupertino.dart' show DefaultCupertinoLocalizations;
-import 'package:flutter/material.dart'
+import 'package:cupertino_ui/cupertino_ui.dart'
+    show DefaultCupertinoLocalizations;
+import 'package:material_ui/material_ui.dart'
     show
         DefaultMaterialLocalizations,
         SelectionArea,
@@ -63,14 +64,13 @@ class AdaptiveCopyText extends StatelessWidget {
         MenuItem<dynamic>(
           label: Text(chatStrings.copy),
           icon: Icon(chatStyle.copyButtonStyle!.icon),
-          onSelected:
-              (_) => unawaited(
-                copyToClipboard(
-                  context,
-                  clipboardText,
-                  chatStrings.copyToClipboard,
-                ),
-              ),
+          onSelected: (_) => unawaited(
+            copyToClipboard(
+              context,
+              clipboardText,
+              chatStrings.copyToClipboard,
+            ),
+          ),
         ),
       ],
     );
@@ -82,14 +82,14 @@ class AdaptiveCopyText extends StatelessWidget {
         : isCupertinoApp(context)
         // Ensure MaterialLocalizations is available for SelectionArea
         ? Localizations(
-          locale: Localizations.localeOf(context),
-          delegates: const [
-            DefaultMaterialLocalizations.delegate,
-            DefaultWidgetsLocalizations.delegate,
-            DefaultCupertinoLocalizations.delegate,
-          ],
-          child: SelectionArea(child: child),
-        )
+            locale: Localizations.localeOf(context),
+            delegates: const [
+              DefaultMaterialLocalizations.delegate,
+              DefaultWidgetsLocalizations.delegate,
+              DefaultCupertinoLocalizations.delegate,
+            ],
+            child: SelectionArea(child: child),
+          )
         : SelectionArea(child: child);
   }
 }

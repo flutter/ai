@@ -4,7 +4,7 @@
 
 import 'package:firebase_ai/firebase_ai.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_ai_toolkit/flutter_ai_toolkit.dart';
 
 // from `flutterfire config`: https://firebase.google.com/docs/flutter/setup
@@ -33,7 +33,9 @@ class ChatPage extends StatelessWidget {
     appBar: AppBar(title: const Text(App.title)),
     body: LlmChatView(
       provider: FirebaseProvider(
-        model: FirebaseAI.vertexAI().generativeModel(model: 'gemini-2.0-flash'),
+        model: FirebaseAI.agentPlatform().generativeModel(
+          model: 'gemini-2.0-flash',
+        ),
       ),
     ),
   );

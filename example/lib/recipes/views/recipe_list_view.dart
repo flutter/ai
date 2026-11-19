@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:go_router/go_router.dart';
 
 import '../data/recipe_data.dart';
@@ -61,8 +61,8 @@ class _RecipeListViewState extends State<RecipeListView> {
                 key: ValueKey(recipeId),
                 recipe: recipe,
                 expanded: _expanded[recipeId] == true,
-                onExpansionChanged:
-                    (expanded) => _onExpand(recipe.id, expanded),
+                onExpansionChanged: (expanded) =>
+                    _onExpand(recipe.id, expanded),
                 onEdit: () => _onEdit(recipe),
                 onDelete: () => _onDelete(recipe),
               );
@@ -80,23 +80,22 @@ class _RecipeListViewState extends State<RecipeListView> {
   void _onDelete(Recipe recipe) async {
     final shouldDelete = await showDialog<bool>(
       context: context,
-      builder:
-          (context) => AlertDialog(
-            title: const Text('Delete Recipe'),
-            content: Text(
-              'Are you sure you want to delete the recipe "${recipe.title}"?',
-            ),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.pop(context, false),
-                child: const Text('Cancel'),
-              ),
-              TextButton(
-                onPressed: () => Navigator.pop(context, true),
-                child: const Text('Delete'),
-              ),
-            ],
+      builder: (context) => AlertDialog(
+        title: const Text('Delete Recipe'),
+        content: Text(
+          'Are you sure you want to delete the recipe "${recipe.title}"?',
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context, false),
+            child: const Text('Cancel'),
           ),
+          TextButton(
+            onPressed: () => Navigator.pop(context, true),
+            child: const Text('Delete'),
+          ),
+        ],
+      ),
     );
 
     if (shouldDelete == true) await RecipeRepository.deleteRecipe(recipe);

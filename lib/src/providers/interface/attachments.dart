@@ -59,10 +59,9 @@ final class FileAttachment extends Attachment {
     required String name,
     required String mimeType,
     required Uint8List bytes,
-  }) =>
-      Attachment._isImage(mimeType)
-          ? ImageFileAttachment(name: name, mimeType: mimeType, bytes: bytes)
-          : FileAttachment(name: name, mimeType: mimeType, bytes: bytes);
+  }) => Attachment._isImage(mimeType)
+      ? ImageFileAttachment(name: name, mimeType: mimeType, bytes: bytes)
+      : FileAttachment(name: name, mimeType: mimeType, bytes: bytes);
 
   /// The MIME type of the file attachment.
   final String mimeType;

@@ -24,10 +24,9 @@ class ImagePreviewDialog extends StatelessWidget {
     child: Center(
       child: switch (attachment) {
         (final ImageFileAttachment a) => Image.memory(a.bytes, fit: _fit),
-        (FileAttachment _) =>
-          throw AssertionError(
-            'File attachments not supported in image preview dialog',
-          ),
+        (FileAttachment _) => throw AssertionError(
+          'File attachments not supported in image preview dialog',
+        ),
         (final LinkAttachment a) => Image.network(a.url.toString(), fit: _fit),
       },
     ),

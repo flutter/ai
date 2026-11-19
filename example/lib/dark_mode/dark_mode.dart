@@ -4,7 +4,7 @@
 
 import 'package:firebase_ai/firebase_ai.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_ai_toolkit/flutter_ai_toolkit.dart';
 
 import '../dark_style.dart';
@@ -26,8 +26,8 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) => ValueListenableBuilder<ThemeMode>(
     valueListenable: themeMode,
-    builder:
-        (BuildContext context, ThemeMode mode, Widget? child) => MaterialApp(
+    builder: (BuildContext context, ThemeMode mode, Widget? child) =>
+        MaterialApp(
           title: title,
           theme: ThemeData.light(),
           darkTheme: ThemeData.dark(),
@@ -59,16 +59,13 @@ class _ChatPageState extends State<ChatPage> {
       title: const Text(App.title),
       actions: [
         IconButton(
-          onPressed:
-              () =>
-                  App.themeMode.value =
-                      App.themeMode.value == ThemeMode.light
-                          ? ThemeMode.dark
-                          : ThemeMode.light,
-          tooltip:
-              App.themeMode.value == ThemeMode.light
-                  ? 'Dark Mode'
-                  : 'Light Mode',
+          onPressed: () =>
+              App.themeMode.value = App.themeMode.value == ThemeMode.light
+              ? ThemeMode.dark
+              : ThemeMode.light,
+          tooltip: App.themeMode.value == ThemeMode.light
+              ? 'Dark Mode'
+              : 'Light Mode',
           icon: const Icon(Icons.brightness_4_outlined),
         ),
       ],

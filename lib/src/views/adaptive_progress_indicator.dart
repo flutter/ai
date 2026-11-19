@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-import 'package:flutter/cupertino.dart' show CupertinoActivityIndicator;
-import 'package:flutter/material.dart' show CircularProgressIndicator;
+import 'package:cupertino_ui/cupertino_ui.dart' show CupertinoActivityIndicator;
+import 'package:material_ui/material_ui.dart' show CircularProgressIndicator;
 import 'package:flutter/widgets.dart';
 
 import '../utility.dart';
@@ -25,8 +25,7 @@ class AdaptiveCircularProgressIndicator extends StatelessWidget {
   final Color color;
 
   @override
-  Widget build(BuildContext context) =>
-      isCupertinoApp(context)
-          ? CupertinoActivityIndicator(color: color)
-          : CircularProgressIndicator(color: color);
+  Widget build(BuildContext context) => isCupertinoApp(context)
+      ? CupertinoActivityIndicator(color: color)
+      : CircularProgressIndicator(color: color);
 }

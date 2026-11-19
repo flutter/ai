@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-import 'package:flutter/material.dart' show Tooltip;
+import 'package:material_ui/material_ui.dart' show Tooltip;
 import 'package:flutter/widgets.dart';
 
 import '../styles/action_button_style.dart';
@@ -44,18 +44,13 @@ class ActionButton extends StatelessWidget {
       height: size,
       decoration: style.iconDecoration,
       // tooltips aren't a thing in cupertino, so skip it
-      child:
-          isCupertinoApp(context)
-              ? Icon(style.icon, color: style.iconColor, size: size * 0.6)
-              : Tooltip(
-                message: style.text,
-                textStyle: style.textStyle,
-                child: Icon(
-                  style.icon,
-                  color: style.iconColor,
-                  size: size * 0.6,
-                ),
-              ),
+      child: isCupertinoApp(context)
+          ? Icon(style.icon, color: style.iconColor, size: size * 0.6)
+          : Tooltip(
+              message: style.text,
+              textStyle: style.textStyle,
+              child: Icon(style.icon, color: style.iconColor, size: size * 0.6),
+            ),
     ),
   );
 }
